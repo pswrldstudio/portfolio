@@ -457,8 +457,8 @@
         if (r.top < innerHeight * 0.85 && r.bottom > innerHeight * 0.15) {
           setTimeout(function () {
             if (!alive()) return;
-            animateTo(1, 900);
-            setTimeout(function () { auto = null; startAuto(); }, 1100);
+            animateTo(1, 900);                                                   // the book opens...
+            setTimeout(function () { if (!alive()) return; auto = null; go(1); startAuto(); }, 900 + 1250);   // ...holds 1.25s, then starts turning
           }, 1750);
         } else setTimeout(waitVisible, 300);
       };
