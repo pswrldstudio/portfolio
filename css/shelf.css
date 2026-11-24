@@ -236,3 +236,7 @@ body.drawer-open { overflow: hidden; }
   .about-cutout { position: relative; display: block; right: auto; margin: 0 auto -20px; height: auto; max-width: 70%; }
   #about.has-cutout .about-grid, #about.has-cutout .section-head { padding-right: 0; }
 }
+
+/* the P-and-star mark instead of the little circle on the bottom spines */
+.ib-mark { width: 78%; max-width: 46px; height: auto; border: 0; border-radius: 0; box-shadow: none; flex: none; display: block; }
+.ib.lying .ib-mark { width: auto; height: 62%; max-width: none; }

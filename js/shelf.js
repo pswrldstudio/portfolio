@@ -97,7 +97,7 @@
     el.dataset.w = b.w; el.dataset.h = b.h;
     el.style.setProperty("--tilt", (b.tilt || 0) + "deg");
     el.style.setProperty("--c", b.color);
-    var icon = b.kind === "profile" ? '<i class="ib-clock"></i>' : b.kind === "tag" ? '<i class="ib-arrows">&#8645;</i>' : '<i class="ib-ring"></i>';
+    var icon = b.kind === "profile" ? '<i class="ib-clock"></i>' : b.kind === "tag" ? '<i class="ib-arrows">&#8645;</i>' : '<img class="ib-ring ib-mark" src="assets/pswrld-mark-black.svg" alt="">';
     el.innerHTML = '<div class="bk-body"><div class="ib-spine">' +
       '<span class="ib-sub" data-edit="ib_sub_' + b.key + '">' + esc(T["ib_sub_" + b.key] || b.sub) + '</span>' + icon +
       '<span class="ib-label" data-edit="ib_label_' + b.key + '">' + esc(T["ib_label_" + b.key] || b.label) + '</span>' +
