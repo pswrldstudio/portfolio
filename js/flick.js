@@ -134,7 +134,7 @@
   var lastPos = 0, dir = 1, lastHalf = null, lastFlipAt = 0;
   function place() {
     var half = Math.floor(pos + 0.5);                 // changes when a page passes halfway
-    if (multiTurn && lastHalf !== null && half !== lastHalf && alive()) {
+    if (FLIP_SOUND && multiTurn && lastHalf !== null && half !== lastHalf && alive()) {
       var now = performance.now();
       if (now - lastFlipAt > 70) { lastFlipAt = now; var a = FLIP[(half % FLIP.length + FLIP.length) % FLIP.length]; try { a.currentTime = 0; a.play().catch(function () {}); } catch (e) {} }
     }
@@ -179,7 +179,7 @@
   var anim = null, tgt = 0, running = false;
   function ease(t) { return 1 - Math.pow(1 - t, 3); }
   // page-turn sound (follows the Sound button: off = silent flips too)
-  var FLIP = window.__flipPool || (window.__flipPool = [0, 1, 2, 3].map(function () { var a = new Audio("audio/page-turn.mp3"); a.preload = "auto"; a.volume = 0.55; return a; }));
+  var FLIP = window.__flipPool || (window.__flipPool = [0, 1, 2, 3].map(function () { return new Audio(); }));
   function flipSound(count, ms) {
     if (document.body.classList.contains("zooming")) return;
     var plays = Math.min(count, 5);
@@ -190,11 +190,12 @@
     }
   }
   // ---- the page-turn sound follows the paper ----
-  var FA = window.__flipA || (window.__flipA = new Audio("audio/page-turn.mp3"));
+  var FA = window.__flipA || (window.__flipA = new Audio());
   FA.preload = "auto"; FA.preservesPitch = false; FA.mozPreservesPitch = false; FA.webkitPreservesPitch = false;
   var DUR = 0.6, grainT = null, multiTurn = false, lastScrub = null;
   FA.addEventListener("loadedmetadata", function () { if (FA.duration) DUR = FA.duration; });
-  function quietNow() { return document.body.classList.contains("zooming") || !alive(); }
+  var FLIP_SOUND = false;   // page-turn sound switched off (set to true to bring it back)
+  function quietNow() { return !FLIP_SOUND || document.body.classList.contains("zooming") || !alive(); }
   function progressOf(p, d) { var f = p - Math.floor(p); return d >= 0 ? f : 1 - f; }   // how far the moving page has gone
   function playFrom(prog, seconds) {                // play the rest of the flip over the time the page takes to land
     if (quietNow()) return;
