@@ -14,7 +14,7 @@
     applyTextStyles(PT);
   }
   var embedded = !!stage.dataset.album;
-  var slug = stage.dataset.album || new URLSearchParams(location.search).get("a");
+  var slug = stage.dataset.album || window.__flickSlug || new URLSearchParams(location.search).get("a");
   var album = albums.find(function (a) { return a.slug === slug; }) || albums.find(function (a) { return !a.featured; });
   if (!album) { stage.textContent = "No albums yet. Run tools/add_photos.py"; return; }
   window.PSWRLD_CURRENT = album;
@@ -197,7 +197,35 @@
       if (t < 1) anim = requestAnimationFrame(step); else running = false;
     })(start);
   }
-  function go(d) { if (!alive()) return; if (typeof clearPeel === "function") clearPeel(); hideHint(); animateTo((running ? tgt : Math.round(pos)) + d); }
+  function go(d) {
+    if (!alive()) return;
+    if (typeof clearPeel === "function") clearPeel();
+    hideHint();
+    var target = (running ? tgt : Math.round(pos)) + d;
+    if (!embedded && d > 0 && target > n - 1 && Math.round(pos) >= n - 1) { closeThenNext(); return; }
+    animateTo(target);
+  }
+  var leaving = false;
+  function closeThenNext() {
+    if (leaving || embedded) return;
+    leaving = true;
+    var wait = 0;
+    if (Math.round(pos) < n) { animateTo(n, 900); wait = 1050; }        // the book closes on its back cover
+    setTimeout(function () {
+      stage.classList.add("swipe-out");                                  // ...and slides away
+      setTimeout(function () {
+        window.__flickSlug = nextAlbum.slug;
+        try { history.replaceState(null, "", "album.html?a=" + encodeURIComponent(nextAlbum.slug)); } catch (e) {}
+        var fresh = stage.cloneNode(false);
+        fresh.classList.remove("swipe-out");
+        fresh.classList.add("swipe-in");
+        stage.replaceWith(fresh);
+        run();                                                             // the next book slides in, closed
+        fresh.getBoundingClientRect();
+        requestAnimationFrame(function () { fresh.classList.remove("swipe-in"); });
+      }, 650);
+    }, wait);
+  }
 
   // ---- corner peel: lift any corner to peek at the next page before turning ----
   var peelLayer = document.createElement("div");
@@ -282,7 +310,19 @@
 
   // ---- drag & flick ----
   var dragging = false, x0 = 0, p0 = 0, lastX = 0, lastT = 0, vel = 0, moved = 0;
+  var touches = {};
   stage.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "touch") {
+      touches[e.pointerId] = e;
+      var ids = Object.keys(touches);
+      if (ids.length === 2) {                         // second finger down: pinch -> zoom into that page
+        var a = touches[ids[0]], b = touches[ids[1]], r = stage.getBoundingClientRect();
+        touches = {}; dragging = false; clearTimeout(tapT); tapT = null;
+        animateTo(Math.round(pos), 200, true);
+        openZoomAt((a.clientX + b.clientX) / 2 > r.left + r.width / 2);
+        return;
+      }
+    }
     if (e.target.closest("[data-nav]")) return;
     if (atRest() || peel.on) {   // grabbed a corner: peel it instead of flicking
       var hit = cornerHit(e, Math.min(W, H) * (e.pointerType === "mouse" ? 0.22 : 0.3));
@@ -335,6 +375,7 @@
     hideHint();
     var throwPages = -vel * 240 / (W * 1.1);
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
+    if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
     animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110));
   }
   stage.addEventListener("pointerup", release);
@@ -342,7 +383,15 @@
   stage.addEventListener("pointerleave", function (e) { if (!peel.held && peel.on && e.pointerType === "mouse") peelBack(); });
 
   var wheelT = null;
+  stage.addEventListener("pointerup", function (e) { delete touches[e.pointerId]; });
+  stage.addEventListener("pointercancel", function (e) { delete touches[e.pointerId]; });
   stage.addEventListener("wheel", function (e) {
+    if (e.ctrlKey && e.deltaY < 0) {                  // trackpad pinch-out
+      e.preventDefault();
+      var r = stage.getBoundingClientRect();
+      if (!document.body.classList.contains("zooming")) openZoomAt(e.clientX > r.left + r.width / 2);
+      return;
+    }
     if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
     e.preventDefault(); cancelAnimationFrame(anim); running = false;
     pos = clamp(pos + e.deltaX / (W * 1.1), 0, n);

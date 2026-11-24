@@ -331,3 +331,9 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* moving band: every second word in the outlined italic serif again (words are links now) */
 .mq-track > a:nth-child(4n+3) span { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--bone); }
 .mq-track > a:nth-child(4n+3):hover span { color: var(--bone); -webkit-text-stroke: 0; }
+
+/* album page: the finished book slides out, the next slides in */
+.album-page .stage { transition: transform .65s cubic-bezier(.6,0,.3,1), opacity .65s; }
+.album-page .stage.swipe-out { transform: translateX(-45%) rotate(-3deg); opacity: 0; }
+.album-page .stage.swipe-in { transform: translateX(45%) rotate(3deg); opacity: 0; transition: none; }
+.stage { touch-action: pan-y; }
