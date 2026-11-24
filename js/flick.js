@@ -64,7 +64,7 @@
           (album.year ? " &middot; " + esc(album.year) : "") + '</p>' +
           (album.description ? '<div class="concept">' + esc(album.description) + '</div>' : '') + '</div>';
       case "photo":
-        return '<img class="fill" alt="' + esc(album.title) + ' ' + pg.n + '" data-src="' + esc(pg.p.src) + '" draggable="false">';
+        return '<img class="fill" alt="' + esc(album.title) + ' ' + pg.n + '" data-src="' + esc(pg.p.md || pg.p.src) + '" decoding="async" draggable="false">';
       case "placeholder":
         return '<div class="ph"><b>' + String(pg.n).padStart(2, "0") + '</b>Placeholder<br>your photo goes here</div>';
       case "end":
@@ -157,7 +157,10 @@
       bendSheet(j, B, light);
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
       el.style.visibility = far > (LITE ? 5 : 9) ? "hidden" : "visible";
-      if (far < (LITE ? 4 : 8)) el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
+      if (!el._loaded && far < (LITE ? 4 : 8)) {
+        el._loaded = true;
+        el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
+      }
     }
     var cur = Math.round(pos);
     if (counter) counter.textContent = cur === 0 ? "Cover" : cur === n ? "Back" : String(cur).padStart(2, "0") + " / " + String(n - 1).padStart(2, "0");
@@ -168,7 +171,20 @@
   // ---- animation ----
   var anim = null, tgt = 0, running = false;
   function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  // page-turn sound (follows the Sound button: off = silent flips too)
+  var FLIP = window.__flipPool || (window.__flipPool = [0, 1, 2, 3].map(function () { var a = new Audio("audio/page-turn.mp3"); a.preload = "auto"; a.volume = 0.55; return a; }));
+  function flipSound(count, ms) {
+    if (sessionStorage.getItem("pswrld-music") === "off" || document.body.classList.contains("zooming")) return;
+    var plays = Math.min(count, 5);
+    for (var k = 0; k < plays; k++) {
+      (function (a, delay) {
+        setTimeout(function () { try { a.currentTime = 0; a.play().catch(function () {}); } catch (e) {} }, delay);
+      })(FLIP[k % FLIP.length], plays > 1 ? k * (ms / plays) : 0);
+    }
+  }
   function animateTo(target, ms) {
+    var moved = Math.abs(Math.round(Math.max(0, Math.min(n, target))) - Math.round(pos));
+    if (moved >= 1 && alive()) flipSound(moved, ms || 600);
     target = embedded ? clamp(target, 1, n - 1) : clamp(target, 0, n); tgt = target; running = true;
     var from = pos, start = performance.now();
     ms = ms || Math.min(1100, 520 + Math.abs(target - from) * 70);
@@ -297,6 +313,7 @@
     lastX = e.clientX; lastT = now;
     place();
   });
+  var tapT = null;
   function release(e) {
     if (peel.held) {
       peel.held = false;
@@ -309,8 +326,9 @@
     if (!dragging) return;
     dragging = false;
     if (moved < 6) {
-      var r = stage.getBoundingClientRect();
-      go(pos < 0.5 || e.clientX > r.left + r.width / 2 ? 1 : -1);
+      var r = stage.getBoundingClientRect(), right = e.clientX > r.left + r.width / 2;
+      if (tapT) { clearTimeout(tapT); tapT = null; openZoomAt(right); return; }   // double tap: zoom
+      tapT = setTimeout(function () { tapT = null; go(pos < 0.5 || right ? 1 : -1); }, 240);
       return;
     }
     hideHint();
@@ -363,7 +381,7 @@
     }
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
-      if (dragging || peel.held || document.hidden) return;   // only pauses while you're holding a page
+      if (dragging || peel.held || document.hidden || document.body.classList.contains("zooming")) return;   // pauses while you hold a page or zoom
       if (Math.round(pos) >= n - 1) swipeToNextBook(); else go(1);
     }, 2800);
   }
@@ -400,6 +418,110 @@
       stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 2500);
     });
   }
+
+  // ---- zoom: see each photo big, pinch / scroll / double-tap to zoom, swipe to flick ----
+  var photoPages = [];   // page index -> photo index
+  pages.forEach(function (pg, k) { if (pg.kind === "photo") photoPages[k] = pg.n - 1; });
+  function openZoomAt(rightSide) {
+    var s = Math.round(pos), k = rightSide ? 2 * s : 2 * s - 1;
+    var idx = photoPages[k];
+    if (idx === undefined) idx = photoPages[rightSide ? 2 * s - 1 : 2 * s];
+    if (idx === undefined) idx = 0;
+    if (album.photos.length) openZoom(idx);
+  }
+  function openZoom(i) {
+    var P = album.photos, scale = 1, tx = 0, ty = 0;
+    var z = document.createElement("div");
+    z.className = "zoom";
+    z.innerHTML = '<div class="zoom-stage"><img alt=""></div>' +
+      '<button class="zoom-x" aria-label="Close">&times;</button>' +
+      '<button class="zoom-prev" aria-label="Previous">&larr;</button><button class="zoom-next" aria-label="Next">&rarr;</button>' +
+      '<div class="zoom-bar"><span class="zoom-n"></span><span class="zoom-tip">Pinch, scroll or double-tap to zoom</span></div>';
+    document.body.appendChild(z);
+    document.body.classList.add("zooming");
+    var img = z.querySelector("img"), zs = z.querySelector(".zoom-stage"), num = z.querySelector(".zoom-n");
+    function apply(anim) {
+      img.style.transition = anim ? "transform .3s cubic-bezier(.2,.8,.2,1)" : "none";
+      img.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")";
+    }
+    function show(n, dir) {
+      i = (n + P.length) % P.length; scale = 1; tx = 0; ty = 0; apply(false);
+      img.classList.remove("in"); if (dir) img.style.opacity = 0;
+      img.src = P[i].src;
+      num.textContent = String(i + 1).padStart(2, "0") + " / " + String(P.length).padStart(2, "0") + "  ·  " + album.title;
+      img.onload = function () { img.style.opacity = 1; };
+      var pre = new Image(); pre.src = P[(i + 1) % P.length].src;   // next one ready
+    }
+    function zoomAt(f, cx, cy) {
+      var r = zs.getBoundingClientRect(), ns = Math.max(1, Math.min(4, scale * f));
+      var ox = cx - (r.left + r.width / 2), oy = cy - (r.top + r.height / 2);
+      tx = ox - (ox - tx) * (ns / scale); ty = oy - (oy - ty) * (ns / scale); scale = ns;
+      if (scale === 1) { tx = 0; ty = 0; }
+    }
+    function close() {
+      z.remove(); document.body.classList.remove("zooming");
+      document.removeEventListener("keydown", key, true);
+      var k = i + 2;                                    // photo i is on page i+2
+      animateTo(k % 2 ? (k + 1) / 2 : k / 2, 700);       // the book opens where you left off
+    }
+    function key(e) {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") show(i + 1, 1);
+      else if (e.key === "ArrowLeft") show(i - 1, 1);
+      else return;
+      e.preventDefault(); e.stopPropagation();
+    }
+    document.addEventListener("keydown", key, true);
+    z.querySelector(".zoom-x").onclick = close;
+    z.querySelector(".zoom-prev").onclick = function () { show(i - 1, 1); };
+    z.querySelector(".zoom-next").onclick = function () { show(i + 1, 1); };
+    zs.addEventListener("wheel", function (e) { e.preventDefault(); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY); apply(false); }, { passive: false });
+    zs.addEventListener("dblclick", function (e) { if (scale > 1) { scale = 1; tx = ty = 0; } else zoomAt(2.5, e.clientX, e.clientY); apply(true); });
+    // drag to pan (zoomed) or swipe to flick (not zoomed); two fingers pinch
+    var pts = {}, sx = 0, sy = 0, st = 0, pinch0 = 0, lastTap = 0;
+    zs.addEventListener("pointerdown", function (e) {
+      zs.setPointerCapture(e.pointerId); pts[e.pointerId] = e;
+      var ids = Object.keys(pts);
+      if (ids.length === 2) { var a = pts[ids[0]], b = pts[ids[1]]; pinch0 = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); st = scale; }
+      sx = e.clientX - tx; sy = e.clientY - ty;
+      var now = Date.now();
+      if (e.pointerType !== "mouse" && now - lastTap < 280) { if (scale > 1) { scale = 1; tx = ty = 0; } else zoomAt(2.5, e.clientX, e.clientY); apply(true); }
+      lastTap = now; z._x0 = e.clientX; z._moved = false;
+    });
+    zs.addEventListener("pointermove", function (e) {
+      if (!pts[e.pointerId]) return;
+      pts[e.pointerId] = e;
+      var ids = Object.keys(pts);
+      if (ids.length === 2) {
+        var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+        var ns = Math.max(1, Math.min(4, st * d / pinch0));
+        zoomAt(ns / scale, (a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2); apply(false); return;
+      }
+      if (Math.abs(e.clientX - z._x0) > 6) z._moved = true;
+      if (scale > 1) { tx = e.clientX - sx; ty = e.clientY - sy; apply(false); }
+      else { img.style.transition = "none"; img.style.transform = "translateX(" + (e.clientX - z._x0) + "px)"; }
+    });
+    function up(e) {
+      if (!pts[e.pointerId]) return;
+      var single = Object.keys(pts).length === 1;
+      delete pts[e.pointerId];
+      if (!single || scale > 1) return;
+      var dx = e.clientX - z._x0;
+      if (dx < -60) show(i + 1, 1); else if (dx > 60) show(i - 1, 1); else { tx = 0; apply(true); }
+    }
+    zs.addEventListener("pointerup", up); zs.addEventListener("pointercancel", up);
+    z.addEventListener("click", function (e) { if (e.target === z) close(); });
+    show(i);
+  }
+  // a Zoom button between the page arrows
+  if (counter && !document.getElementById("zoomBtn")) {
+    var zb = document.createElement("button");
+    zb.id = "zoomBtn"; zb.className = "zoom-btn"; zb.setAttribute("aria-label", "Zoom into the photos");
+    zb.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>';
+    counter.parentNode.insertBefore(zb, counter.nextSibling);
+  }
+  var zbtn = document.getElementById("zoomBtn");
+  if (zbtn) zbtn.onclick = function () { if (alive()) openZoomAt(true); };
 
   measure(); place();
 
