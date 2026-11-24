@@ -134,7 +134,7 @@
   var lastPos = 0, dir = 1, lastHalf = null, lastFlipAt = 0;
   function place() {
     var half = Math.floor(pos + 0.5);                 // changes when a page passes halfway
-    if (lastHalf !== null && half !== lastHalf && alive()) {
+    if (multiTurn && lastHalf !== null && half !== lastHalf && alive()) {
       var now = performance.now();
       if (now - lastFlipAt > 70) { lastFlipAt = now; var a = FLIP[(half % FLIP.length + FLIP.length) % FLIP.length]; try { a.currentTime = 0; a.play().catch(function () {}); } catch (e) {} }
     }
@@ -189,18 +189,52 @@
       })(FLIP[k % FLIP.length], plays > 1 ? k * (ms / plays) : 0);
     }
   }
+  // ---- the page-turn sound follows the paper ----
+  var FA = window.__flipA || (window.__flipA = new Audio("audio/page-turn.mp3"));
+  FA.preload = "auto"; FA.preservesPitch = false; FA.mozPreservesPitch = false; FA.webkitPreservesPitch = false;
+  var DUR = 0.6, grainT = null, multiTurn = false, lastScrub = null;
+  FA.addEventListener("loadedmetadata", function () { if (FA.duration) DUR = FA.duration; });
+  function quietNow() { return document.body.classList.contains("zooming") || !alive(); }
+  function progressOf(p, d) { var f = p - Math.floor(p); return d >= 0 ? f : 1 - f; }   // how far the moving page has gone
+  function playFrom(prog, seconds) {                // play the rest of the flip over the time the page takes to land
+    if (quietNow()) return;
+    clearTimeout(grainT);
+    try {
+      FA.currentTime = Math.max(0, Math.min(DUR - 0.02, prog * DUR));
+      FA.playbackRate = Math.max(0.5, Math.min(2.5, (DUR * (1 - prog)) / Math.max(0.15, seconds)));
+      FA.play().catch(function () {});
+    } catch (e) {}
+  }
+  function scrub(prog) {                            // holding / dragging: tiny bits of sound that follow your finger
+    if (quietNow()) return;
+    try {
+      FA.playbackRate = 1;
+      FA.currentTime = Math.max(0, Math.min(DUR - 0.02, prog * DUR));
+      FA.play().catch(function () {});
+    } catch (e) {}
+    clearTimeout(grainT);
+    grainT = setTimeout(function () { try { FA.pause(); } catch (e) {} }, 90);   // stops when you stop moving
+  }
   function animateTo(target, ms, quiet) {
     var moved = Math.abs(Math.round(Math.max(0, Math.min(n, target))) - Math.round(pos));
     // (the flip sound now plays as each page passes the middle, see place())
     target = embedded ? clamp(target, 1, n - 1) : clamp(target, 0, n); tgt = target; running = true;
     var from = pos, start = performance.now();
     ms = ms || Math.min(1100, 520 + Math.abs(target - from) * 70);
+    var span = Math.abs(target - from);
+    multiTurn = !quiet && span > 1.2;                                   // flicking several pages: a flip per page
+    if (!quiet && !multiTurn && span > 0.05) {
+      var forward = target > from;
+      var landing = forward ? Math.ceil(from - 1e-6) : Math.floor(from + 1e-6);
+      var turning = Math.abs(target - landing) < 0.01 || Math.round(target) !== Math.round(from) || Math.abs(from - Math.round(from)) > 0.05;
+      if (turning) playFrom(Math.abs(from - Math.round(from)) < 0.02 ? 0 : progressOf(from, forward ? 1 : -1), ms / 1000);
+    }
     cancelAnimationFrame(anim);
     (function step(now) {
       var t = Math.min(1, (now - start) / ms);
       pos = from + (target - from) * ease(t);
       place();
-      if (t < 1) anim = requestAnimationFrame(step); else running = false;
+      if (t < 1) anim = requestAnimationFrame(step); else { running = false; multiTurn = false; }
     })(start);
   }
   function go(d) {
@@ -340,6 +374,7 @@
       }
     }
     clearPeel();
+    lastScrub = null;
     dragging = true; moved = 0; x0 = lastX = e.clientX; p0 = pos; lastT = performance.now(); vel = 0;
     cancelAnimationFrame(anim); running = false;
     stage.setPointerCapture(e.pointerId);
@@ -355,6 +390,11 @@
     }
     var now = performance.now(), dx = e.clientX - x0;
     moved = Math.max(moved, Math.abs(dx));
+    if (moved > 6 && (lastScrub === null || Math.abs(pos - lastScrub) > 0.025)) {
+      var d0 = lastScrub === null ? 1 : pos - lastScrub;
+      lastScrub = pos;
+      scrub(progressOf(pos, d0));
+    }
     pos = clamp(p0 - dx / (W * 1.1), -0.15, n + 0.15);
     vel = 0.8 * vel + 0.2 * ((e.clientX - lastX) / Math.max(1, now - lastT));
     lastX = e.clientX; lastT = now;
