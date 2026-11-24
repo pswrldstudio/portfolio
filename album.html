@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Album | PSWRLD</title>
+<link rel="icon" href="assets/pswrld-favicon-32.png">
+<link rel="apple-touch-icon" href="assets/pswrld-favicon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1124173417">
+<link rel="stylesheet" href="css/motion.css?v=1124173417">
+</head>
+<!-- For a cream photo album instead of a dark one: class="album-page paper-cream" -->
+<body class="album-page">
+<header class="top">
+  <a class="backlink" href="index.html#work">&larr; All albums</a>
+  <span class="album-title" id="albumTitle"></span>
+  <a href="index.html" aria-label="PSWRLD home"><img class="mark" src="assets/pswrld-mark-animated.svg?v=1124173656" alt="PSWRLD"></a>
+</header>
+
+<div class="stage" id="stage"></div>
+
+<div class="controls">
+  <button id="prev" aria-label="Previous page">&larr;</button>
+  <span class="count" id="count"></span>
+  <button id="next" aria-label="Next page">&rarr;</button>
+</div>
+<p class="hint" id="hint" data-edit="album_hint">Drag, flick or swipe through the pages</p>
+
+<script src="albums.js?v=1124173417"></script>
+<script src="content.js?v=1124173417"></script>
+<script src="js/flick.js?v=1124173417"></script>
+<script src="js/edit.js?v=1124173417"></script>
+<script src="js/motion.js?v=1124173417"></script>
+</body>
+</html>

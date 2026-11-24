@@ -1,0 +1,21 @@
+/* Ambient motion (js/motion.js) */
+.marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; white-space: nowrap; }
+.mq-track { display: inline-flex; align-items: center; gap: 34px; will-change: transform; }
+.mq-track span { font-family: var(--display); font-weight: 600; text-transform: uppercase; font-size: clamp(26px, 4.6vw, 64px); line-height: 1; letter-spacing: -.01em; }
+.mq-track span:nth-child(4n+3) { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--bone); }
+.mq-track i { width: clamp(16px, 2vw, 28px); color: var(--bone); animation: spin 6s linear infinite; display: inline-block; }
+.mq-track i svg { width: 100%; display: block; }
+@keyframes spin { to { rotate: 360deg; } }
+
+.drift { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
+.drift b { position: absolute; width: var(--z); height: var(--z); border-radius: 50%; background: #efebe4; animation: twinkle var(--d) ease-in-out var(--dl) infinite; }
+@keyframes twinkle { 0%,100% { opacity: .08; } 50% { opacity: .75; } }
+.drift i { position: absolute; width: var(--s); color: rgba(239,235,228,.55); animation: float var(--d) ease-in-out var(--dl) infinite; transition: translate .8s cubic-bezier(.2,.8,.2,1); }
+.drift i svg { width: 100%; display: block; animation: spin calc(var(--d) * 1.5) linear infinite; }
+@keyframes float { 0%,100% { transform: translate(0,0); opacity: .35; } 50% { transform: translate(18px,-26px); opacity: .9; } }
+.hero-logo { transition: translate .9s cubic-bezier(.2,.8,.2,1), rotate .9s cubic-bezier(.2,.8,.2,1); }
+
+h2.split .ch { display: inline-block; transform: translateY(105%) rotate(6deg); opacity: 0; transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .6s; transition-delay: calc(var(--i) * 35ms); }
+h2.split { overflow: hidden; padding-bottom: .08em; }
+h2.split.go .ch { transform: none; opacity: 1; }
+.top nav a, .controls button, .contact-links a, .backlink { transition: translate .35s cubic-bezier(.2,.8,.2,1), opacity .3s, background .3s, color .3s; }

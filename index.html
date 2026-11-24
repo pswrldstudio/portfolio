@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PSWRLD | Photography &amp; Creative Direction</title>
+<meta name="description" content="PSWRLD: photography and creative direction. Fashion, music, events and film.">
+<link rel="icon" href="assets/pswrld-favicon-32.png">
+<link rel="apple-touch-icon" href="assets/pswrld-favicon-512.png">
+<meta property="og:title" content="PSWRLD">
+<meta property="og:image" content="assets/pswrld-favicon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=1124173417">
+<link rel="stylesheet" href="css/shelf.css?v=1124173417">
+<link rel="stylesheet" href="css/motion.css?v=1124173417">
+</head>
+<body>
+<header class="top">
+  <a href="#top" aria-label="PSWRLD home"><img class="mark" src="assets/pswrld-mark-animated.svg?v=1124173656" alt="PSWRLD"></a>
+  <nav><a href="#favourites" data-edit="nav_fav">Favourites</a><a href="#about" data-edit="nav_about">About</a><a href="#work" data-edit="nav_work">Work</a><a href="#contact" data-edit="nav_contact">Contact</a></nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <img class="hero-logo" src="assets/pswrld-logo-animated.svg?v=1124173417" alt="PSWRLD">
+    <div class="hero-meta">
+      <span data-edit="hero_left">Photography &amp; Creative Direction</span>
+      <em data-edit="hero_middle">Fashion, music, events &amp; film</em>
+      <span data-edit="hero_right">Scroll to open the albums &darr;</span>
+    </div>
+  </section>
+
+  <section class="featured" id="favourites">
+    <div class="featured-head reveal"><span data-edit="fav_left">Favourites</span><em data-edit="fav_title">Open the book</em><span data-edit="fav_right">Selected work</span></div>
+    <div class="stage" id="stage" data-album="favourites"></div>
+    <div class="controls">
+      <button id="prev" aria-label="Previous page">&larr;</button>
+      <span class="count" id="count"></span>
+      <button id="next" aria-label="Next page">&rarr;</button>
+    </div>
+    <p class="hint" id="hint" data-edit="fav_hint">Drag, flick or swipe through the pages</p>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-head reveal"><h2 data-edit="about_title">About</h2><p data-edit="about_tag">PSWRLD. P's world.</p></div>
+    <!-- your cut-out portrait: save it as assets/about-cutout.png (transparent PNG) and it shows up here -->
+    <img class="about-cutout" src="assets/about-cutout.png" alt="Petter, PSWRLD" onload="this.closest('section').classList.add('has-cutout')" onerror="this.remove()">
+    <div class="about-grid reveal">
+      <p class="about-lead"><span class="todo" data-edit="about_lead">[ADD BIO: one or two lines in your own words, e.g. who you are and what you shoot.]</span></p>
+      <div>
+        <div class="about-body">
+          <p class="todo" data-edit="about_body">[ADD BIO: a short paragraph. Where you're based, who you've worked with, what you bring to a shoot.]</p>
+        </div>
+        <ul class="disciplines" data-edit-list="disciplines">
+          <li>Fashion lookbooks</li><li>Music artists</li><li>DJs &amp; concerts</li><li>Events</li><li>Film</li><li>Creative direction</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="section-head reveal">
+      <h2 data-edit="albums_title">The albums</h2>
+      <p data-edit="albums_text">Pick a book off the shelf. The camera up top has the films.</p>
+    </div>
+    <div class="bookcase" id="shelf"></div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-head reveal"><h2 data-edit="contact_title">Contact</h2><p data-edit="contact_tag">Bookings, collaborations, commissions.</p></div>
+    <a class="contact-big reveal todo" data-edit="email" data-mailto href="mailto:ADD-EMAIL@example.com">[ADD EMAIL]</a>
+    <div class="contact-links reveal">
+      <div class="cl"><a class="todo" data-edit="instagram" data-link="instagram_url" href="#">[Instagram link]</a><small data-edit="cl_instagram">Instagram</small></div>
+      <div class="cl"><a class="todo" data-edit="tiktok" data-link="tiktok_url" href="#">[TikTok link]</a><small data-edit="cl_tiktok">TikTok</small></div>
+      <div class="cl"><span class="todo" data-edit="location">[Location / based in]</span><small data-edit="cl_location">Location</small></div>
+    </div>
+  </section>
+</main>
+
+<footer><span>&copy; <span id="yr"></span> PSWRLD</span><span data-edit="footer">All photographs by PSWRLD</span></footer>
+
+<script src="albums.js?v=1124173417"></script>
+<script src="content.js?v=1124173417"></script>
+<script src="js/shelf.js?v=1124173417"></script>
+<script src="js/site.js?v=1124173417"></script>
+<script src="js/flick.js?v=1124173417"></script>
+<script src="js/edit.js?v=1124173417"></script>
+<script src="js/motion.js?v=1124173417"></script>
+</body>
+</html>
