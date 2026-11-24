@@ -405,7 +405,7 @@
     if (embedded) { var r = stage.getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight - 80) return; }
     if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
     if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    if (e.key === "Escape" && !embedded) location.href = "index.html#work";
+    if (e.key === "Escape" && !embedded) location.href = "index.html";
   });
 
   var counter = document.getElementById("count"), prevBtn = document.getElementById("prev"), nextBtn = document.getElementById("next");
