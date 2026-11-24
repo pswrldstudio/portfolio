@@ -347,16 +347,16 @@
   function startAuto() {
     if (!embedded || auto) return;
     auto = setInterval(function () {
-      if (hovering || dragging || peel.on || document.hidden) return;
+      if (dragging || peel.held || document.hidden) return;   // only pauses while you're holding a page
       if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);
-    }, 3200);
+    }, 2800);
   }
   function stopAuto() { clearInterval(auto); auto = null; }
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
     stage.addEventListener("pointerleave", function () { hovering = false; });
     stage.addEventListener("pointerdown", function () {   // you took over: pause, resume after a while
-      stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 7000);
+      stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 2500);
     });
   }
 

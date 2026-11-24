@@ -1424,7 +1424,7 @@ window.PSWRLD = {
    "order": 13,
    "featured": false,
    "cover": "albums/commercial/web/_cover.jpg",
-   "coverFrom": "pf-005",
+   "coverFrom": "pf-a7b6864f",
    "photos": [
     {
      "src": "albums/commercial/web/pf-001.jpg",
@@ -1443,12 +1443,6 @@ window.PSWRLD = {
      "w": 1060,
      "h": 1600,
      "name": "pf-003"
-    },
-    {
-     "src": "albums/commercial/web/pf-004.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-004"
     },
     {
      "src": "albums/commercial/web/pf-005.jpg",
@@ -1479,6 +1473,12 @@ window.PSWRLD = {
      "w": 1333,
      "h": 2000,
      "name": "pf-9e873b58"
+    },
+    {
+     "src": "albums/commercial/web/pf-004.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-004"
     },
     {
      "src": "albums/commercial/web/pf-27557b06.jpg",
