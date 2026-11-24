@@ -290,3 +290,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .cam-tag { right: auto; left: 50%; bottom: -24px; transform: translateX(-50%); font-size: 9px; }
   .contact-big { font-size: min(15px, 4.2vw) !important; }
 }
+
+/* camcorder label: centred just above the camera (lower than it first was) */
+.cam-tag { top: -4px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); text-align: center; }
+@media (max-width: 760px) { .cam-tag { top: -8px; bottom: auto; } }
