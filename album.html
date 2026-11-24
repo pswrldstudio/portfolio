@@ -4,21 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Album | PSWRLD</title>
-<link rel="icon" href="assets/pswrld-favicon-32.png">
-<link rel="apple-touch-icon" href="assets/pswrld-favicon-512.png">
+<link rel="icon" href="assets/pswrld-favicon-32.png?v=1124223908">
+<link rel="apple-touch-icon" href="assets/pswrld-favicon-512.png?v=1124223908">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Unbounded:wght@600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=1124223639">
-<link rel="stylesheet" href="css/shelf.css?v=1124223639">
-<link rel="stylesheet" href="css/motion.css?v=1124223639">
+<script>try{var t=localStorage.getItem("pswrld-theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css?v=1124225114">
+<link rel="stylesheet" href="css/shelf.css?v=1124225114">
+<link rel="stylesheet" href="css/motion.css?v=1124225114">
+<link rel="stylesheet" href="css/theme.css?v=1124225114">
 </head>
 <!-- For a cream photo album instead of a dark one: class="album-page paper-cream" -->
 <body class="album-page">
 <header class="top">
   <a class="backlink" href="index.html#work">&larr; All albums</a>
   <span class="album-title" id="albumTitle"></span>
-  <a href="index.html" aria-label="PSWRLD home"><img class="mark" src="assets/pswrld-mark-animated.svg?v=1124221622" alt="PSWRLD"></a>
+  <span class="album-right"><button class="theme-btn" id="themeBtn" aria-label="Light or dark mode"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button><a href="index.html" aria-label="PSWRLD home"><img class="mark" src="assets/pswrld-mark-animated.svg?v=1124223908" alt="PSWRLD"></a></span>
 </header>
 
 <div class="stage" id="stage"></div>
@@ -30,11 +32,12 @@
 </div>
 <p class="hint" id="hint" data-edit="album_hint">Drag, flick or swipe through the pages</p>
 
-<script src="albums.js?v=1124223639"></script>
-<script src="content.js?v=1124223639"></script>
-<script src="js/flick.js?v=1124223639"></script>
-<script src="js/edit.js?v=1124223639"></script>
-<script src="js/music.js?v=1124223639"></script>
-<script src="js/motion.js?v=1124223639"></script>
+<script src="albums.js?v=1124224916"></script>
+<script src="content.js?v=1124224916"></script>
+<script src="js/flick.js?v=1124224916"></script>
+<script src="js/edit.js?v=1124224916"></script>
+<script src="js/music.js?v=1124224916"></script>
+<script src="js/motion.js?v=1124224916"></script>
+<script>document.getElementById("themeBtn").onclick=function(){var h=document.documentElement,n=h.dataset.theme==="light"?"dark":"light";h.dataset.theme=n;try{localStorage.setItem("pswrld-theme",n)}catch(e){}};</script>
 </body>
 </html>

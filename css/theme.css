@@ -1,0 +1,47 @@
+/* Light mode (dark is the default). Switched with the sun/moon button in the menu. */
+html[data-theme="light"] {
+  --ink: #f2ede4;
+  --bone: #151413;
+  --mute: #6f6a63;
+  --line: rgba(20, 18, 16, .14);
+  background: var(--ink);
+  color: var(--bone);
+}
+html[data-theme="light"] body { background: var(--ink); color: var(--bone); }
+/* white logos turn dark */
+html[data-theme="light"] .hero-logo,
+html[data-theme="light"] .album-page .top .mark,
+html[data-theme="light"] .endleaf img { filter: invert(1); }
+/* the home header blends against the page, so it stays readable on its own */
+/* stars and speckles go dark */
+html[data-theme="light"] .drift i { color: rgba(20, 18, 16, .35); }
+html[data-theme="light"] .drift b { background: #151413; }
+/* book pages: warm paper */
+html[data-theme="light"] .pg { background: #e8e1d5; }
+html[data-theme="light"] .introleaf p, html[data-theme="light"] .ph { color: #6f6a63; }
+html[data-theme="light"] .ph { border-color: rgba(20, 18, 16, .3); }
+/* buttons and chips */
+html[data-theme="light"] .controls button { color: var(--bone); }
+html[data-theme="light"] .controls button:hover:not(:disabled) { background: var(--bone); color: var(--ink); }
+html[data-theme="light"] .disciplines li:has(a):hover { background: var(--bone); color: var(--ink); }
+html[data-theme="light"] .music-btn { background: rgba(242, 237, 228, .8); color: var(--bone); border-color: rgba(20, 18, 16, .2); }
+html[data-theme="light"] .mq-track i { color: var(--bone); }
+html[data-theme="light"] .about-body { color: #3b3834; }
+html[data-theme="light"] body::after { opacity: .035; }
+html[data-theme="light"] .bookcase { box-shadow: inset 0 0 0 14px #1f1813, inset 0 0 60px rgba(0,0,0,.6), 0 40px 80px -30px rgba(0,0,0,.45); }
+
+/* the switch */
+.theme-btn { background: none; border: 1px solid var(--line); color: inherit; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  display: inline-grid; place-items: center; padding: 0; margin-left: 6px; }
+.theme-btn svg { width: 15px; height: 15px; }
+.theme-btn .sun { display: none; }
+html[data-theme="light"] .theme-btn .sun { display: block; }
+html[data-theme="light"] .theme-btn .moon { display: none; }
+@media (max-width: 420px) { .theme-btn { width: 24px; height: 24px; margin-left: 2px; } .theme-btn svg { width: 12px; height: 12px; } }
+
+.album-right { display: flex; align-items: center; gap: 12px; }
+
+/* light mode: the home header stops blending and uses dark text */
+html[data-theme="light"] .top { mix-blend-mode: normal; color: var(--bone); }
+html[data-theme="light"] .top .mark { filter: invert(1); }
+html[data-theme="light"] .top nav a { opacity: .85; }

@@ -52,5 +52,8 @@ window.PSWRLD_TEXT = {
  "tapes": "Galacta melanin paris 2025\nGalacta melanin paris 2026\nwe in paris: mel wood 2025\npeak mood 2025",
  "style_album_back": "",
  "instagram": "@pswrld.png",
- "tiktok": "@pswrld.png1"
+ "tiktok": "@pswrld.png1",
+ "style_albums_title": "{\"x\":-8,\"y\":-59}",
+ "style_albums_text": "{\"x\":-9,\"y\":-62}",
+ "style_cam_label": "{\"x\":-174,\"y\":-514}"
 };

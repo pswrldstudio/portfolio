@@ -96,7 +96,7 @@
     el.dataset.cursor = b.open ? "Read" : "Go";
     el.dataset.w = b.w; el.dataset.h = b.h;
     el.style.setProperty("--tilt", (b.tilt || 0) + "deg");
-    el.style.setProperty("--c", b.color);
+    el.style.setProperty("--c", T["ib_color_" + b.key] || b.color);
     var icon = b.kind === "profile" ? '<i class="ib-clock"></i>' : b.kind === "tag" ? '<i class="ib-arrows">&#8645;</i>' : '<img class="ib-ring ib-mark" src="assets/pswrld-mark-black.svg" alt="">';
     el.innerHTML = '<div class="bk-body"><div class="ib-spine">' +
       '<span class="ib-sub" data-edit="ib_sub_' + b.key + '">' + esc(T["ib_sub_" + b.key] || b.sub) + '</span>' + icon +
@@ -344,6 +344,23 @@
       msg.style.display = "none";
     }
     box.querySelectorAll(".tape").forEach(function (t) { t.onclick = function () { play(+t.dataset.i); }; });
+    if (location.port === "5190") {   // editor: x on a tape removes that film
+      box.querySelectorAll(".tape").forEach(function (t) {
+        var x = document.createElement("i");
+        x.className = "tape-del"; x.textContent = "\u00d7"; x.title = "Remove this film";
+        x.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var ask = window.PSWRLD_CONFIRM || function (q) { return Promise.resolve(confirm(q)); };
+          var file = videos[+t.dataset.i].src.split("/").pop();
+          ask("Remove the film \"" + t.textContent.replace("\u00d7", "").trim() + "\"? It moves to videos/_removed.", "Remove").then(function (ok) {
+            if (!ok) return;
+            fetch("/api/film-delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ file: file }) })
+              .then(function () { location.reload(); });
+          });
+        });
+        t.appendChild(x);
+      });
+    }
     if (location.port === "5190") {   // editor: drag tapes to reorder them
       var dragI = null, row = box.querySelector(".vhs-tapes");
       box.querySelectorAll(".tape").forEach(function (t) {

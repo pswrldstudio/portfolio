@@ -84,6 +84,7 @@
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
   var STRIPS = LITE ? 4 : 6;
+  stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [];
   for (var s = 0; s < n; s++) {
     var el = document.createElement("div");

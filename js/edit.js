@@ -47,6 +47,9 @@
       '<label>Moving words band (comma separated) <input id="ed-marquee"></label>' +
       '<label>Background music (YouTube link, or "off") <input id="ed-music"></label>' +
       '<label>Tape names (one per line, in order) <textarea id="ed-tapes" rows="4"></textarea></label>' +
+      '<label class="ed-file">+ Add films (mp4 / mov)<input type="file" id="ed-films" accept="video/*" multiple hidden></label>' +
+      '<label class="ed-file">Replace background music (mp3)<input type="file" id="ed-mp3" accept=".mp3,audio/mpeg" hidden></label>' +
+      '<div class="ed-colours"><span>Bottom book colours</span><div id="ed-cols"></div></div>' +
       '<a href="album.html?a=favourites">Edit the Favourites book &rarr;</a>' +
       '<span class="ed-tip">To change an album, open it from the shelf.</span>' +
       '<button id="ed-save">Save text</button>' +
@@ -57,6 +60,34 @@
     document.getElementById("ed-ig").value = T.instagram_url || "";
     document.getElementById("ed-tt").value = T.tiktok_url || "";
     document.getElementById("ed-music").value = T.music_off === "1" ? "off" : (T.music_youtube || "https://www.youtube.com/watch?v=MSNNtIHCexE");
+    // films + music uploads
+    function upload(kind, f) {
+      return fetch("/api/asset?kind=" + kind + "&name=" + encodeURIComponent(f.name), { method: "POST", body: f })
+        .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || r.status); return j; }); });
+    }
+    document.getElementById("ed-films").onchange = function (e) {
+      var files = [].slice.call(e.target.files), k = 0;
+      (function next() {
+        if (k >= files.length) { msg("Films added \u2713 Reloading..."); setTimeout(function () { location.reload(); }, 600); return; }
+        msg("Uploading film " + (k + 1) + " of " + files.length + "...");
+        upload("film", files[k++]).then(next).catch(function (er) { msg("Not added: " + er.message); });
+      })();
+    };
+    document.getElementById("ed-mp3").onchange = function (e) {
+      var f = e.target.files[0]; if (!f) return;
+      msg("Uploading music...");
+      upload("music", f).then(function () { msg("Music replaced \u2713"); }).catch(function (er) { msg("Not replaced: " + er.message); });
+    };
+    // bottom book colours
+    var cols = document.getElementById("ed-cols");
+    document.querySelectorAll(".ib").forEach(function (b) {
+      var key = (b.querySelector(".ib-label") || {}).dataset ? b.querySelector(".ib-label").dataset.edit.replace("ib_label_", "") : "";
+      if (!key) return;
+      var cur = getComputedStyle(b).getPropertyValue("--c").trim() || "#cccccc";
+      var lab = el("label", { class: "ed-col", title: b.querySelector(".ib-label").textContent }, '<input type="color" value="' + cur + '">');
+      lab.querySelector("input").oninput = function () { b.style.setProperty("--c", this.value); b.dataset.newColor = this.value; b.dataset.colKey = key; };
+      cols.appendChild(lab);
+    });
     document.getElementById("ed-marquee").value = T.marquee || "Fashion, Music, DJs, Concerts, Events, Film, Creative Direction, Lookbooks";
     document.getElementById("ed-tapes").value = T.tapes || ((window.PSWRLD && window.PSWRLD.videos) || []).map(function (v) { return v.title; }).join("\n");
     document.getElementById("ed-skills").value = T.disciplines ||
@@ -73,6 +104,7 @@
       data.tiktok_url = document.getElementById("ed-tt").value.trim();
       data.disciplines = document.getElementById("ed-skills").value.trim();
       data.marquee = document.getElementById("ed-marquee").value.trim();
+      document.querySelectorAll(".ib[data-new-color]").forEach(function (b) { data["ib_color_" + b.dataset.colKey] = b.dataset.newColor; });
       var mv = document.getElementById("ed-music").value.trim();
       data.music_off = /^off$/i.test(mv) ? "1" : "";
       if (!data.music_off) data.music_youtube = mv;
@@ -418,6 +450,9 @@
     ".ed-ok{background:#c0392b;color:#fff}",
     ".ed-flag{align-self:center;padding:0 10px;font:700 12px/1 var(--sans);color:#0b0b0b;opacity:0;transition:opacity .25s;white-space:nowrap}.ed-flag.on{opacity:1}",
     ".ed-pub{background:#4fa85c!important;color:#fff!important;border:0;border-radius:99px;padding:10px 16px;font-weight:700;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;font-size:12px}",
+    ".ed-file{border:1px dashed rgba(239,235,228,.35)!important;border-radius:10px;padding:10px;text-align:center;cursor:pointer;color:#efebe4!important}",
+    ".ed-colours span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8d8a85;margin-bottom:6px}",
+    "#ed-cols{display:flex;flex-wrap:wrap;gap:6px}.ed-col input{width:34px;height:28px;border:0;padding:0;background:none;cursor:pointer}",
     ".ed-badge{position:absolute;left:4px;bottom:4px;background:#efebe4;color:#000;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:99px}",
     ".ed-badge.new{left:auto;right:4px;background:#7de0a0}",
     ".ed-drop{border:1px dashed rgba(239,235,228,.35);border-radius:10px;padding:18px;text-align:center;cursor:pointer;color:#efebe4!important;font-size:13px!important}",

@@ -311,3 +311,19 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .zoom-prev, .zoom-next { display: none; }
   .zoom-tip { display: none; }
 }
+
+@media (max-width: 360px) {
+  .top nav { gap: 8px; font-size: 9px; letter-spacing: .06em; }
+  .top .mark { height: 19px; }
+}
+
+/* camcorder label: back to the side of the camera (left), level with its base */
+.cam-tag { top: auto; bottom: 14px; left: auto; right: calc(100% + 14px); transform: none; text-align: right; white-space: nowrap; }
+@media (max-width: 760px) { .cam-tag { top: auto; bottom: 10px; right: calc(100% + 8px); left: auto; transform: none; font-size: 9px; } }
+
+.cam-tag { top: 50%; bottom: auto; transform: translateY(-50%); }
+@media (max-width: 760px) { .cam-tag { top: 50%; bottom: auto; transform: translateY(-50%); } }
+
+/* camcorder label: centred on top of the camera */
+.cam-tag { top: -4px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); text-align: center; }
+@media (max-width: 760px) { .cam-tag { top: -8px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); } }
