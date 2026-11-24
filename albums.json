@@ -124,6 +124,24 @@
      "w": 1332,
      "h": 2000,
      "name": "djs/pf-b7e9a45e"
+    },
+    {
+     "src": "albums/film/web/pf-005.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "film/pf-005"
+    },
+    {
+     "src": "albums/film/web/pf-007.jpg",
+     "w": 1125,
+     "h": 2000,
+     "name": "film/pf-007"
+    },
+    {
+     "src": "albums/commercial/web/pf-a7b6864f.jpg",
+     "w": 1259,
+     "h": 2000,
+     "name": "commercial/pf-a7b6864f"
     }
    ],
    "picks": [
@@ -145,7 +163,10 @@
     "graduations/pf-009",
     "fete-de-la-musique/pf-003",
     "celebrations/pf-004",
-    "djs/pf-b7e9a45e"
+    "djs/pf-b7e9a45e",
+    "film/pf-005",
+    "film/pf-007",
+    "commercial/pf-a7b6864f"
    ]
   },
   {
