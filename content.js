@@ -56,10 +56,11 @@ window.PSWRLD_TEXT = {
  "style_albums_title": "{\"x\":-8,\"y\":-59}",
  "style_albums_text": "{\"x\":-9,\"y\":-62}",
  "style_cam_label": "{\"x\":-174,\"y\":-514}",
- "style_email": "{\"a\":\"center\",\"z\":1.4}",
+ "style_email": "{\"a\":\"center\",\"z\":1.7}",
  "cl_instagram": "Instagram",
  "cl_tiktok": "TikTok",
  "cl_location": "Location",
  "music_off": "",
- "music_youtube": "https://www.youtube.com/watch?v=MSNNtIHCexE"
+ "music_youtube": "https://www.youtube.com/watch?v=MSNNtIHCexE",
+ "style_contact_tag": "{\"z\":1}"
 };

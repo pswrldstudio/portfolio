@@ -51,3 +51,10 @@ html[data-theme="light"] .drift i { color: #0b0b0b; }
 html[data-theme="light"] .drift b { background: #0b0b0b; }
 html[data-theme="light"] .drift i { animation-name: floatDark; }
 @keyframes floatDark { 0%,100% { transform: translate(0,0); opacity: .55; } 50% { transform: translate(18px,-26px); opacity: .95; } }
+
+/* light mode: writing on the album books in the bookcase stays white (bottom books keep their own colours) */
+html[data-theme="light"] .bk-face .bk-cover,
+html[data-theme="light"] .bk-face .bk-top,
+html[data-theme="light"] .bk-face .bk-name { color: #efebe4; }
+html[data-theme="light"] .bk-face .bk-tag { background: #efebe4; color: #0b0b0b; }
+html[data-theme="light"] .bk-face .bk-tag small { color: #0b0b0b; }
