@@ -128,7 +128,7 @@
     stage.style.setProperty("--H", H + "px");
   }
 
-  var pos = embedded && window.__flickRiffled ? 1 : 0;   // turned sheets, continuous (0 = closed on the cover)
+  var pos = embedded ? 1 : 0;   // turned sheets, continuous (0 = closed on the cover)
   var fan = 0;   // 0 = pages squared up, 1 = fanned out
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   var lastPos = 0, dir = 1;
@@ -367,7 +367,7 @@
   window.addEventListener("resize", function () { if (alive()) { measure(); place(); } });
   // the Favourites book on the home page stays open and flicks through by itself
   var auto = null, idle = null, hovering = false;
-  var riffled = !!window.__flickRiffled;
+  var riffled = true, startedOnce = false;   // no opening flick-through: the Favourites book starts open and turns page by page
   function startAuto() {
     if (!embedded || auto) return;
     if (!riffled) {   // first time: the cover opens (book sound), flicks to the end, back to page 1, then page by page
@@ -395,10 +395,11 @@
       }
       return;
     }
+    if (!startedOnce) { startedOnce = true; setTimeout(function () { if (alive() && !dragging) go(1); }, 900); }   // first turn right away
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
       if (dragging || peel.held || document.hidden || document.body.classList.contains("zooming")) return;   // pauses while you hold a page or zoom
-      if (Math.round(pos) >= n - 1) swipeToNextBook(); else go(1);
+      if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);   // only the Favourites book: loop back to its start
     }, 2800);
   }
   function stopAuto() { if (auto !== -1) { clearInterval(auto); auto = null; } }
@@ -425,7 +426,7 @@
       if (!alive()) { clearInterval(beat); return; }
       if (!auto && !dragging && !peel.held) startAuto();
     }, 4000);   // never stays stopped
-    setTimeout(function () { if (!alive()) return; if (fan < 1) { fan = 1; place(); } startAuto(); }, 1500);   // start even if not scrolled to yet
+    setTimeout(function () { if (!alive()) return; if (fan < 1) { fan = 1; place(); } startAuto(); }, 0);   // start straight away
   }
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
