@@ -128,7 +128,7 @@
     stage.style.setProperty("--H", H + "px");
   }
 
-  var pos = embedded ? 1 : 0;   // turned sheets, continuous (0 = closed on the cover)
+  var pos = 0;   // turned sheets, continuous (0 = closed on the cover)
   var fan = 0;   // 0 = pages squared up, 1 = fanned out
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   var lastPos = 0, dir = 1;
@@ -444,7 +444,21 @@
       }
       return;
     }
-    if (!startedOnce) { startedOnce = true; setTimeout(function () { if (alive() && !dragging) go(1); }, 900); }   // first turn right away
+    if (pos < 0.5 && !startedOnce) {   // Favourites: closed for 3 seconds once it's on screen, then it opens
+      startedOnce = true; auto = -1;
+      var waitVisible = function () {
+        var r = stage.getBoundingClientRect();
+        if (r.top < innerHeight * 0.85 && r.bottom > innerHeight * 0.15) {
+          setTimeout(function () {
+            if (!alive()) return;
+            animateTo(1, 900);
+            setTimeout(function () { auto = null; startAuto(); }, 1100);
+          }, 3000);
+        } else setTimeout(waitVisible, 300);
+      };
+      waitVisible();
+      return;
+    }
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
       if (dragging || peel.held || document.hidden || document.body.classList.contains("zooming")) return;   // pauses while you hold a page or zoom
