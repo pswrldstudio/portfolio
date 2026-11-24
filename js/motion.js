@@ -12,7 +12,10 @@
   if (hero) {
     var words = ((window.PSWRLD_TEXT || {}).marquee || "Fashion, Music, DJs, Concerts, Events, Film, Creative Direction, Lookbooks")
       .split(",").map(function (w) { return w.trim().replace(/</g, "&lt;"); }).filter(Boolean);
-    var chunk = words.map(function (w) { return "<span>" + w + "</span><i>" + STAR + "</i>"; }).join("");
+    var linkFor = window.PSWRLD_LINK || function () { return "#work"; };
+    var chunk = words.map(function (w) {
+      return '<a class="mq-link" href="' + linkFor(w) + '"><span>' + w + "</span></a><i>" + STAR + "</i>";
+    }).join("");
     var band = document.createElement("div");
     band.className = "marquee";
     band.innerHTML = '<div class="mq-track">' + chunk + chunk + chunk + chunk + "</div>";
@@ -34,12 +37,12 @@
   sky.className = "drift";
   var html = "";
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;
-  for (var i = 0; i < (LITE ? 14 : 34); i++) {
+  for (var i = 0; i < (LITE ? 14 : 24); i++) {
     var size = Math.random() < 0.18 ? 22 + Math.random() * 26 : 5 + Math.random() * 14;
     html += '<i style="left:' + (Math.random() * 100).toFixed(1) + '%;top:' + (Math.random() * 100).toFixed(1) + '%;--s:' + size.toFixed(0) +
-      'px;--d:' + (8 + Math.random() * 14).toFixed(1) + 's;--dl:' + (-Math.random() * 12).toFixed(1) + 's" data-depth="' + (0.2 + Math.random()).toFixed(2) + '">' + STAR + '</i>';
+      'px;--d:' + (3.5 + Math.random() * 5).toFixed(1) + 's;--dl:' + (-Math.random() * 6).toFixed(1) + 's" data-depth="' + (0.2 + Math.random()).toFixed(2) + '">' + STAR + '</i>';
   }
-  for (var j = 0; j < (LITE ? 45 : 160); j++) {
+  for (var j = 0; j < (LITE ? 45 : 100); j++) {
     html += '<b style="left:' + (Math.random() * 100).toFixed(2) + '%;top:' + (Math.random() * 100).toFixed(2) + '%;--z:' + (1 + Math.random() * 1.8).toFixed(1) +
       'px;--d:' + (2 + Math.random() * 5).toFixed(1) + 's;--dl:' + (-Math.random() * 6).toFixed(1) + 's"></b>';
   }

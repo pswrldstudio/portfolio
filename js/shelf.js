@@ -344,6 +344,28 @@
       msg.style.display = "none";
     }
     box.querySelectorAll(".tape").forEach(function (t) { t.onclick = function () { play(+t.dataset.i); }; });
+    if (location.port === "5190") {   // editor: drag tapes to reorder them
+      var dragI = null, row = box.querySelector(".vhs-tapes");
+      box.querySelectorAll(".tape").forEach(function (t) {
+        t.draggable = true;
+        t.addEventListener("dragstart", function () { dragI = t; t.classList.add("dragging"); });
+        t.addEventListener("dragend", function () { t.classList.remove("dragging"); });
+        t.addEventListener("dragover", function (e) { e.preventDefault(); });
+        t.addEventListener("drop", function (e) {
+          e.preventDefault();
+          if (!dragI || dragI === t) return;
+          var r = t.getBoundingClientRect();
+          row.insertBefore(dragI, e.clientX > r.left + r.width / 2 ? t.nextSibling : t);
+          var tapesNow = [].slice.call(row.querySelectorAll(".tape"));
+          var files = tapesNow.map(function (x) { return videos[+x.dataset.i].src.split("/").pop(); });
+          var names = tapesNow.map(function (x) { return x.querySelector("span").textContent.trim(); });
+          videos = tapesNow.map(function (x) { return videos[+x.dataset.i]; });
+          tapesNow.forEach(function (x, k) { x.dataset.i = k; });
+          TX.tapes = names.join(String.fromCharCode(10));
+          fetch("/api/videos-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ files: files, names: names }) });
+        });
+      });
+    }
     if (location.port === "5190") {   // editor: click a tape name to rename it, saved when you click away
       box.classList.add("naming");
       box.querySelectorAll(".tape span").forEach(function (sp) {

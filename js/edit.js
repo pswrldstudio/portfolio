@@ -45,6 +45,7 @@
       '<label>TikTok link <input id="ed-tt" placeholder="https://tiktok.com/@..."></label>' +
       '<label>Skills (comma separated) <input id="ed-skills"></label>' +
       '<label>Moving words band (comma separated) <input id="ed-marquee"></label>' +
+      '<label>Background music (YouTube link, or "off") <input id="ed-music"></label>' +
       '<label>Tape names (one per line, in order) <textarea id="ed-tapes" rows="4"></textarea></label>' +
       '<a href="album.html?a=favourites">Edit the Favourites book &rarr;</a>' +
       '<span class="ed-tip">To change an album, open it from the shelf.</span>' +
@@ -55,6 +56,7 @@
     bar.querySelector(".ed-toggle").onclick = function () { bar.classList.toggle("min"); };
     document.getElementById("ed-ig").value = T.instagram_url || "";
     document.getElementById("ed-tt").value = T.tiktok_url || "";
+    document.getElementById("ed-music").value = T.music_off === "1" ? "off" : (T.music_youtube || "https://www.youtube.com/watch?v=MSNNtIHCexE");
     document.getElementById("ed-marquee").value = T.marquee || "Fashion, Music, DJs, Concerts, Events, Film, Creative Direction, Lookbooks";
     document.getElementById("ed-tapes").value = T.tapes || ((window.PSWRLD && window.PSWRLD.videos) || []).map(function (v) { return v.title; }).join("\n");
     document.getElementById("ed-skills").value = T.disciplines ||
@@ -71,6 +73,9 @@
       data.tiktok_url = document.getElementById("ed-tt").value.trim();
       data.disciplines = document.getElementById("ed-skills").value.trim();
       data.marquee = document.getElementById("ed-marquee").value.trim();
+      var mv = document.getElementById("ed-music").value.trim();
+      data.music_off = /^off$/i.test(mv) ? "1" : "";
+      if (!data.music_off) data.music_youtube = mv;
       data.tapes = document.getElementById("ed-tapes").value.trim();
       msg("Saving...");
       post("/api/text", JSON.stringify(data)).then(function () { msg("Saved ✓"); })

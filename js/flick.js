@@ -2,7 +2,9 @@
 // The book lies fully open: two flat pages side by side. The other pages fan out as
 // slivers off the outer edges. Drag / flick / swipe turns pages around the spine;
 // arrow keys, trackpad scroll and the buttons work too.
-(function () {
+(function run() {
+  var GEN = window.__flickGen = (window.__flickGen || 0) + 1;   // a newer book replaces this one
+  function alive() { return GEN === window.__flickGen; }
   var albums = (window.PSWRLD && window.PSWRLD.albums) || [];
   var stage = document.getElementById("stage");
   if (!stage) return;
@@ -81,7 +83,7 @@
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
-  var STRIPS = LITE ? 4 : 10;
+  var STRIPS = LITE ? 4 : 6;
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [];
   for (var s = 0; s < n; s++) {
     var el = document.createElement("div");
@@ -154,7 +156,7 @@
       el.style.zIndex = z;
       bendSheet(j, B, light);
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
-      el.style.visibility = far > (LITE ? 5 : 16) ? "hidden" : "visible";
+      el.style.visibility = far > (LITE ? 5 : 9) ? "hidden" : "visible";
       if (far < (LITE ? 4 : 8)) el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
     }
     var cur = Math.round(pos);
@@ -178,7 +180,7 @@
       if (t < 1) anim = requestAnimationFrame(step); else running = false;
     })(start);
   }
-  function go(d) { if (typeof clearPeel === "function") clearPeel(); hideHint(); animateTo((running ? tgt : Math.round(pos)) + d); }
+  function go(d) { if (!alive()) return; if (typeof clearPeel === "function") clearPeel(); hideHint(); animateTo((running ? tgt : Math.round(pos)) + d); }
 
   // ---- corner peel: lift any corner to peek at the next page before turning ----
   var peelLayer = document.createElement("div");
@@ -330,6 +332,7 @@
   }, { passive: false });
 
   document.addEventListener("keydown", function (e) {
+    if (!alive()) return;
     if (e.target.closest && e.target.closest("[contenteditable], input, textarea")) return;
     if (embedded) { var r = stage.getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight - 80) return; }
     if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
@@ -342,14 +345,14 @@
   function hideHint() { if (hint) hint.classList.add("gone"); }
   if (prevBtn) prevBtn.addEventListener("click", function () { go(-1); });
   if (nextBtn) nextBtn.addEventListener("click", function () { go(1); });
-  window.addEventListener("resize", function () { measure(); place(); });
+  window.addEventListener("resize", function () { if (alive()) { measure(); place(); } });
   // the Favourites book on the home page stays open and flicks through by itself
   var auto = null, idle = null, hovering = false;
-  var riffled = false;
+  var riffled = !!window.__flickRiffled;
   function startAuto() {
     if (!embedded || auto) return;
     if (!riffled) {   // first time: flick quickly through the whole book, then start again from page 1
-      riffled = true;
+      riffled = window.__flickRiffled = true;
       auto = -1;
       animateTo(n - 1, Math.min(4200, 260 * n));
       setTimeout(function () {
@@ -359,14 +362,36 @@
       return;
     }
     auto = setInterval(function () {
+      if (!alive()) { clearInterval(auto); return; }
       if (dragging || peel.held || document.hidden) return;   // only pauses while you're holding a page
-      if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);
+      if (Math.round(pos) >= n - 1) swipeToNextBook(); else go(1);
     }, 2800);
   }
   function stopAuto() { if (auto !== -1) { clearInterval(auto); auto = null; } }
+  // the finished book slides away and the next book slides in, then keeps flicking
+  function swipeToNextBook() {
+    stopAuto(); auto = -1;
+    var list = albums.filter(function (a) { return a.photos.length; });
+    var i = list.findIndex(function (a) { return a.slug === album.slug; });
+    var next = list[(i + 1) % list.length] || album;
+    stage.classList.add("swipe-out");
+    setTimeout(function () {
+      var fresh = stage.cloneNode(false);        // a clean stage (drops this book's listeners)
+      fresh.classList.remove("swipe-out");
+      fresh.classList.add("swipe-in");
+      fresh.dataset.album = next.slug;
+      stage.replaceWith(fresh);
+      run();
+      fresh.getBoundingClientRect();
+      requestAnimationFrame(function () { fresh.classList.remove("swipe-in"); });
+    }, 650);
+  }
   if (embedded) {
-    setInterval(function () { if (!auto && !dragging && !peel.held) startAuto(); }, 4000);   // never stays stopped
-    setTimeout(function () { if (fan < 1) { fan = 1; place(); } startAuto(); }, 3500);        // start even if not scrolled to yet
+    var beat = setInterval(function () {
+      if (!alive()) { clearInterval(beat); return; }
+      if (!auto && !dragging && !peel.held) startAuto();
+    }, 4000);   // never stays stopped
+    setTimeout(function () { if (!alive()) return; if (fan < 1) { fan = 1; place(); } startAuto(); }, 1500);   // start even if not scrolled to yet
   }
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
@@ -382,18 +407,18 @@
   function intro() {
     var start = performance.now();
     (function step(now) {
-      var t = Math.min(1, (now - start) / 900);
+      var t = Math.min(1, (now - start) / 500);
       fan = ease(t); place();
       if (t < 1) requestAnimationFrame(step);
-      else if (pos === 0) setTimeout(function () { animateTo(1, 1000); setTimeout(startAuto, 1200); }, 150);
+      else if (pos === 0) { animateTo(1, 800); setTimeout(startAuto, 850); }
       else startAuto();
     })(start);
   }
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { fan = 1; pos = 1; place(); }
   else if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (en) {
-      if (en[0].isIntersecting) { io.disconnect(); setTimeout(intro, 300); }
-    }, { threshold: 0.4 });
+      if (en[0].isIntersecting) { io.disconnect(); intro(); }
+    }, { threshold: 0.15 });
     io.observe(stage);
   } else { fan = 1; place(); }
 })();
