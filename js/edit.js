@@ -346,7 +346,7 @@
   window.PSWRLD_CONFIRM = askConfirm;
 
   function publishSite() {
-    askConfirm("Publish the site live at petterm15.github.io/pswrld? Save your changes first. Visitors see the new version about a minute later.", "Publish").then(function (ok) {
+    askConfirm("Publish the site live at pswrldstudio.github.io/portfolio? Save your changes first. Visitors see the new version about a minute later.", "Publish").then(function (ok) {
       if (!ok) return;
       msg("Publishing... (this can take a minute)");
       post("/api/publish", "{}").then(function (j) {
