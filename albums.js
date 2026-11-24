@@ -55,6 +55,18 @@ window.PSWRLD = {
      "name": "headshots/pf-5e26de08"
     },
     {
+     "src": "albums/celebrations/web/pf-004.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "celebrations/pf-004"
+    },
+    {
+     "src": "albums/commercial/web/pf-a7b6864f.jpg",
+     "w": 1259,
+     "h": 2000,
+     "name": "commercial/pf-a7b6864f"
+    },
+    {
      "src": "albums/sereno-del-sordo-ss25/web/pf-004.jpg",
      "w": 1325,
      "h": 2000,
@@ -115,10 +127,10 @@ window.PSWRLD = {
      "name": "fete-de-la-musique/pf-003"
     },
     {
-     "src": "albums/celebrations/web/pf-004.jpg",
-     "w": 1325,
+     "src": "albums/film/web/pf-007.jpg",
+     "w": 1125,
      "h": 2000,
-     "name": "celebrations/pf-004"
+     "name": "film/pf-007"
     },
     {
      "src": "albums/djs/web/pf-b7e9a45e.jpg",
@@ -131,18 +143,6 @@ window.PSWRLD = {
      "w": 1325,
      "h": 2000,
      "name": "film/pf-005"
-    },
-    {
-     "src": "albums/film/web/pf-007.jpg",
-     "w": 1125,
-     "h": 2000,
-     "name": "film/pf-007"
-    },
-    {
-     "src": "albums/commercial/web/pf-a7b6864f.jpg",
-     "w": 1259,
-     "h": 2000,
-     "name": "commercial/pf-a7b6864f"
     }
    ],
    "picks": [
