@@ -7,7 +7,7 @@ html[data-theme="light"] {
   background: var(--ink);
   color: var(--bone);
 }
-html[data-theme="light"] body { background: var(--ink); color: var(--bone); }
+html[data-theme="light"] body { background: transparent; color: var(--bone); }
 /* white logos turn dark */
 html[data-theme="light"] .hero-logo,
 html[data-theme="light"] .album-page .top .mark,
@@ -45,3 +45,9 @@ html[data-theme="light"] .theme-btn .moon { display: none; }
 html[data-theme="light"] .top { mix-blend-mode: normal; color: var(--bone); }
 html[data-theme="light"] .top .mark { filter: invert(1); }
 html[data-theme="light"] .top nav a { opacity: .85; }
+
+/* light mode: solid black stars */
+html[data-theme="light"] .drift i { color: #0b0b0b; }
+html[data-theme="light"] .drift b { background: #0b0b0b; }
+html[data-theme="light"] .drift i { animation-name: floatDark; }
+@keyframes floatDark { 0%,100% { transform: translate(0,0); opacity: .55; } 50% { transform: translate(18px,-26px); opacity: .95; } }

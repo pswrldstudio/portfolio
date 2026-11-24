@@ -18,7 +18,7 @@ window.PSWRLD_TEXT = {
  "disciplines": "Directing, Production, Commercials, Fashion Shows, Editorials, Music, Film Photography",
  "email": "PSWRLD.PNG@GMAIL.COM",
  "location": "pARIS/DUBLIN",
- "about_lead": "BIO: My name is Petter Maciala, a director and photographer based in Paris whose dream is to create.",
+ "about_lead": "My name is Petter Maciala, a director and photographer based in Paris whose dream is to create.",
  "about_body": "Available worldwide for photography, directing and production!",
  "album_back": "← All albums",
  "album_hint": "Drag, flick or swipe through the pages",
@@ -55,5 +55,11 @@ window.PSWRLD_TEXT = {
  "tiktok": "@pswrld.png1",
  "style_albums_title": "{\"x\":-8,\"y\":-59}",
  "style_albums_text": "{\"x\":-9,\"y\":-62}",
- "style_cam_label": "{\"x\":-174,\"y\":-514}"
+ "style_cam_label": "{\"x\":-174,\"y\":-514}",
+ "style_email": "{\"a\":\"center\",\"z\":1.4}",
+ "cl_instagram": "Instagram",
+ "cl_tiktok": "TikTok",
+ "cl_location": "Location",
+ "music_off": "",
+ "music_youtube": "https://www.youtube.com/watch?v=MSNNtIHCexE"
 };
