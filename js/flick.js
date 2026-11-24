@@ -444,7 +444,7 @@
       }
       return;
     }
-    if (pos < 0.5 && !startedOnce) {   // Favourites: closed for 3 seconds once it's on screen, then it opens
+    if (pos < 0.5 && !startedOnce) {   // Favourites: closed for 1.75 seconds once it's on screen, then it opens
       startedOnce = true; auto = -1;
       var waitVisible = function () {
         var r = stage.getBoundingClientRect();
@@ -453,7 +453,7 @@
             if (!alive()) return;
             animateTo(1, 900);
             setTimeout(function () { auto = null; startAuto(); }, 1100);
-          }, 3000);
+          }, 1750);
         } else setTimeout(waitVisible, 300);
       };
       waitVisible();
