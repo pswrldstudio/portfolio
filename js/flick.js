@@ -131,8 +131,14 @@
   var pos = 0;   // turned sheets, continuous (0 = closed on the cover)
   var fan = 0;   // 0 = pages squared up, 1 = fanned out
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  var lastPos = 0, dir = 1;
+  var lastPos = 0, dir = 1, lastHalf = null, lastFlipAt = 0;
   function place() {
+    var half = Math.floor(pos + 0.5);                 // changes when a page passes halfway
+    if (lastHalf !== null && half !== lastHalf && alive()) {
+      var now = performance.now();
+      if (now - lastFlipAt > 70) { lastFlipAt = now; var a = FLIP[(half % FLIP.length + FLIP.length) % FLIP.length]; try { a.currentTime = 0; a.play().catch(function () {}); } catch (e) {} }
+    }
+    lastHalf = half;
     if (pos !== lastPos) dir = pos > lastPos ? 1 : -1;
     lastPos = pos;
     var shift = -W / 2 * (1 - clamp(pos, 0, 1)) + W / 2 * clamp(pos - (n - 1), 0, 1);
@@ -175,7 +181,7 @@
   // page-turn sound (follows the Sound button: off = silent flips too)
   var FLIP = window.__flipPool || (window.__flipPool = [0, 1, 2, 3].map(function () { var a = new Audio("audio/page-turn.mp3"); a.preload = "auto"; a.volume = 0.55; return a; }));
   function flipSound(count, ms) {
-    if (sessionStorage.getItem("pswrld-music") === "off" || document.body.classList.contains("zooming")) return;
+    if (document.body.classList.contains("zooming")) return;
     var plays = Math.min(count, 5);
     for (var k = 0; k < plays; k++) {
       (function (a, delay) {
@@ -185,7 +191,7 @@
   }
   function animateTo(target, ms, quiet) {
     var moved = Math.abs(Math.round(Math.max(0, Math.min(n, target))) - Math.round(pos));
-    if (moved >= 1 && alive() && !quiet) flipSound(moved, ms || 600);
+    // (the flip sound now plays as each page passes the middle, see place())
     target = embedded ? clamp(target, 1, n - 1) : clamp(target, 0, n); tgt = target; running = true;
     var from = pos, start = performance.now();
     ms = ms || Math.min(1100, 520 + Math.abs(target - from) * 70);

@@ -11,12 +11,31 @@
   btn.className = "music-btn";
   btn.setAttribute("aria-label", "Sound on or off");
   btn.innerHTML = '<span class="bars"><i></i><i></i><i></i><i></i></span><em>Sound</em>';
-  document.body.appendChild(btn);
+  // volume slider for the music (page-turn sounds always play)
+  var wrap = document.createElement("div");
+  wrap.className = "music-ctl";
+  var vol = parseFloat(localStorage.getItem("pswrld-vol"));
+  if (isNaN(vol)) vol = 0.7;
+  wrap.innerHTML = '<input class="music-vol" type="range" min="0" max="100" aria-label="Music volume" value="' + Math.round(vol * 100) + '">';
+  wrap.appendChild(btn);
+  document.body.appendChild(wrap);
+  var slider = wrap.querySelector(".music-vol");
+  function setVol(v) {
+    vol = v; localStorage.setItem("pswrld-vol", v);
+    slider.style.setProperty("--v", Math.round(v * 100) + "%");
+    if (frame && frame.pause) frame.volume = v;
+    if (v === 0 && on) stop(); else if (v > 0 && !on && userStarted) start();
+  }
+  var userStarted = false;
+  slider.style.setProperty("--v", Math.round(vol * 100) + "%");
+  slider.addEventListener("input", function (e) { e.stopPropagation(); setVol(slider.value / 100); });
+  slider.addEventListener("pointerdown", function (e) { e.stopPropagation(); userStarted = true; });
   var mp3 = T.music_file === undefined ? "audio/music.mp3" : T.music_file;   // your own track, played from the site
   function start() {
     if (on) return;
     if (mp3) {
-      if (!frame) { frame = new Audio(mp3); frame.loop = true; frame.volume = 0.7; }
+      if (!frame) { frame = new Audio(mp3); frame.loop = true; }
+      frame.volume = vol || 0.7;
       frame.play().catch(function () {});
       on = true; btn.classList.add("on"); sessionStorage.setItem("pswrld-music", "on");
       return;
@@ -37,7 +56,8 @@
   btn.addEventListener("click", function (e) { e.stopPropagation(); on ? stop() : start(); });
   function first() {
     document.removeEventListener("pointerdown", first, true);
-    if (!wantOff) start();
+    userStarted = true;
+    if (!wantOff && vol > 0) start();
   }
   document.addEventListener("pointerdown", first, true);
 })();
