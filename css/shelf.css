@@ -240,3 +240,22 @@ body.drawer-open { overflow: hidden; }
 /* the P-and-star mark instead of the little circle on the bottom spines */
 .ib-mark { width: 78%; max-width: 46px; height: auto; border: 0; border-radius: 0; box-shadow: none; flex: none; display: block; }
 .ib.lying .ib-mark { width: auto; height: 62%; max-width: none; }
+
+/* ---------- phones: fit + smooth ---------- */
+.contact-big { display: inline-block; max-width: 100%; white-space: nowrap; }
+@media (max-width: 760px), (pointer: coarse) {
+  body::after { display: none; }                      /* film grain overlay is costly on phones */
+  .drift i { animation-duration: 18s; transition: none; }
+  .drift i svg { animation: none; }
+  .osheet { will-change: auto; }
+  .bk-body { will-change: auto; }
+  .mq-track span { font-size: clamp(22px, 7vw, 40px); }
+  .vhs { backdrop-filter: none; }
+}
+html, body { max-width: 100%; overflow-x: hidden; }
+
+@media (max-width: 420px) {
+  .top { padding: 16px 14px; }
+  .top nav { gap: 10px; font-size: 10px; letter-spacing: .08em; }
+  .top .mark { height: 22px; }
+}

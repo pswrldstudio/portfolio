@@ -80,7 +80,8 @@
   book.className = "obook";
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
-  var STRIPS = 10;
+  var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
+  var STRIPS = LITE ? 4 : 10;
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [];
   for (var s = 0; s < n; s++) {
     var el = document.createElement("div");
@@ -153,8 +154,8 @@
       el.style.zIndex = z;
       bendSheet(j, B, light);
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
-      el.style.visibility = far > 16 ? "hidden" : "visible";
-      if (far < 8) el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
+      el.style.visibility = far > (LITE ? 5 : 16) ? "hidden" : "visible";
+      if (far < (LITE ? 4 : 8)) el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
     }
     var cur = Math.round(pos);
     if (counter) counter.textContent = cur === 0 ? "Cover" : cur === n ? "Back" : String(cur).padStart(2, "0") + " / " + String(n - 1).padStart(2, "0");
@@ -344,14 +345,29 @@
   window.addEventListener("resize", function () { measure(); place(); });
   // the Favourites book on the home page stays open and flicks through by itself
   var auto = null, idle = null, hovering = false;
+  var riffled = false;
   function startAuto() {
     if (!embedded || auto) return;
+    if (!riffled) {   // first time: flick quickly through the whole book, then start again from page 1
+      riffled = true;
+      auto = -1;
+      animateTo(n - 1, Math.min(4200, 260 * n));
+      setTimeout(function () {
+        animateTo(1, Math.min(2600, 160 * n));
+        setTimeout(function () { auto = null; startAuto(); }, Math.min(2600, 160 * n) + 900);
+      }, Math.min(4200, 260 * n) + 700);
+      return;
+    }
     auto = setInterval(function () {
       if (dragging || peel.held || document.hidden) return;   // only pauses while you're holding a page
       if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);
     }, 2800);
   }
-  function stopAuto() { clearInterval(auto); auto = null; }
+  function stopAuto() { if (auto !== -1) { clearInterval(auto); auto = null; } }
+  if (embedded) {
+    setInterval(function () { if (!auto && !dragging && !peel.held) startAuto(); }, 4000);   // never stays stopped
+    setTimeout(function () { if (fan < 1) { fan = 1; place(); } startAuto(); }, 3500);        // start even if not scrolled to yet
+  }
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
     stage.addEventListener("pointerleave", function () { hovering = false; });

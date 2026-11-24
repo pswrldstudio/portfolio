@@ -37,6 +37,19 @@
     });
   }
   applyTextStyles(T);
+  // the email shrinks to fit the screen width (never cut off on phones)
+  function fitEmail() {
+    var e = document.querySelector(".contact-big");
+    if (!e) return;
+    e.style.fontSize = "";
+    var ps = getComputedStyle(e.parentElement);
+    var room = e.parentElement.clientWidth - parseFloat(ps.paddingLeft) - parseFloat(ps.paddingRight) - 4;
+    var fs = parseFloat(getComputedStyle(e).fontSize), n = 0;
+    while (e.scrollWidth > room && fs > 11 && n++ < 80) { fs -= 1; e.style.fontSize = fs + "px"; }
+  }
+  fitEmail();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitEmail);
+  addEventListener("resize", fitEmail);
   // the bookshelf itself is built by js/shelf.js
 
   var io = new IntersectionObserver(function (entries) {
