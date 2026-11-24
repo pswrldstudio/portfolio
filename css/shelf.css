@@ -327,3 +327,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 /* camcorder label: centred on top of the camera */
 .cam-tag { top: -4px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); text-align: center; }
 @media (max-width: 760px) { .cam-tag { top: -8px; bottom: auto; left: 50%; right: auto; transform: translateX(-50%); } }
+
+/* moving band: every second word in the outlined italic serif again (words are links now) */
+.mq-track > a:nth-child(4n+3) span { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; color: transparent; -webkit-text-stroke: 1px var(--bone); }
+.mq-track > a:nth-child(4n+3):hover span { color: var(--bone); -webkit-text-stroke: 0; }
