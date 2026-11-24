@@ -127,7 +127,7 @@
     stage.style.setProperty("--H", H + "px");
   }
 
-  var pos = embedded ? 1 : 0;   // turned sheets, continuous (0 = closed on the cover)
+  var pos = embedded && window.__flickRiffled ? 1 : 0;   // turned sheets, continuous (0 = closed on the cover)
   var fan = 0;   // 0 = pages squared up, 1 = fanned out
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   var lastPos = 0, dir = 1;
@@ -182,9 +182,9 @@
       })(FLIP[k % FLIP.length], plays > 1 ? k * (ms / plays) : 0);
     }
   }
-  function animateTo(target, ms) {
+  function animateTo(target, ms, quiet) {
     var moved = Math.abs(Math.round(Math.max(0, Math.min(n, target))) - Math.round(pos));
-    if (moved >= 1 && alive()) flipSound(moved, ms || 600);
+    if (moved >= 1 && alive() && !quiet) flipSound(moved, ms || 600);
     target = embedded ? clamp(target, 1, n - 1) : clamp(target, 0, n); tgt = target; running = true;
     var from = pos, start = performance.now();
     ms = ms || Math.min(1100, 520 + Math.abs(target - from) * 70);
@@ -369,14 +369,29 @@
   var riffled = !!window.__flickRiffled;
   function startAuto() {
     if (!embedded || auto) return;
-    if (!riffled) {   // first time: flick quickly through the whole book, then start again from page 1
+    if (!riffled) {   // first time: the cover opens (book sound), flicks to the end, back to page 1, then page by page
       riffled = window.__flickRiffled = true;
       auto = -1;
-      animateTo(n - 1, Math.min(4200, 260 * n));
-      setTimeout(function () {
-        animateTo(1, Math.min(2600, 160 * n));
-        setTimeout(function () { auto = null; startAuto(); }, Math.min(2600, 160 * n) + 900);
-      }, Math.min(4200, 260 * n) + 700);
+      var go1 = function () {
+        if (sessionStorage.getItem("pswrld-music") !== "off") { var snd = new Audio("audio/book-open.mp3"); snd.volume = 0.8; snd.play().catch(function () {}); }
+        animateTo(1, 550, true);                                   // cover opens
+        setTimeout(function () {
+          animateTo(n - 1, 1600, true);                            // flutter through every page
+          setTimeout(function () {
+            animateTo(1, Math.min(2200, 140 * n), true);           // back to the start
+            setTimeout(function () { auto = null; startAuto(); }, Math.min(2200, 140 * n) + 800);
+          }, 1600 + 900);
+        }, 550);
+      };
+      // sound needs a click first: open right away if the visitor already clicked, else wait up to 5s for one
+      var active = navigator.userActivation ? navigator.userActivation.hasBeenActive : false;
+      if (active) go1();
+      else {
+        var done = false, t = setTimeout(fire, 5000);
+        function fire() { if (done) return; done = true; clearTimeout(t); document.removeEventListener("pointerdown", fire, true); document.removeEventListener("keydown", fire, true); setTimeout(go1, 60); }
+        document.addEventListener("pointerdown", fire, true);
+        document.addEventListener("keydown", fire, true);
+      }
       return;
     }
     auto = setInterval(function () {
@@ -532,7 +547,7 @@
       var t = Math.min(1, (now - start) / 500);
       fan = ease(t); place();
       if (t < 1) requestAnimationFrame(step);
-      else if (pos === 0) { animateTo(1, 800); setTimeout(startAuto, 850); }
+      else if (pos === 0 && !embedded) { animateTo(1, 800); setTimeout(startAuto, 850); }
       else startAuto();
     })(start);
   }
