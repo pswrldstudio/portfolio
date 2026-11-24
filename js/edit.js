@@ -48,7 +48,8 @@
       '<label>Tape names (one per line, in order) <textarea id="ed-tapes" rows="4"></textarea></label>' +
       '<a href="album.html?a=favourites">Edit the Favourites book &rarr;</a>' +
       '<span class="ed-tip">To change an album, open it from the shelf.</span>' +
-      '<button id="ed-save">Save text</button><em id="ed-msg"></em>');
+      '<button id="ed-save">Save text</button>' +
+      '<button id="ed-publish" class="ed-pub">Publish to web</button><em id="ed-msg"></em>');
     document.body.appendChild(bar);
     bar.classList.add("min");
     bar.querySelector(".ed-toggle").onclick = function () { bar.classList.toggle("min"); };
@@ -58,6 +59,7 @@
     document.getElementById("ed-tapes").value = T.tapes || ((window.PSWRLD && window.PSWRLD.videos) || []).map(function (v) { return v.title; }).join("\n");
     document.getElementById("ed-skills").value = T.disciplines ||
       [].map.call(list ? list.querySelectorAll("li") : [], function (li) { return li.textContent; }).join(", ");
+    document.getElementById("ed-publish").onclick = publishSite;
     document.getElementById("ed-save").onclick = function () {
       var data = {};
       document.querySelectorAll("[data-edit]").forEach(function (e) {
@@ -106,6 +108,7 @@
       (A.featured ? '<button id="ed-lib" class="ed-libbtn">+ Select from library</button>' : '') +
       '<label class="ed-drop" id="ed-drop">+ Add photos<br><small>drop files here or click</small><input type="file" id="ed-file" multiple accept="image/*" hidden></label>' +
       '<button id="ed-save">Save album</button><em id="ed-msg"></em>' +
+      '<button id="ed-publish2" class="ed-pub">Publish to web</button>' +
       (A.featured ? '' : '<button id="ed-delete" class="ed-danger">Delete this book</button>'));
     document.body.appendChild(panel);
     var tab = el("button", { class: "ed-tab" }, "Edit album");
@@ -113,6 +116,7 @@
     tab.onclick = function () { panel.classList.remove("hidden"); };
     panel.querySelector(".ed-x").onclick = function () { panel.classList.add("hidden"); };
 
+    document.getElementById("ed-publish2").onclick = publishSite;
     var libBtn = document.getElementById("ed-lib");
     if (libBtn) libBtn.onclick = openLibrary;
     if (libBtn && /[?&]lib=1/.test(location.search)) setTimeout(openLibrary, 300);
@@ -341,6 +345,16 @@
   }
   window.PSWRLD_CONFIRM = askConfirm;
 
+  function publishSite() {
+    askConfirm("Publish the site live at petterm15.github.io/pswrld? Save your changes first. Visitors see the new version about a minute later.", "Publish").then(function (ok) {
+      if (!ok) return;
+      msg("Publishing... (this can take a minute)");
+      post("/api/publish", "{}").then(function (j) {
+        msg("Published \u2713 " + j.url);
+      }).catch(function (e) { msg("Not published: " + e.message); });
+    });
+  }
+
   function msg(t) { var m = document.getElementById("ed-msg"); if (m) m.textContent = t; }
 
   var CSS = [
@@ -398,6 +412,7 @@
     ".ed-ghost2{background:none!important;color:#efebe4;border:1px solid rgba(239,235,228,.3)!important}",
     ".ed-ok{background:#c0392b;color:#fff}",
     ".ed-flag{align-self:center;padding:0 10px;font:700 12px/1 var(--sans);color:#0b0b0b;opacity:0;transition:opacity .25s;white-space:nowrap}.ed-flag.on{opacity:1}",
+    ".ed-pub{background:#4fa85c!important;color:#fff!important;border:0;border-radius:99px;padding:10px 16px;font-weight:700;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;font-size:12px}",
     ".ed-badge{position:absolute;left:4px;bottom:4px;background:#efebe4;color:#000;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:99px}",
     ".ed-badge.new{left:auto;right:4px;background:#7de0a0}",
     ".ed-drop{border:1px dashed rgba(239,235,228,.35);border-radius:10px;padding:18px;text-align:center;cursor:pointer;color:#efebe4!important;font-size:13px!important}",
