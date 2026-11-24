@@ -283,3 +283,10 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .music-btn.on .bars i:nth-child(2) { animation-delay: -.3s; } .music-btn.on .bars i:nth-child(3) { animation-delay: -.6s; } .music-btn.on .bars i:nth-child(4) { animation-delay: -.15s; }
 @keyframes eq { 0%,100% { height: 3px; } 50% { height: 12px; } }
 .editing .music-btn { right: auto; left: 50%; transform: translateX(-50%); }
+
+/* camcorder label sits low, beside the camera */
+.cam-tag { top: auto; bottom: 6px; left: auto; right: calc(100% + 12px); transform: none; text-align: right; }
+@media (max-width: 760px) {
+  .cam-tag { right: auto; left: 50%; bottom: -24px; transform: translateX(-50%); font-size: 9px; }
+  .contact-big { font-size: min(15px, 4.2vw) !important; }
+}

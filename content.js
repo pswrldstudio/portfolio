@@ -15,7 +15,7 @@ window.PSWRLD_TEXT = {
  "footer": "All photographs by Petter maciala",
  "instagram_url": "https://www.instagram.com/pswrld.png/",
  "tiktok_url": "https://www.tiktok.com/@pswrld.png1",
- "disciplines": "Fashion lookbooks, Music artists, DJs & concerts, Events, Film, Creative direction",
+ "disciplines": "Directing, Production, Commercials, Fashion Shows, Editorials, Music, Film Photography",
  "email": "PSWRLD.PNG@GMAIL.COM",
  "location": "pARIS/DUBLIN",
  "about_lead": "BIO: My name is Petter Maciala, a director and photographer based in Paris whose dream is to create.",
