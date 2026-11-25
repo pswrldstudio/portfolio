@@ -379,6 +379,7 @@
           videos = tapesNow.map(function (x) { return videos[+x.dataset.i]; });
           tapesNow.forEach(function (x, k) { x.dataset.i = k; });
           TX.tapes = names.join(String.fromCharCode(10));
+          try { vid.pause(); vid.removeAttribute("src"); vid.load(); } catch (er) {}   // release the file so it can be renamed
           fetch("/api/videos-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ files: files, names: names }) });
         });
       });

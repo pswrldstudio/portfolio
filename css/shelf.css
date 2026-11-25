@@ -369,3 +369,9 @@ html[data-theme="light"] .music-vol::-webkit-slider-thumb { background: #151413;
   #work .section-head { margin-bottom: 0; }
   .bookcase { margin-top: 215px; }   /* room for the camcorder under the heading */
 }
+
+@media (min-width: 761px) { .cam { left: auto; right: 6%; } }   /* camcorder back on the far right */
+
+/* skills under About: plain bubbles */
+.disciplines li, .disciplines li:hover { cursor: default; background: none; color: inherit; }
+html[data-theme="light"] .disciplines li:hover { background: none; color: inherit; }

@@ -32,9 +32,7 @@
     if (v) ul.innerHTML = v.split(",").map(function (x) { return x.trim(); }).filter(Boolean)
       .map(function (x) { return "<li>" + x.replace(/</g, "&lt;") + "</li>"; }).join("");
   });
-  if (!(location.port === "5190")) document.querySelectorAll(".disciplines li").forEach(function (li) {
-    li.innerHTML = '<a href="' + window.PSWRLD_LINK(li.textContent) + '">' + li.innerHTML + "</a>";
-  });
+  // (the skills under About are plain text bubbles, not links)
   // "#films" opens the camcorder
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href="#films"]');
