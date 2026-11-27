@@ -423,3 +423,7 @@ html[data-theme="light"] .introleaf .concept { color: #2b2825; scrollbar-color: 
 .introleaf .concept.scrolls::after { content: ""; position: absolute; right: 2px; width: 3px; border-radius: 3px; background: rgba(239,235,228,.4);
   height: var(--cth, 0%); top: calc((100% - var(--cth, 0%)) * var(--ctt, 0)); pointer-events: none; }
 html[data-theme="light"] .introleaf .concept.scrolls::after { background: rgba(20,18,16,.35); }
+
+/* page turns: keep the book's repaints inside the book */
+.stage { contain: layout paint; }
+.obook { contain: layout style; }

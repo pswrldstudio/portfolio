@@ -96,13 +96,13 @@
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
   var STRIPS = LITE ? 4 : 5;
   stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
-  var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [];
+  var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [], litsOf = [];
   for (var s = 0; s < n; s++) {
     var el = document.createElement("div");
     el.className = "osheet";
     var fHTML = pageHTML(pages[2 * s]), bHTML = pageHTML(pages[2 * s + 1]);
     var fCls = "pg front-pg" + (s === 0 ? " is-cover" : ""), bCls = "pg back-pg" + (s === n - 1 ? " is-cover" : "");
-    var parent = el, list = [];
+    var parent = el, list = [], lits = [];
     for (var i = 0; i < STRIPS; i++) {
       var st = document.createElement("div");
       st.className = "ostrip" + (i ? " nested" : "");
@@ -112,19 +112,21 @@
       parent.appendChild(st);
       parent = st;
       list.push(st);
+      lits.push([st.children[0].lastChild, st.children[1].lastChild]);
     }
     book.appendChild(el);
-    sheets.push(el); stripsOf.push(list); bendOf.push(null);
+    sheets.push(el); stripsOf.push(list); bendOf.push(null); litsOf.push(lits);
   }
   // bend: positive = page curls away from the reader, negative = edge lifts towards the left
   function bendSheet(j, B, light) {
     var key = B.toFixed(1) + "|" + light.toFixed(2);
     if (bendOf[j] === key) return;
     bendOf[j] = key;
-    var list = stripsOf[j], tri = STRIPS * (STRIPS - 1) / 2;
+    var list = stripsOf[j], L = litsOf[j], tri = STRIPS * (STRIPS - 1) / 2;
     for (var i = 0; i < STRIPS; i++) {
       list[i].style.transform = i ? "rotateY(" + (B * i / tri).toFixed(2) + "deg)" : "";
-      list[i].style.setProperty("--lit", (light * (0.35 + 0.65 * i / STRIPS)).toFixed(3));
+      var o = (light * (0.35 + 0.65 * i / STRIPS)).toFixed(3);
+      L[i][0].style.opacity = o; L[i][1].style.opacity = o;
     }
   }
 
@@ -179,9 +181,12 @@
         if (z !== el._z) { el._z = z; el.style.zIndex = z; }
         bendSheet(j, B, light);
       }
-      if (!el._loaded && far < (LITE ? 4 : 8)) {
+      if (!el._loaded && far < (LITE ? 6 : 9)) {
         el._loaded = true;
-        el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
+        el.querySelectorAll("img[data-src]").forEach(function (img) {
+          img.src = img.dataset.src; img.removeAttribute("data-src");
+          if (img.decode) img.decode().catch(function () {});   // ready before the page turns into view
+        });
       }
     }
     var cur = Math.round(pos);
@@ -191,8 +196,10 @@
   }
 
   // ---- animation ----
-  var anim = null, tgt = 0, running = false;
+  var anim = null, tgt = 0, running = false, curV = 0;   // curV: how fast the pages are moving (pages per ms)
   function ease(t) { return 1 - Math.pow(1 - t, 3); }
+  // a smooth curve from here to the target that starts at the speed the pages already have (m0) and lands softly
+  function curve(t, m0) { var t2 = t * t, t3 = t2 * t; return (t3 - 2 * t2 + t) * m0 + (-2 * t3 + 3 * t2); }
   // page-turn sound (follows the Sound button: off = silent flips too)
   var FLIP = window.__flipPool || (window.__flipPool = [0, 1, 2, 3].map(function () { return new Audio(); }));
   function flipSound(count, ms) {
@@ -231,7 +238,7 @@
     clearTimeout(grainT);
     grainT = setTimeout(function () { try { FA.pause(); } catch (e) {} }, 90);   // stops when you stop moving
   }
-  function animateTo(target, ms, quiet) {
+  function animateTo(target, ms, quiet, v0) {
     var moved = Math.abs(Math.round(Math.max(0, Math.min(n, target))) - Math.round(pos));
     // (the flip sound now plays as each page passes the middle, see place())
     target = embedded ? clamp(target, 1, n - 1) : clamp(target, 0, n); tgt = target; running = true;
@@ -246,11 +253,16 @@
       if (turning) playFrom(Math.abs(from - Math.round(from)) < 0.02 ? 0 : progressOf(from, forward ? 1 : -1), ms / 1000);
     }
     cancelAnimationFrame(anim);
+    var d = target - from, m0 = 1.7;                     // a quick, gentle start for taps and buttons
+    if (v0 == null && running) v0 = curV;                // already moving: keep that speed
+    if (v0 != null && Math.abs(d) > 1e-4) m0 = Math.max(1.2, Math.min(3, v0 * ms / d));
+    var lastP = from, lastNow = start;
     (function step(now) {
       var t = Math.min(1, (now - start) / ms);
-      pos = from + (target - from) * ease(t);
+      pos = from + d * curve(t, m0);
+      if (now > lastNow) { curV = (pos - lastP) / (now - lastNow); lastP = pos; lastNow = now; }
       place();
-      if (t < 1) anim = requestAnimationFrame(step); else { running = false; multiTurn = false; }
+      if (t < 1) anim = requestAnimationFrame(step); else { running = false; multiTurn = false; curV = 0; }
     })(start);
   }
   function go(d) {
@@ -371,7 +383,7 @@
   function clearPeel() { cancelAnimationFrame(peelAnim); peel.on = peel.held = false; peel.P = null; peelLayer.classList.remove("on"); }
 
   // ---- drag & flick ----
-  var dragging = false, x0 = 0, p0 = 0, lastX = 0, lastT = 0, vel = 0, moved = 0;
+  var dragging = false, x0 = 0, p0 = 0, lastX = 0, lastT = 0, vel = 0, moved = 0, dragFrame = 0;
   var touches = {}, grab = null;
   // ---- the description box scrolls by moving the text (one number shared by every strip's copy) ----
   // Smooth on phones: no real scrolling inside the 3D page, just a transform, plus a flick that glides.
@@ -464,9 +476,9 @@
       scrub(progressOf(pos, d0));
     }
     pos = clamp(p0 - dx / (W * 1.1), -0.15, n + 0.15);
-    vel = 0.8 * vel + 0.2 * ((e.clientX - lastX) / Math.max(1, now - lastT));
+    vel = 0.6 * vel + 0.4 * ((e.clientX - lastX) / Math.max(1, now - lastT));
     lastX = e.clientX; lastT = now;
-    place();
+    if (!dragFrame) dragFrame = requestAnimationFrame(function () { dragFrame = 0; if (dragging) place(); });
   });
   var tapT = null;
   function release(e) {
@@ -491,7 +503,8 @@
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
     if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
     if (!embedded && target < 1 && throwPages < 0 && p0 <= 1.5) { closeThenPrev(); return; }
-    animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110));
+    if (performance.now() - lastT > 80) vel = 0;           // held still before letting go: no throw
+    animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110), false, -vel / (W * 1.1));
   }
   stage.addEventListener("click", function (e) {   // "Next: ..." on the last page swipes to it in place
     var a = e.target.closest && e.target.closest("[data-nav]");

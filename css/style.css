@@ -265,7 +265,7 @@ footer { padding: 28px clamp(18px, 4vw, 48px); display: flex; justify-content: s
 .ostrip.nested { left: 100%; }
 .sf { position: absolute; top: 0; bottom: 0; left: -0.75px; right: -1.5px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .sf.back { transform: rotateY(180deg); }
-.sf .lit { position: absolute; inset: 0; background: #000; opacity: var(--lit, 0); pointer-events: none; }
+.sf .lit { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
 .pg { position: absolute; top: 0; width: var(--W); height: var(--H); overflow: hidden; background: #1a1918; }
 .front-pg { border-radius: 0 12px 12px 0; }
 .back-pg { border-radius: 12px 0 0 12px; }
