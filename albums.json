@@ -162,12 +162,865 @@
    ]
   },
   {
+   "slug": "crowned",
+   "title": "Crowned",
+   "subtitle": "PERSONAL PROJECT",
+   "description": "Crowned celebrates the cultural significance of African hair and adornment within Black identity. Challenging society's negative perceptions, the shoot reclaims braids, locs, gold teeth and grills as expressions of heritage, resistance and self-expression. It is an exploration of cultural pride, embracing our roots and owning the beauty of who we are.",
+   "year": "2026",
+   "order": 1,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/crowned/web/_cover.jpg",
+   "coverFrom": "pf-001",
+   "photos": [
+    {
+     "src": "albums/crowned/web/pf-001.jpg",
+     "md": "albums/crowned/web/md/pf-001.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/crowned/web/pf-002.jpg",
+     "md": "albums/crowned/web/md/pf-002.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/crowned/web/pf-003.jpg",
+     "md": "albums/crowned/web/md/pf-003.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/crowned/web/pf-005.jpg",
+     "md": "albums/crowned/web/md/pf-005.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/crowned/web/pf-015.jpg",
+     "md": "albums/crowned/web/md/pf-015.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-015"
+    },
+    {
+     "src": "albums/crowned/web/pf-006.jpg",
+     "md": "albums/crowned/web/md/pf-006.jpg",
+     "w": 1365,
+     "h": 2000,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/crowned/web/pf-010.jpg",
+     "md": "albums/crowned/web/md/pf-010.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-010"
+    },
+    {
+     "src": "albums/crowned/web/pf-007.jpg",
+     "md": "albums/crowned/web/md/pf-007.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/crowned/web/pf-008.jpg",
+     "md": "albums/crowned/web/md/pf-008.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-008"
+    },
+    {
+     "src": "albums/crowned/web/pf-009.jpg",
+     "md": "albums/crowned/web/md/pf-009.jpg",
+     "w": 1266,
+     "h": 1704,
+     "name": "pf-009"
+    },
+    {
+     "src": "albums/crowned/web/pf-012.jpg",
+     "md": "albums/crowned/web/md/pf-012.jpg",
+     "w": 1259,
+     "h": 1762,
+     "name": "pf-012"
+    },
+    {
+     "src": "albums/crowned/web/pf-016.jpg",
+     "md": "albums/crowned/web/md/pf-016.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-016"
+    },
+    {
+     "src": "albums/crowned/web/pf-017.jpg",
+     "md": "albums/crowned/web/md/pf-017.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-017"
+    },
+    {
+     "src": "albums/crowned/web/pf-011.jpg",
+     "md": "albums/crowned/web/md/pf-011.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-011"
+    },
+    {
+     "src": "albums/crowned/web/pf-013.jpg",
+     "md": "albums/crowned/web/md/pf-013.jpg",
+     "w": 1334,
+     "h": 2000,
+     "name": "pf-013"
+    },
+    {
+     "src": "albums/crowned/web/pf-014.jpg",
+     "md": "albums/crowned/web/md/pf-014.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-014"
+    },
+    {
+     "src": "albums/crowned/web/pf-018.jpg",
+     "md": "albums/crowned/web/md/pf-018.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-018"
+    },
+    {
+     "src": "albums/crowned/web/pf-004.jpg",
+     "md": "albums/crowned/web/md/pf-004.jpg",
+     "w": 1080,
+     "h": 1080,
+     "name": "pf-004"
+    }
+   ]
+  },
+  {
+   "slug": "blues-heartbreak",
+   "title": "Blue's Heartbreak",
+   "subtitle": "Commission work for Sona Blue",
+   "description": "Blues Heartbreak was developed in collaboration with Sona Blue as part of the creative direction for her album release. Exploring the quiet complexities of heartbreak, vulnerability and emotional concealment, the project translates the emotional themes of her music into a visual narrative. Through considered styling, portraiture and visual storytelling, the imagery captures the contrast between what we present to the world and what we carry within, creating a visual extension of the album's identity and themes.",
+   "year": "2026",
+   "order": 2,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/blues-heartbreak/web/_cover.jpg",
+   "coverFrom": "pf-001",
+   "photos": [
+    {
+     "src": "albums/blues-heartbreak/web/pf-001.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-001.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-002.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-002.jpg",
+     "w": 1425,
+     "h": 2000,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-003.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-003.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-004.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-004.jpg",
+     "w": 1139,
+     "h": 2000,
+     "name": "pf-004"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-005.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-005.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-006.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-006.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-007.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-007.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-008.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-008.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-008"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-009.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-009.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-009"
+    },
+    {
+     "src": "albums/blues-heartbreak/web/pf-010.jpg",
+     "md": "albums/blues-heartbreak/web/md/pf-010.jpg",
+     "w": 1282,
+     "h": 1707,
+     "name": "pf-010"
+    }
+   ]
+  },
+  {
+   "slug": "tell-the-truth-ss26",
+   "title": "Tell The Truth SS26",
+   "subtitle": "Berlin Fashion Week",
+   "description": "",
+   "year": "2025",
+   "order": 3,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/tell-the-truth-ss26/web/_cover.jpg",
+   "coverFrom": "pf-001",
+   "photos": [
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-001.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-001.jpg",
+     "w": 1368,
+     "h": 2000,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-002.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-002.jpg",
+     "w": 1398,
+     "h": 2000,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-003.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-003.jpg",
+     "w": 1386,
+     "h": 2000,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-004.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-004.jpg",
+     "w": 1503,
+     "h": 2000,
+     "name": "pf-004"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-005.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-005.jpg",
+     "w": 1220,
+     "h": 2000,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-006.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-006.jpg",
+     "w": 1365,
+     "h": 2000,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-007.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-007.jpg",
+     "w": 1305,
+     "h": 2000,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-008.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-008.jpg",
+     "w": 1320,
+     "h": 2000,
+     "name": "pf-008"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-009.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-009.jpg",
+     "w": 1322,
+     "h": 2000,
+     "name": "pf-009"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-010.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-010.jpg",
+     "w": 1033,
+     "h": 2000,
+     "name": "pf-010"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-011.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-011.jpg",
+     "w": 1137,
+     "h": 2000,
+     "name": "pf-011"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-012.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-012.jpg",
+     "w": 1043,
+     "h": 2000,
+     "name": "pf-012"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-013.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-013.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-013"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-014.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-014.jpg",
+     "w": 1077,
+     "h": 2000,
+     "name": "pf-014",
+     "fit": {
+      "s": 1.0,
+      "x": 50.0,
+      "y": 32.9
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-015.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-015.jpg",
+     "w": 1294,
+     "h": 2000,
+     "name": "pf-015"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-016.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-016.jpg",
+     "w": 1430,
+     "h": 2000,
+     "name": "pf-016",
+     "fit": {
+      "s": 1.16,
+      "x": 51.9,
+      "y": 92.6
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-017.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-017.jpg",
+     "w": 1219,
+     "h": 2000,
+     "name": "pf-017"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-018.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-018.jpg",
+     "w": 1030,
+     "h": 2000,
+     "name": "pf-018",
+     "fit": {
+      "s": 1.01,
+      "x": 52.9,
+      "y": 68.3
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-019.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-019.jpg",
+     "w": 1095,
+     "h": 2000,
+     "name": "pf-019",
+     "fit": {
+      "s": 1.09,
+      "x": 55.8,
+      "y": 61.5
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-020.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-020.jpg",
+     "w": 1123,
+     "h": 2000,
+     "name": "pf-020"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-021.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-021.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-021",
+     "fit": {
+      "s": 1.08,
+      "x": 52.4,
+      "y": 100.0
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-022.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-022.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-022",
+     "fit": {
+      "s": 1.25,
+      "x": 48.5,
+      "y": 44.7
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-023.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-023.jpg",
+     "w": 1422,
+     "h": 2000,
+     "name": "pf-023",
+     "fit": {
+      "s": 1.25,
+      "x": 54.3,
+      "y": 69.8
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-024.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-024.jpg",
+     "w": 1196,
+     "h": 2000,
+     "name": "pf-024"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-025.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-025.jpg",
+     "w": 1484,
+     "h": 2000,
+     "name": "pf-025",
+     "fit": {
+      "s": 1.13,
+      "x": 45.0,
+      "y": 100.0
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-026.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-026.jpg",
+     "w": 1558,
+     "h": 2000,
+     "name": "pf-026",
+     "fit": {
+      "s": 1.25,
+      "x": 47.1,
+      "y": 45.1
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-027.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-027.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-027",
+     "fit": {
+      "s": 1.24,
+      "x": 62.6,
+      "y": 67.1
+     }
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-028.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-028.jpg",
+     "w": 1220,
+     "h": 2000,
+     "name": "pf-028"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-029.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-029.jpg",
+     "w": 1294,
+     "h": 2000,
+     "name": "pf-029"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-030.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-030.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-030"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-031.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-031.jpg",
+     "w": 1149,
+     "h": 2000,
+     "name": "pf-031"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-032.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-032.jpg",
+     "w": 1360,
+     "h": 2000,
+     "name": "pf-032"
+    },
+    {
+     "src": "albums/tell-the-truth-ss26/web/pf-033.jpg",
+     "md": "albums/tell-the-truth-ss26/web/md/pf-033.jpg",
+     "w": 1296,
+     "h": 2000,
+     "name": "pf-033"
+    }
+   ]
+  },
+  {
+   "slug": "sereno-del-sordo-ss25",
+   "title": "Sereno Del Sordo SS25",
+   "subtitle": "Paris Fashion Week",
+   "description": "",
+   "year": "2024",
+   "order": 4,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/sereno-del-sordo-ss25/web/_cover.jpg",
+   "coverFrom": "pf-001",
+   "photos": [
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-001.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-001.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-002.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-002.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-003.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-003.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-004.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-004.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-004"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-005.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-005.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-006.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-006.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-007.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-007.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-008.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-008.jpg",
+     "w": 1195,
+     "h": 2000,
+     "name": "pf-008"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-009.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-009.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-009"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-010.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-010.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-010"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-011.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-011.jpg",
+     "w": 1443,
+     "h": 2000,
+     "name": "pf-011"
+    },
+    {
+     "src": "albums/sereno-del-sordo-ss25/web/pf-012.jpg",
+     "md": "albums/sereno-del-sordo-ss25/web/md/pf-012.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-012"
+    }
+   ]
+  },
+  {
+   "slug": "after-hours",
+   "title": "After Hours",
+   "subtitle": "PERSONAL PROJECT",
+   "description": "After Hours explores the tension between societal expectations and individual freedom. Through a character-led visual narrative, the project examines the roles we find ourselves playing and the expectations that shape our everyday lives. Blending fashion imagery with conceptual storytelling, it explores the desire to break away from routine, challenge convention and reclaim a sense of individuality. At its core, the project is about finding the freedom to exist beyond the roles imposed on us.",
+   "year": "2026",
+   "order": 5,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/after-hours/web/_cover.jpg",
+   "coverFrom": "pf-73c5265a",
+   "photos": [
+    {
+     "src": "albums/after-hours/web/pf-73c5265a.jpg",
+     "md": "albums/after-hours/web/md/pf-73c5265a.jpg",
+     "w": 1125,
+     "h": 2000,
+     "name": "pf-73c5265a",
+     "fit": {
+      "s": 1.0,
+      "x": 51.5,
+      "y": 36.5
+     }
+    },
+    {
+     "src": "albums/after-hours/web/pf-5dd6a80d.jpg",
+     "md": "albums/after-hours/web/md/pf-5dd6a80d.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5dd6a80d"
+    },
+    {
+     "src": "albums/after-hours/web/pf-26c561d5.jpg",
+     "md": "albums/after-hours/web/md/pf-26c561d5.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-26c561d5"
+    },
+    {
+     "src": "albums/after-hours/web/pf-caed6085.jpg",
+     "md": "albums/after-hours/web/md/pf-caed6085.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-caed6085"
+    },
+    {
+     "src": "albums/after-hours/web/pf-5e3bb2d7.jpg",
+     "md": "albums/after-hours/web/md/pf-5e3bb2d7.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5e3bb2d7"
+    },
+    {
+     "src": "albums/after-hours/web/pf-a2c424cc.jpg",
+     "md": "albums/after-hours/web/md/pf-a2c424cc.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-a2c424cc"
+    },
+    {
+     "src": "albums/after-hours/web/pf-cd1cfd61.jpg",
+     "md": "albums/after-hours/web/md/pf-cd1cfd61.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-cd1cfd61"
+    },
+    {
+     "src": "albums/after-hours/web/pf-0a260d44.jpg",
+     "md": "albums/after-hours/web/md/pf-0a260d44.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-0a260d44"
+    },
+    {
+     "src": "albums/after-hours/web/pf-674123df.jpg",
+     "md": "albums/after-hours/web/md/pf-674123df.jpg",
+     "w": 1332,
+     "h": 2000,
+     "name": "pf-674123df"
+    },
+    {
+     "src": "albums/after-hours/web/pf-80e1eb2c.jpg",
+     "md": "albums/after-hours/web/md/pf-80e1eb2c.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-80e1eb2c"
+    },
+    {
+     "src": "albums/after-hours/web/pf-a51e25ca.jpg",
+     "md": "albums/after-hours/web/md/pf-a51e25ca.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-a51e25ca"
+    },
+    {
+     "src": "albums/after-hours/web/pf-a6168671.jpg",
+     "md": "albums/after-hours/web/md/pf-a6168671.jpg",
+     "w": 1920,
+     "h": 1280,
+     "name": "pf-a6168671"
+    },
+    {
+     "src": "albums/after-hours/web/pf-be0aa997.jpg",
+     "md": "albums/after-hours/web/md/pf-be0aa997.jpg",
+     "w": 1500,
+     "h": 2000,
+     "name": "pf-be0aa997"
+    },
+    {
+     "src": "albums/after-hours/web/pf-53e29eeb.jpg",
+     "md": "albums/after-hours/web/md/pf-53e29eeb.jpg",
+     "w": 1600,
+     "h": 2000,
+     "name": "pf-53e29eeb"
+    }
+   ]
+  },
+  {
+   "slug": "unity",
+   "title": "Public Figure",
+   "subtitle": "Commissioned work for DJ Unity",
+   "description": "Public Figure explores contemporary fashion through a commercial lens, combining considered styling, sculptural posing and props to create a distinctive visual identity. Creative directed for Unity's rebrand, the shoot presents her as more than a DJ, but an artist with a refined image, sound and unmistakable presence. Celebrating her charisma, it explores DJing as more than music, but a space for connection, community and creative expression.",
+   "year": "2026",
+   "order": 6,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/unity/web/_cover.jpg",
+   "coverFrom": "pf-0db3f024",
+   "photos": [
+    {
+     "src": "albums/unity/web/pf-0db3f024.jpg",
+     "md": "albums/unity/web/md/pf-0db3f024.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-0db3f024"
+    },
+    {
+     "src": "albums/unity/web/pf-3f0a4c86.jpg",
+     "md": "albums/unity/web/md/pf-3f0a4c86.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-3f0a4c86"
+    },
+    {
+     "src": "albums/unity/web/pf-5a657487.jpg",
+     "md": "albums/unity/web/md/pf-5a657487.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5a657487"
+    },
+    {
+     "src": "albums/unity/web/pf-6b00b0a9.jpg",
+     "md": "albums/unity/web/md/pf-6b00b0a9.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-6b00b0a9"
+    },
+    {
+     "src": "albums/unity/web/pf-11fb23a7.jpg",
+     "md": "albums/unity/web/md/pf-11fb23a7.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-11fb23a7"
+    },
+    {
+     "src": "albums/unity/web/pf-42b18635.jpg",
+     "md": "albums/unity/web/md/pf-42b18635.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-42b18635"
+    },
+    {
+     "src": "albums/unity/web/pf-241d6812.jpg",
+     "md": "albums/unity/web/md/pf-241d6812.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-241d6812"
+    },
+    {
+     "src": "albums/unity/web/pf-06462383.jpg",
+     "md": "albums/unity/web/md/pf-06462383.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-06462383"
+    },
+    {
+     "src": "albums/unity/web/pf-b2d54fd6.jpg",
+     "md": "albums/unity/web/md/pf-b2d54fd6.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-b2d54fd6"
+    },
+    {
+     "src": "albums/unity/web/pf-b4025d54.jpg",
+     "md": "albums/unity/web/md/pf-b4025d54.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-b4025d54"
+    },
+    {
+     "src": "albums/unity/web/pf-ba66fa00.jpg",
+     "md": "albums/unity/web/md/pf-ba66fa00.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-ba66fa00"
+    },
+    {
+     "src": "albums/unity/web/pf-c9db659e.jpg",
+     "md": "albums/unity/web/md/pf-c9db659e.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-c9db659e"
+    },
+    {
+     "src": "albums/unity/web/pf-cd469490.jpg",
+     "md": "albums/unity/web/md/pf-cd469490.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-cd469490"
+    },
+    {
+     "src": "albums/unity/web/pf-eda79e66.jpg",
+     "md": "albums/unity/web/md/pf-eda79e66.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-eda79e66"
+    },
+    {
+     "src": "albums/unity/web/pf-f6a8616e.jpg",
+     "md": "albums/unity/web/md/pf-f6a8616e.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-f6a8616e"
+    }
+   ]
+  },
+  {
    "slug": "rubi-rose",
    "title": "Rubi Rose",
    "subtitle": "Paris Fashion Week 2026",
    "description": "A two-day commissioned collaboration with Rubi Rose during Paris Fashion Week, combining fashion photography and styling. Working closely on her visual presentation, the project explores the relationship between personal style and contemporary fashion, using considered wardrobe choices, composition and portraiture to create a cohesive visual narrative. The intention was to capture her individuality and presence while bringing a distinct editorial perspective to her image. Spanning multiple looks and settings, the shoot documents both the polished and candid moments of her time in Paris, reflecting the energy and visual culture of Fashion Week.",
    "year": "2026",
-   "order": 1,
+   "order": 7,
    "featured": false,
    "roll": false,
    "cover": "albums/rubi-rose/web/_cover.jpg",
@@ -324,7 +1177,7 @@
    "subtitle": "Commissioned Headshots",
    "description": "A creative headshot series built around strong framing, considered lighting and intentional posing. Using close-up compositions, controlled shadows and subtle variations in expression, the shoot moves beyond conventional headshots to create a more individual and character-led portrait. The focus is on capturing Toochi’s presence and style through a refined, contemporary visual approach.",
    "year": "2026",
-   "order": 2,
+   "order": 8,
    "featured": false,
    "roll": false,
    "cover": "albums/toochi/web/_cover.jpg",
@@ -380,7 +1233,7 @@
    "subtitle": "Selection of commissioned headshots",
    "description": "",
    "year": "2026",
-   "order": 3,
+   "order": 9,
    "featured": false,
    "roll": false,
    "cover": "albums/headshots/web/_cover.jpg",
@@ -527,7 +1380,7 @@
    "subtitle": "Press Release",
    "description": "### SONA BLUE — FORBIDDEN FRUIT\n\nA commissioned press shoot with Sona Blue for the announcement of Forbidden Fruit. Built around an intentional palette of blue and green, the imagery uses colour to establish the project's visual identity, creating a distinct atmosphere that complements the release. Through considered styling, composition and colour, the shoot translates the announcement into a cohesive visual narrative for press and promotional use.",
    "year": "2026",
-   "order": 4,
+   "order": 10,
    "featured": false,
    "roll": false,
    "cover": "albums/sona-blue-x-jt/web/_cover.jpg",
@@ -674,7 +1527,7 @@
    "subtitle": "Rendezvous main photographer",
    "description": "An ongoing creative collaboration spanning two years, serving as the brand's main photographer from its inception. Working closely with Rendezvous, I helped shape and curate its visual identity through photography, documenting its evolution and the culture and community surrounding it. Shot predominantly on film, the work captures the brand's identity through an organic and considered visual approach.",
    "year": "2024 - 2026",
-   "order": 5,
+   "order": 11,
    "featured": false,
    "roll": false,
    "cover": "albums/rendezvous/web/_cover.jpg",
@@ -1006,7 +1859,7 @@
    "subtitle": "Commercial shoot for Yallah",
    "description": "A campaign for Nigerian fashion brand Yallah, bringing together models across different ages and genders to celebrate individuality and self-expression. Through expressive posing, considered styling and a playful creative approach, the shoot presents the brand through a diverse range of identities and perspectives. Blending fashion with character-led imagery, the campaign gives Yallah a distinctive visual identity while celebrating the people who bring it to life.",
    "year": "2026",
-   "order": 6,
+   "order": 12,
    "featured": false,
    "roll": false,
    "cover": "albums/yallah/web/_cover.jpg",
@@ -1207,7 +2060,7 @@
    "subtitle": "Commercial shot for TWH",
    "description": "A commissioned photography project for TWH, a fitness and training brand. Created for the brand's online store, the shoot focuses on clean, consistent product and apparel imagery, presenting the collection through clear compositions and considered lighting. The aim was to showcase the products in a polished, accessible way while maintaining a cohesive visual presentation across their website.",
    "year": "2026",
-   "order": 7,
+   "order": 13,
    "featured": false,
    "roll": false,
    "cover": "albums/twh/web/_cover.jpg",
@@ -1409,7 +2262,7 @@
    "subtitle": "Commercial shoot for MONTFRD",
    "description": "An analogue photography collaboration with UK streetwear brand MONTFRD, producing imagery for its website, campaign and social media. Shot entirely on film, the project brings an organic, tactile quality to the brand's streetwear identity. Combining fashion-led imagery with the distinct character of film photography, the work captures the collection through a more considered and authentic visual approach, creating a cohesive image library across the brand's digital platforms.",
    "year": "2024",
-   "order": 8,
+   "order": 14,
    "featured": false,
    "roll": false,
    "cover": "albums/montfrd/web/_cover.jpg",
@@ -1536,7 +2389,7 @@
    "subtitle": "Shot over the years",
    "description": "",
    "year": "2024 - 2026",
-   "order": 9,
+   "order": 15,
    "featured": false,
    "roll": false,
    "cover": "albums/commercial/web/_cover.jpg",
@@ -1616,740 +2469,6 @@
      "w": 1325,
      "h": 2000,
      "name": "pf-f3fab7ab"
-    }
-   ]
-  },
-  {
-   "slug": "crowned",
-   "title": "Crowned",
-   "subtitle": "PERSONAL PROJECT",
-   "description": "Crowned celebrates the cultural significance of African hair and adornment within Black identity. Challenging society's negative perceptions, the shoot reclaims braids, locs, gold teeth and grills as expressions of heritage, resistance and self-expression. It is an exploration of cultural pride, embracing our roots and owning the beauty of who we are.",
-   "year": "2026",
-   "order": 10,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/crowned/web/_cover.jpg",
-   "coverFrom": "pf-001",
-   "photos": [
-    {
-     "src": "albums/crowned/web/pf-001.jpg",
-     "md": "albums/crowned/web/md/pf-001.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/crowned/web/pf-002.jpg",
-     "md": "albums/crowned/web/md/pf-002.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/crowned/web/pf-003.jpg",
-     "md": "albums/crowned/web/md/pf-003.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/crowned/web/pf-005.jpg",
-     "md": "albums/crowned/web/md/pf-005.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/crowned/web/pf-015.jpg",
-     "md": "albums/crowned/web/md/pf-015.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-015"
-    },
-    {
-     "src": "albums/crowned/web/pf-006.jpg",
-     "md": "albums/crowned/web/md/pf-006.jpg",
-     "w": 1365,
-     "h": 2000,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/crowned/web/pf-010.jpg",
-     "md": "albums/crowned/web/md/pf-010.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-010"
-    },
-    {
-     "src": "albums/crowned/web/pf-007.jpg",
-     "md": "albums/crowned/web/md/pf-007.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/crowned/web/pf-008.jpg",
-     "md": "albums/crowned/web/md/pf-008.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-008"
-    },
-    {
-     "src": "albums/crowned/web/pf-009.jpg",
-     "md": "albums/crowned/web/md/pf-009.jpg",
-     "w": 1266,
-     "h": 1704,
-     "name": "pf-009"
-    },
-    {
-     "src": "albums/crowned/web/pf-012.jpg",
-     "md": "albums/crowned/web/md/pf-012.jpg",
-     "w": 1259,
-     "h": 1762,
-     "name": "pf-012"
-    },
-    {
-     "src": "albums/crowned/web/pf-016.jpg",
-     "md": "albums/crowned/web/md/pf-016.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-016"
-    },
-    {
-     "src": "albums/crowned/web/pf-017.jpg",
-     "md": "albums/crowned/web/md/pf-017.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-017"
-    },
-    {
-     "src": "albums/crowned/web/pf-011.jpg",
-     "md": "albums/crowned/web/md/pf-011.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-011"
-    },
-    {
-     "src": "albums/crowned/web/pf-013.jpg",
-     "md": "albums/crowned/web/md/pf-013.jpg",
-     "w": 1334,
-     "h": 2000,
-     "name": "pf-013"
-    },
-    {
-     "src": "albums/crowned/web/pf-014.jpg",
-     "md": "albums/crowned/web/md/pf-014.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-014"
-    },
-    {
-     "src": "albums/crowned/web/pf-018.jpg",
-     "md": "albums/crowned/web/md/pf-018.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-018"
-    },
-    {
-     "src": "albums/crowned/web/pf-004.jpg",
-     "md": "albums/crowned/web/md/pf-004.jpg",
-     "w": 1080,
-     "h": 1080,
-     "name": "pf-004"
-    }
-   ]
-  },
-  {
-   "slug": "blues-heartbreak",
-   "title": "Blue's Heartbreak",
-   "subtitle": "Commission work for Sona Blue",
-   "description": "Blues Heartbreak was developed in collaboration with Sona Blue as part of the creative direction for her album release. Exploring the quiet complexities of heartbreak, vulnerability and emotional concealment, the project translates the emotional themes of her music into a visual narrative. Through considered styling, portraiture and visual storytelling, the imagery captures the contrast between what we present to the world and what we carry within, creating a visual extension of the album's identity and themes.",
-   "year": "2026",
-   "order": 11,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/blues-heartbreak/web/_cover.jpg",
-   "coverFrom": "pf-001",
-   "photos": [
-    {
-     "src": "albums/blues-heartbreak/web/pf-001.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-001.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-002.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-002.jpg",
-     "w": 1425,
-     "h": 2000,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-003.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-003.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-004.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-004.jpg",
-     "w": 1139,
-     "h": 2000,
-     "name": "pf-004"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-005.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-005.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-006.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-006.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-007.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-007.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-008.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-008.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-008"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-009.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-009.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-009"
-    },
-    {
-     "src": "albums/blues-heartbreak/web/pf-010.jpg",
-     "md": "albums/blues-heartbreak/web/md/pf-010.jpg",
-     "w": 1282,
-     "h": 1707,
-     "name": "pf-010"
-    }
-   ]
-  },
-  {
-   "slug": "tell-the-truth-ss26",
-   "title": "Tell The Truth SS26",
-   "subtitle": "Berlin Fashion Week",
-   "description": "",
-   "year": "2025",
-   "order": 12,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/tell-the-truth-ss26/web/_cover.jpg",
-   "coverFrom": "pf-001",
-   "photos": [
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-001.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-001.jpg",
-     "w": 1368,
-     "h": 2000,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-002.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-002.jpg",
-     "w": 1398,
-     "h": 2000,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-003.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-003.jpg",
-     "w": 1386,
-     "h": 2000,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-004.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-004.jpg",
-     "w": 1503,
-     "h": 2000,
-     "name": "pf-004"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-005.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-005.jpg",
-     "w": 1220,
-     "h": 2000,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-006.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-006.jpg",
-     "w": 1365,
-     "h": 2000,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-007.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-007.jpg",
-     "w": 1305,
-     "h": 2000,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-008.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-008.jpg",
-     "w": 1320,
-     "h": 2000,
-     "name": "pf-008"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-009.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-009.jpg",
-     "w": 1322,
-     "h": 2000,
-     "name": "pf-009"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-010.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-010.jpg",
-     "w": 1033,
-     "h": 2000,
-     "name": "pf-010"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-011.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-011.jpg",
-     "w": 1137,
-     "h": 2000,
-     "name": "pf-011"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-012.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-012.jpg",
-     "w": 1043,
-     "h": 2000,
-     "name": "pf-012"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-013.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-013.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-013"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-014.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-014.jpg",
-     "w": 1077,
-     "h": 2000,
-     "name": "pf-014",
-     "fit": {
-      "s": 1.0,
-      "x": 50.0,
-      "y": 32.9
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-015.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-015.jpg",
-     "w": 1294,
-     "h": 2000,
-     "name": "pf-015"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-016.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-016.jpg",
-     "w": 1430,
-     "h": 2000,
-     "name": "pf-016",
-     "fit": {
-      "s": 1.16,
-      "x": 51.9,
-      "y": 92.6
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-017.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-017.jpg",
-     "w": 1219,
-     "h": 2000,
-     "name": "pf-017"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-018.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-018.jpg",
-     "w": 1030,
-     "h": 2000,
-     "name": "pf-018",
-     "fit": {
-      "s": 1.01,
-      "x": 52.9,
-      "y": 68.3
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-019.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-019.jpg",
-     "w": 1095,
-     "h": 2000,
-     "name": "pf-019",
-     "fit": {
-      "s": 1.09,
-      "x": 55.8,
-      "y": 61.5
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-020.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-020.jpg",
-     "w": 1123,
-     "h": 2000,
-     "name": "pf-020"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-021.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-021.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-021",
-     "fit": {
-      "s": 1.08,
-      "x": 52.4,
-      "y": 100.0
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-022.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-022.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-022",
-     "fit": {
-      "s": 1.25,
-      "x": 48.5,
-      "y": 44.7
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-023.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-023.jpg",
-     "w": 1422,
-     "h": 2000,
-     "name": "pf-023",
-     "fit": {
-      "s": 1.25,
-      "x": 54.3,
-      "y": 69.8
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-024.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-024.jpg",
-     "w": 1196,
-     "h": 2000,
-     "name": "pf-024"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-025.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-025.jpg",
-     "w": 1484,
-     "h": 2000,
-     "name": "pf-025",
-     "fit": {
-      "s": 1.13,
-      "x": 45.0,
-      "y": 100.0
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-026.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-026.jpg",
-     "w": 1558,
-     "h": 2000,
-     "name": "pf-026",
-     "fit": {
-      "s": 1.25,
-      "x": 47.1,
-      "y": 45.1
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-027.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-027.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-027",
-     "fit": {
-      "s": 1.24,
-      "x": 62.6,
-      "y": 67.1
-     }
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-028.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-028.jpg",
-     "w": 1220,
-     "h": 2000,
-     "name": "pf-028"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-029.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-029.jpg",
-     "w": 1294,
-     "h": 2000,
-     "name": "pf-029"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-030.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-030.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-030"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-031.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-031.jpg",
-     "w": 1149,
-     "h": 2000,
-     "name": "pf-031"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-032.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-032.jpg",
-     "w": 1360,
-     "h": 2000,
-     "name": "pf-032"
-    },
-    {
-     "src": "albums/tell-the-truth-ss26/web/pf-033.jpg",
-     "md": "albums/tell-the-truth-ss26/web/md/pf-033.jpg",
-     "w": 1296,
-     "h": 2000,
-     "name": "pf-033"
-    }
-   ]
-  },
-  {
-   "slug": "sereno-del-sordo-ss25",
-   "title": "Sereno Del Sordo SS25",
-   "subtitle": "Paris Fashion Week",
-   "description": "",
-   "year": "2024",
-   "order": 13,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/sereno-del-sordo-ss25/web/_cover.jpg",
-   "coverFrom": "pf-001",
-   "photos": [
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-001.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-001.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-002.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-002.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-003.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-003.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-004.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-004.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-004"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-005.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-005.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-006.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-006.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-007.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-007.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-008.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-008.jpg",
-     "w": 1195,
-     "h": 2000,
-     "name": "pf-008"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-009.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-009.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-009"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-010.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-010.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-010"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-011.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-011.jpg",
-     "w": 1443,
-     "h": 2000,
-     "name": "pf-011"
-    },
-    {
-     "src": "albums/sereno-del-sordo-ss25/web/pf-012.jpg",
-     "md": "albums/sereno-del-sordo-ss25/web/md/pf-012.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-012"
-    }
-   ]
-  },
-  {
-   "slug": "after-hours",
-   "title": "After Hours",
-   "subtitle": "PERSONAL PROJECT",
-   "description": "After Hours explores the tension between societal expectations and individual freedom. Through a character-led visual narrative, the project examines the roles we find ourselves playing and the expectations that shape our everyday lives. Blending fashion imagery with conceptual storytelling, it explores the desire to break away from routine, challenge convention and reclaim a sense of individuality. At its core, the project is about finding the freedom to exist beyond the roles imposed on us.",
-   "year": "2026",
-   "order": 14,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/after-hours/web/_cover.jpg",
-   "coverFrom": "pf-73c5265a",
-   "photos": [
-    {
-     "src": "albums/after-hours/web/pf-73c5265a.jpg",
-     "md": "albums/after-hours/web/md/pf-73c5265a.jpg",
-     "w": 1125,
-     "h": 2000,
-     "name": "pf-73c5265a",
-     "fit": {
-      "s": 1.0,
-      "x": 51.5,
-      "y": 36.5
-     }
-    },
-    {
-     "src": "albums/after-hours/web/pf-5dd6a80d.jpg",
-     "md": "albums/after-hours/web/md/pf-5dd6a80d.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-5dd6a80d"
-    },
-    {
-     "src": "albums/after-hours/web/pf-26c561d5.jpg",
-     "md": "albums/after-hours/web/md/pf-26c561d5.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-26c561d5"
-    },
-    {
-     "src": "albums/after-hours/web/pf-caed6085.jpg",
-     "md": "albums/after-hours/web/md/pf-caed6085.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-caed6085"
-    },
-    {
-     "src": "albums/after-hours/web/pf-5e3bb2d7.jpg",
-     "md": "albums/after-hours/web/md/pf-5e3bb2d7.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-5e3bb2d7"
-    },
-    {
-     "src": "albums/after-hours/web/pf-a2c424cc.jpg",
-     "md": "albums/after-hours/web/md/pf-a2c424cc.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-a2c424cc"
-    },
-    {
-     "src": "albums/after-hours/web/pf-cd1cfd61.jpg",
-     "md": "albums/after-hours/web/md/pf-cd1cfd61.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-cd1cfd61"
-    },
-    {
-     "src": "albums/after-hours/web/pf-0a260d44.jpg",
-     "md": "albums/after-hours/web/md/pf-0a260d44.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-0a260d44"
-    },
-    {
-     "src": "albums/after-hours/web/pf-674123df.jpg",
-     "md": "albums/after-hours/web/md/pf-674123df.jpg",
-     "w": 1332,
-     "h": 2000,
-     "name": "pf-674123df"
-    },
-    {
-     "src": "albums/after-hours/web/pf-80e1eb2c.jpg",
-     "md": "albums/after-hours/web/md/pf-80e1eb2c.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-80e1eb2c"
-    },
-    {
-     "src": "albums/after-hours/web/pf-a51e25ca.jpg",
-     "md": "albums/after-hours/web/md/pf-a51e25ca.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-a51e25ca"
-    },
-    {
-     "src": "albums/after-hours/web/pf-a6168671.jpg",
-     "md": "albums/after-hours/web/md/pf-a6168671.jpg",
-     "w": 1920,
-     "h": 1280,
-     "name": "pf-a6168671"
-    },
-    {
-     "src": "albums/after-hours/web/pf-be0aa997.jpg",
-     "md": "albums/after-hours/web/md/pf-be0aa997.jpg",
-     "w": 1500,
-     "h": 2000,
-     "name": "pf-be0aa997"
-    },
-    {
-     "src": "albums/after-hours/web/pf-53e29eeb.jpg",
-     "md": "albums/after-hours/web/md/pf-53e29eeb.jpg",
-     "w": 1600,
-     "h": 2000,
-     "name": "pf-53e29eeb"
     }
    ]
   },
@@ -2501,306 +2620,12 @@
    ]
   },
   {
-   "slug": "unity",
-   "title": "Public Figure",
-   "subtitle": "Commissioned work for DJ Unity",
-   "description": "Public Figure explores contemporary fashion through a commercial lens, combining considered styling, sculptural posing and props to create a distinctive visual identity. Creative directed for Unity's rebrand, the shoot presents her as more than a DJ, but an artist with a refined image, sound and unmistakable presence. Celebrating her charisma, it explores DJing as more than music, but a space for connection, community and creative expression.",
-   "year": "2026",
-   "order": 15,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/unity/web/_cover.jpg",
-   "coverFrom": "pf-0db3f024",
-   "photos": [
-    {
-     "src": "albums/unity/web/pf-0db3f024.jpg",
-     "md": "albums/unity/web/md/pf-0db3f024.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-0db3f024"
-    },
-    {
-     "src": "albums/unity/web/pf-3f0a4c86.jpg",
-     "md": "albums/unity/web/md/pf-3f0a4c86.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-3f0a4c86"
-    },
-    {
-     "src": "albums/unity/web/pf-5a657487.jpg",
-     "md": "albums/unity/web/md/pf-5a657487.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-5a657487"
-    },
-    {
-     "src": "albums/unity/web/pf-6b00b0a9.jpg",
-     "md": "albums/unity/web/md/pf-6b00b0a9.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-6b00b0a9"
-    },
-    {
-     "src": "albums/unity/web/pf-11fb23a7.jpg",
-     "md": "albums/unity/web/md/pf-11fb23a7.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-11fb23a7"
-    },
-    {
-     "src": "albums/unity/web/pf-42b18635.jpg",
-     "md": "albums/unity/web/md/pf-42b18635.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-42b18635"
-    },
-    {
-     "src": "albums/unity/web/pf-241d6812.jpg",
-     "md": "albums/unity/web/md/pf-241d6812.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-241d6812"
-    },
-    {
-     "src": "albums/unity/web/pf-06462383.jpg",
-     "md": "albums/unity/web/md/pf-06462383.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-06462383"
-    },
-    {
-     "src": "albums/unity/web/pf-b2d54fd6.jpg",
-     "md": "albums/unity/web/md/pf-b2d54fd6.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-b2d54fd6"
-    },
-    {
-     "src": "albums/unity/web/pf-b4025d54.jpg",
-     "md": "albums/unity/web/md/pf-b4025d54.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-b4025d54"
-    },
-    {
-     "src": "albums/unity/web/pf-ba66fa00.jpg",
-     "md": "albums/unity/web/md/pf-ba66fa00.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-ba66fa00"
-    },
-    {
-     "src": "albums/unity/web/pf-c9db659e.jpg",
-     "md": "albums/unity/web/md/pf-c9db659e.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-c9db659e"
-    },
-    {
-     "src": "albums/unity/web/pf-cd469490.jpg",
-     "md": "albums/unity/web/md/pf-cd469490.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-cd469490"
-    },
-    {
-     "src": "albums/unity/web/pf-eda79e66.jpg",
-     "md": "albums/unity/web/md/pf-eda79e66.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-eda79e66"
-    },
-    {
-     "src": "albums/unity/web/pf-f6a8616e.jpg",
-     "md": "albums/unity/web/md/pf-f6a8616e.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-f6a8616e"
-    }
-   ]
-  },
-  {
-   "slug": "celebrations",
-   "title": "Celebrations",
-   "subtitle": "",
-   "description": "",
-   "year": "",
-   "order": 16,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/celebrations/web/_cover.jpg",
-   "coverFrom": "pf-004",
-   "photos": [
-    {
-     "src": "albums/celebrations/web/pf-001.jpg",
-     "md": "albums/celebrations/web/md/pf-001.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/celebrations/web/pf-002.jpg",
-     "md": "albums/celebrations/web/md/pf-002.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/celebrations/web/pf-003.jpg",
-     "md": "albums/celebrations/web/md/pf-003.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/celebrations/web/pf-004.jpg",
-     "md": "albums/celebrations/web/md/pf-004.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-004"
-    },
-    {
-     "src": "albums/celebrations/web/pf-005.jpg",
-     "md": "albums/celebrations/web/md/pf-005.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/celebrations/web/pf-006.jpg",
-     "md": "albums/celebrations/web/md/pf-006.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/celebrations/web/pf-007.jpg",
-     "md": "albums/celebrations/web/md/pf-007.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/celebrations/web/pf-008.jpg",
-     "md": "albums/celebrations/web/md/pf-008.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-008"
-    },
-    {
-     "src": "albums/celebrations/web/pf-009.jpg",
-     "md": "albums/celebrations/web/md/pf-009.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-009"
-    },
-    {
-     "src": "albums/celebrations/web/pf-010.jpg",
-     "md": "albums/celebrations/web/md/pf-010.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-010"
-    },
-    {
-     "src": "albums/celebrations/web/pf-011.jpg",
-     "md": "albums/celebrations/web/md/pf-011.jpg",
-     "w": 1325,
-     "h": 2000,
-     "name": "pf-011"
-    },
-    {
-     "src": "albums/celebrations/web/pf-012.jpg",
-     "md": "albums/celebrations/web/md/pf-012.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-012"
-    },
-    {
-     "src": "albums/celebrations/web/pf-013.jpg",
-     "md": "albums/celebrations/web/md/pf-013.jpg",
-     "w": 1920,
-     "h": 1272,
-     "name": "pf-013"
-    }
-   ]
-  },
-  {
-   "slug": "cover-art",
-   "title": "Cover Art",
-   "subtitle": "",
-   "description": "",
-   "year": "",
-   "order": 16,
-   "featured": false,
-   "roll": false,
-   "cover": "albums/cover-art/web/_cover.jpg",
-   "coverFrom": "pf-001",
-   "photos": [
-    {
-     "src": "albums/cover-art/web/pf-001.jpg",
-     "md": "albums/cover-art/web/md/pf-001.jpg",
-     "w": 1920,
-     "h": 1920,
-     "name": "pf-001"
-    },
-    {
-     "src": "albums/cover-art/web/pf-002.jpg",
-     "md": "albums/cover-art/web/md/pf-002.jpg",
-     "w": 1920,
-     "h": 1670,
-     "name": "pf-002"
-    },
-    {
-     "src": "albums/cover-art/web/pf-003.jpg",
-     "md": "albums/cover-art/web/md/pf-003.jpg",
-     "w": 1284,
-     "h": 1264,
-     "name": "pf-003"
-    },
-    {
-     "src": "albums/cover-art/web/pf-004.jpg",
-     "md": "albums/cover-art/web/md/pf-004.jpg",
-     "w": 1274,
-     "h": 1284,
-     "name": "pf-004"
-    },
-    {
-     "src": "albums/cover-art/web/pf-005.jpg",
-     "md": "albums/cover-art/web/md/pf-005.jpg",
-     "w": 1268,
-     "h": 1266,
-     "name": "pf-005"
-    },
-    {
-     "src": "albums/cover-art/web/pf-006.jpg",
-     "md": "albums/cover-art/web/md/pf-006.jpg",
-     "w": 1643,
-     "h": 2000,
-     "name": "pf-006"
-    },
-    {
-     "src": "albums/cover-art/web/pf-007.jpg",
-     "md": "albums/cover-art/web/md/pf-007.jpg",
-     "w": 1284,
-     "h": 1270,
-     "name": "pf-007"
-    },
-    {
-     "src": "albums/cover-art/web/pf-008.jpg",
-     "md": "albums/cover-art/web/md/pf-008.jpg",
-     "w": 1282,
-     "h": 1707,
-     "name": "pf-008"
-    }
-   ]
-  },
-  {
    "slug": "graduations",
    "title": "Graduations",
    "subtitle": "",
    "description": "",
    "year": "",
-   "order": 17,
+   "order": 16,
    "featured": false,
    "roll": false,
    "cover": "albums/graduations/web/_cover.jpg",
@@ -2977,12 +2802,82 @@
    ]
   },
   {
+   "slug": "cover-art",
+   "title": "Cover Art",
+   "subtitle": "",
+   "description": "",
+   "year": "",
+   "order": 17,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/cover-art/web/_cover.jpg",
+   "coverFrom": "pf-001",
+   "photos": [
+    {
+     "src": "albums/cover-art/web/pf-001.jpg",
+     "md": "albums/cover-art/web/md/pf-001.jpg",
+     "w": 1920,
+     "h": 1920,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/cover-art/web/pf-002.jpg",
+     "md": "albums/cover-art/web/md/pf-002.jpg",
+     "w": 1920,
+     "h": 1670,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/cover-art/web/pf-003.jpg",
+     "md": "albums/cover-art/web/md/pf-003.jpg",
+     "w": 1284,
+     "h": 1264,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/cover-art/web/pf-004.jpg",
+     "md": "albums/cover-art/web/md/pf-004.jpg",
+     "w": 1274,
+     "h": 1284,
+     "name": "pf-004"
+    },
+    {
+     "src": "albums/cover-art/web/pf-005.jpg",
+     "md": "albums/cover-art/web/md/pf-005.jpg",
+     "w": 1268,
+     "h": 1266,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/cover-art/web/pf-006.jpg",
+     "md": "albums/cover-art/web/md/pf-006.jpg",
+     "w": 1643,
+     "h": 2000,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/cover-art/web/pf-007.jpg",
+     "md": "albums/cover-art/web/md/pf-007.jpg",
+     "w": 1284,
+     "h": 1270,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/cover-art/web/pf-008.jpg",
+     "md": "albums/cover-art/web/md/pf-008.jpg",
+     "w": 1282,
+     "h": 1707,
+     "name": "pf-008"
+    }
+   ]
+  },
+  {
    "slug": "djs",
    "title": "DJs",
    "subtitle": "",
    "description": "",
    "year": "",
-   "order": 19,
+   "order": 18,
    "featured": false,
    "roll": false,
    "cover": "albums/djs/web/_cover.jpg",
@@ -3220,7 +3115,7 @@
    "subtitle": "",
    "description": "",
    "year": "",
-   "order": 20,
+   "order": 19,
    "featured": false,
    "roll": false,
    "cover": "albums/concerts/web/_cover.jpg",
@@ -3302,6 +3197,111 @@
      "w": 1159,
      "h": 2000,
      "name": "pf-011"
+    }
+   ]
+  },
+  {
+   "slug": "celebrations",
+   "title": "Celebrations",
+   "subtitle": "",
+   "description": "",
+   "year": "",
+   "order": 20,
+   "featured": false,
+   "roll": false,
+   "cover": "albums/celebrations/web/_cover.jpg",
+   "coverFrom": "pf-004",
+   "photos": [
+    {
+     "src": "albums/celebrations/web/pf-001.jpg",
+     "md": "albums/celebrations/web/md/pf-001.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-001"
+    },
+    {
+     "src": "albums/celebrations/web/pf-002.jpg",
+     "md": "albums/celebrations/web/md/pf-002.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-002"
+    },
+    {
+     "src": "albums/celebrations/web/pf-003.jpg",
+     "md": "albums/celebrations/web/md/pf-003.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-003"
+    },
+    {
+     "src": "albums/celebrations/web/pf-004.jpg",
+     "md": "albums/celebrations/web/md/pf-004.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-004"
+    },
+    {
+     "src": "albums/celebrations/web/pf-005.jpg",
+     "md": "albums/celebrations/web/md/pf-005.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-005"
+    },
+    {
+     "src": "albums/celebrations/web/pf-006.jpg",
+     "md": "albums/celebrations/web/md/pf-006.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-006"
+    },
+    {
+     "src": "albums/celebrations/web/pf-007.jpg",
+     "md": "albums/celebrations/web/md/pf-007.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-007"
+    },
+    {
+     "src": "albums/celebrations/web/pf-008.jpg",
+     "md": "albums/celebrations/web/md/pf-008.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-008"
+    },
+    {
+     "src": "albums/celebrations/web/pf-009.jpg",
+     "md": "albums/celebrations/web/md/pf-009.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-009"
+    },
+    {
+     "src": "albums/celebrations/web/pf-010.jpg",
+     "md": "albums/celebrations/web/md/pf-010.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-010"
+    },
+    {
+     "src": "albums/celebrations/web/pf-011.jpg",
+     "md": "albums/celebrations/web/md/pf-011.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-011"
+    },
+    {
+     "src": "albums/celebrations/web/pf-012.jpg",
+     "md": "albums/celebrations/web/md/pf-012.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-012"
+    },
+    {
+     "src": "albums/celebrations/web/pf-013.jpg",
+     "md": "albums/celebrations/web/md/pf-013.jpg",
+     "w": 1920,
+     "h": 1272,
+     "name": "pf-013"
     }
    ]
   }

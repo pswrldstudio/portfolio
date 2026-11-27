@@ -105,6 +105,18 @@
     userStarted = true;
     if (!wantOff && vol > 0) start();
   }
+  // leaving the page (another app, another tab, phone locked) pauses the music; coming back picks it up where it was
+  var pausedByLeaving = false;
+  document.addEventListener("visibilitychange", function () {
+    if (!frame || !frame.pause) return;              // (the YouTube fallback can't be paused from here)
+    if (document.hidden) {
+      if (on && !frame.paused) { pausedByLeaving = true; frame.pause(); savePlace(); }
+    } else if (pausedByLeaving) {
+      pausedByLeaving = false;
+      if (on) frame.play().catch(function () { on = false; btn.classList.remove("on"); waitForClick(); });
+    }
+  });
+  addEventListener("pagehide", function () { if (frame && frame.pause && !frame.paused) frame.pause(); });
   // music was already playing on the last page: carry straight on if the browser allows it
   if (mp3 && wasOn && vol > 0) start();
   else waitForClick();

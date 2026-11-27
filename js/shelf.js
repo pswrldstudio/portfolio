@@ -857,6 +857,11 @@
       '<div class="vhs-screen"><video playsinline></video>' +
       '<div class="vhs-osd"><span class="rec">&#9679; REC</span><span class="tc">SP 00:00:00</span></div>' +
       '<div class="vhs-msg">' + (videos.length ? "PLAY &#9654;" : "NO TAPE<br><small>Put video files in pswrld-site/videos/ and run the add-photos script</small>") + '</div></div>' +
+      (videos.length ? '<div class="vhs-ctl"><button class="vc-back" aria-label="Back 10 seconds">&#8634;<small>10</small></button>' +
+        '<button class="vc-play" aria-label="Play or pause"><span class="vc-i">&#10074;&#10074;</span></button>' +
+        '<button class="vc-fwd" aria-label="Forward 10 seconds">&#8635;<small>10</small></button>' +
+        '<input class="vc-scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub through the film">' +
+        '<span class="vc-time">00:00 / 00:00</span></div>' : '') +
       '<div class="vhs-title">' + esc(TX.cam_label || "Creative Directed") + '</div><div class="vhs-tapes">' + tapes + '</div><button class="vhs-x" aria-label="Close">&times;</button>';
     document.body.appendChild(box);
     document.body.classList.add("vhs-open");
@@ -929,13 +934,44 @@
         });
       });
     }
+    // ---- controls: back / forward 10 s, play / pause, and a bar to scrub through the film ----
+    var scrub = box.querySelector(".vc-scrub"), vtime = box.querySelector(".vc-time"), vplay = box.querySelector(".vc-play"), scrubbing = false;
+    function mmss(t) { t = Math.max(0, Math.floor(t || 0)); return String(Math.floor(t / 60)).padStart(2, "0") + ":" + String(t % 60).padStart(2, "0"); }
+    function showTime() {
+      if (!scrub) return;
+      var d = vid.duration || 0;
+      if (!scrubbing) { scrub.value = d ? Math.round(vid.currentTime / d * 1000) : 0; }
+      scrub.style.setProperty("--p", (scrub.value / 10) + "%");
+      vtime.textContent = mmss(scrubbing && d ? scrub.value / 1000 * d : vid.currentTime) + " / " + mmss(d);
+    }
+    function skip(sec) { if (vid.duration) { vid.currentTime = Math.max(0, Math.min(vid.duration - 0.1, vid.currentTime + sec)); showTime(); } }
+    function toggle() { if (vid.paused) vid.play().catch(function () {}); else vid.pause(); }
+    function playIcon() { if (vplay) { vplay.querySelector(".vc-i").innerHTML = vid.paused ? "&#9654;" : "&#10074;&#10074;"; box.classList.toggle("paused", vid.paused); } }
+    if (scrub) {
+      box.querySelector(".vc-back").onclick = function () { skip(-10); };
+      box.querySelector(".vc-fwd").onclick = function () { skip(10); };
+      vplay.onclick = toggle;
+      scrub.addEventListener("pointerdown", function () { scrubbing = true; });
+      scrub.addEventListener("input", function () { scrubbing = true; if (vid.duration) vid.currentTime = scrub.value / 1000 * vid.duration; showTime(); });
+      scrub.addEventListener("change", function () { scrubbing = false; showTime(); });
+      scrub.addEventListener("pointerup", function () { scrubbing = false; });
+      vid.addEventListener("play", playIcon); vid.addEventListener("pause", playIcon);
+      vid.addEventListener("loadedmetadata", showTime); vid.addEventListener("durationchange", showTime);
+    }
     vid.ontimeupdate = function () {
       var s = Math.floor(vid.currentTime), p = function (x) { return String(x).padStart(2, "0"); };
       tc.textContent = "SP " + p(Math.floor(s / 3600)) + ":" + p(Math.floor(s / 60) % 60) + ":" + p(s % 60);
+      showTime();
     };
-    vid.onclick = function () { vid.paused ? vid.play() : vid.pause(); };
+    vid.onclick = toggle;
     function close() { vid.pause(); box.remove(); document.body.classList.remove("vhs-open"); cam.classList.remove("open"); document.removeEventListener("keydown", esc2); }
-    function esc2(e) { if (e.key === "Escape") close(); }
+    function esc2(e) {
+      if (e.target.closest && e.target.closest("[contenteditable], input[type=text], textarea")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") { e.preventDefault(); skip(-10); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); skip(10); }
+      else if (e.key === " " || e.key === "k") { e.preventDefault(); toggle(); }
+    }
     box.querySelector(".vhs-x").onclick = close;
     box.addEventListener("click", function (e) { if (e.target === box) close(); });
     document.addEventListener("keydown", esc2);

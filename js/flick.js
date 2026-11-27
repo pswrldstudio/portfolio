@@ -20,9 +20,25 @@
   var album = albums.find(function (a) { return a.slug === slug; }) || albums.find(function (a) { return !a.featured && !a.roll; });
   if (!album) { stage.textContent = "No albums yet. Run tools/add_photos.py"; return; }
   window.PSWRLD_CURRENT = album;
-  var others = albums.filter(function (a) { return !a.featured && !a.roll && a.slug !== "film"; });
-  var nextAlbum = others[(others.indexOf(album) + 1) % others.length] || others[0];
-  var prevAlbum = others[(others.indexOf(album) - 1 + others.length) % others.length] || others[0];
+  var others = shelfOrder(album);
+  var at = others.indexOf(album);
+  var nextAlbum = at > -1 && at < others.length - 1 ? others[at + 1] : null;   // the last book has no "next" (no wrap-around)
+  var prevAlbum = at > 0 ? others[at - 1] : null;                              // the first book has no "previous"
+  // the order the books stand on the shelf; archived books (inside the Archives book) only lead to each other
+  function shelfOrder(cur) {
+    var TX = window.PSWRLD_TEXT || {}, cats, arch;
+    try { cats = JSON.parse(TX.shelf_cats || "{}"); } catch (e) { cats = {}; }
+    try { arch = JSON.parse(TX.archive || "null") || ["graduations", "cover-art", "djs", "concerts", "celebrations"]; } catch (e) { arch = []; }
+    var books = albums.filter(function (a) { return !a.featured && !a.roll && a.slug !== "film"; });
+    if (arch.indexOf(cur.slug) > -1)
+      return arch.map(function (s) { return books.find(function (a) { return a.slug === s; }); }).filter(Boolean);
+    var KEYS = ["editorials", "commissions", "commercial"], list = [];
+    function catOf(s) { return KEYS.indexOf(cats[s]) > -1 ? cats[s] : KEYS[0]; }
+    KEYS.forEach(function (k) {
+      books.forEach(function (a) { if (arch.indexOf(a.slug) < 0 && catOf(a.slug) === k) list.push(a); });
+    });
+    return list;
+  }
   if (!embedded) {
     document.title = album.title + " | PSWRLD";
     var t = document.getElementById("albumTitle"); if (t) t.textContent = album.title;
@@ -81,7 +97,8 @@
       case "end":
         return '<div class="endleaf"><img src="assets/pswrld-mark-white.svg" alt="PSWRLD">' +
           (embedded ? '<a href="#work" data-nav>See all albums</a>'
-                    : '<a href="album.html?a=' + encodeURIComponent(nextAlbum.slug) + '" data-nav>Next: ' + esc(nextAlbum.title) + '</a>') + '</div>';
+                    : nextAlbum ? '<a href="album.html?a=' + encodeURIComponent(nextAlbum.slug) + '" data-nav>Next: ' + esc(nextAlbum.title) + '</a>'
+                                : '<a href="index.html#work" data-home>Back to the shelf</a>') + '</div>';
       case "backcover":
         return '<div class="fill cloth"></div><img class="backmark" src="assets/pswrld-mark-white.svg" alt="">';
       default:
@@ -291,8 +308,8 @@
     if (typeof clearPeel === "function") clearPeel();
     hideHint();
     var target = (running ? tgt : Math.round(pos)) + d;
-    if (!embedded && d > 0 && target > n - 1 && Math.round(pos) >= n - 1) { closeThenNext(); return; }
-    if (!embedded && d < 0 && target < 1 && Math.round(pos) <= 1) { closeThenPrev(); return; }
+    if (!embedded && d > 0 && target > n - 1 && Math.round(pos) >= n - 1) { if (nextAlbum) closeThenNext(); else animateTo(n - 1, 400); return; }
+    if (!embedded && d < 0 && target < 1 && Math.round(pos) <= 1) { if (prevAlbum) closeThenPrev(); else animateTo(1, 400); return; }
     animateTo(target);
   }
   var leaving = false;
@@ -304,6 +321,7 @@
     if (leaving || embedded) return;
     leaving = true;
     var to = d > 0 ? nextAlbum : prevAlbum, wait = 0, shut = d > 0 ? n : 0;
+    if (!to) { leaving = false; animateTo(d > 0 ? n - 1 : 1, 400); return; }   // first / last book: nowhere to go
     if (Math.abs(pos - shut) > 0.01) { animateTo(shut, 800, true); wait = 900; }   // the book closes
     setTimeout(function () {
       stage.classList.add(d > 0 ? "swipe-out" : "swipe-out-r");        // ...and slides away
@@ -456,7 +474,7 @@
         return;
       }
     }
-    if (e.target.closest("[data-nav]")) return;
+    if (e.target.closest("[data-nav], [data-home]")) return;
     // the description box: grab, scroll and read it without turning the page
     var cc = overText(e);
     if (cc) {
@@ -527,7 +545,11 @@
     if (moved < 6) {
       var r = stage.getBoundingClientRect(), right = e.clientX > r.left + r.width / 2;
       if (tapT) { clearTimeout(tapT); tapT = null; openZoomAt(right); return; }   // double tap: zoom
-      tapT = setTimeout(function () { tapT = null; go(pos < 0.5 || right ? 1 : -1); }, 240);
+      tapT = setTimeout(function () {
+        tapT = null;
+        if (!right && pos >= 0.5 && Math.round(pos) <= 1 && !embedded) return;   // the description page stays put
+        go(pos < 0.5 || right ? 1 : -1);
+      }, 240);
       return;
     }
     hideHint();
@@ -537,10 +559,15 @@
     if (throwPages * dragged < 0 && Math.round(pos) !== Math.round(p0)) { throwPages = 0; vel = 0; }
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
     if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
-    if (!embedded && target < 1 && throwPages < 0 && p0 <= 1.5) { closeThenPrev(); return; }
+    if (!embedded && p0 >= 0.5 && p0 <= 1.5 && pos < 1) {
+      if (pos <= 0.12 && prevAlbum) { closeThenPrev(); return; }           // dragged all the way back: the previous book
+      animateTo(1, 450); return;                                            // anything less: the page settles back, nothing changes
+    }
     animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110), false, -vel / (W * 1.1));
   }
   stage.addEventListener("click", function (e) {   // "Next: ..." on the last page swipes to it in place
+    var h = e.target.closest && e.target.closest("[data-home]");
+    if (h && overlay && window.PSWRLD_CLOSE_ALBUM) { e.preventDefault(); window.PSWRLD_CLOSE_ALBUM(); return; }
     var a = e.target.closest && e.target.closest("[data-nav]");
     if (!a || embedded) return;
     e.preventDefault(); closeThenNext();
