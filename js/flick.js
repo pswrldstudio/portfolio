@@ -563,6 +563,9 @@
     // a small wobble back as the mouse lets go never undoes a page you've pulled past halfway
     if (throwPages * dragged < 0 && Math.round(pos) !== Math.round(p0)) { throwPages = 0; vel = 0; }
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
+    // the book is fully closed: one swipe the way it faces goes straight to the next / previous book
+    if (!embedded && p0 >= n - 0.02 && (dragged > 0.03 || throwPages > 0)) { if (nextAlbum) closeThenNext(); else animateTo(n, 300); return; }
+    if (!embedded && p0 <= 0.02 && (dragged < -0.03 || throwPages < 0)) { if (prevAlbum) closeThenPrev(); else animateTo(0, 300); return; }
     if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
     if (!embedded && p0 >= 0.5 && p0 <= 1.5 && pos < 1) {
       if (pos <= 0.12 && prevAlbum) { closeThenPrev(); return; }           // dragged all the way back: the previous book
