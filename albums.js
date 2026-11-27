@@ -9,7 +9,6 @@ window.PSWRLD = {
    "year": "2024-2026",
    "order": 0,
    "featured": true,
-   "roll": false,
    "cover": "albums/crowned/web/pf-001.jpg",
    "coverFrom": "crowned/pf-001",
    "photos": [
@@ -218,7 +217,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 1,
    "featured": false,
-   "roll": false,
    "cover": "albums/crowned/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -358,7 +356,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 2,
    "featured": false,
-   "roll": false,
    "cover": "albums/blues-heartbreak/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -442,7 +439,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 3,
    "featured": false,
-   "roll": false,
    "cover": "albums/rubi-rose/web/_cover.jpg",
    "coverFrom": "pf-90a2dbef",
    "photos": [
@@ -599,7 +595,6 @@ window.PSWRLD = {
    "year": "2025",
    "order": 4,
    "featured": false,
-   "roll": false,
    "cover": "albums/tell-the-truth-ss26/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -894,7 +889,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 5,
    "featured": false,
-   "roll": false,
    "cover": "albums/after-hours/web/_cover.jpg",
    "coverFrom": "pf-73c5265a",
    "photos": [
@@ -1011,7 +1005,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 6,
    "featured": false,
-   "roll": false,
    "cover": "albums/toochi/web/_cover.jpg",
    "coverFrom": "pf-0eb79d5e",
    "photos": [
@@ -1067,7 +1060,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 7,
    "featured": false,
-   "roll": false,
    "cover": "albums/unity/web/_cover.jpg",
    "coverFrom": "pf-0db3f024",
    "photos": [
@@ -1186,7 +1178,6 @@ window.PSWRLD = {
    "year": "",
    "order": 8,
    "featured": false,
-   "roll": false,
    "cover": "albums/sona-blue-x-jt/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1333,7 +1324,6 @@ window.PSWRLD = {
    "year": "2026",
    "order": 9,
    "featured": false,
-   "roll": false,
    "cover": "albums/headshots/web/_cover.jpg",
    "coverFrom": "pf-5e26de08",
    "photos": [
@@ -1480,7 +1470,6 @@ window.PSWRLD = {
    "year": "2024",
    "order": 10,
    "featured": false,
-   "roll": false,
    "cover": "albums/sereno-del-sordo-ss25/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1578,7 +1567,6 @@ window.PSWRLD = {
    "year": "",
    "order": 11,
    "featured": false,
-   "roll": false,
    "cover": "albums/film/web/_cover.jpg",
    "coverFrom": "000114160021",
    "photos": [
@@ -1718,7 +1706,6 @@ window.PSWRLD = {
    "year": "",
    "order": 12,
    "featured": false,
-   "roll": false,
    "cover": "albums/cover-art/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1788,7 +1775,6 @@ window.PSWRLD = {
    "year": "",
    "order": 13,
    "featured": false,
-   "roll": false,
    "cover": "albums/commercial/web/_cover.jpg",
    "coverFrom": "pf-a7b6864f",
    "photos": [
@@ -1935,7 +1921,6 @@ window.PSWRLD = {
    "year": "",
    "order": 14,
    "featured": false,
-   "roll": false,
    "cover": "albums/rendezvous/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -2082,7 +2067,6 @@ window.PSWRLD = {
    "year": "",
    "order": 15,
    "featured": false,
-   "roll": false,
    "cover": "albums/graduations/web/_cover.jpg",
    "coverFrom": "pf-009",
    "photos": [
@@ -2264,7 +2248,6 @@ window.PSWRLD = {
    "year": "",
    "order": 16,
    "featured": false,
-   "roll": false,
    "cover": "albums/events/web/_cover.jpg",
    "coverFrom": "pf-037",
    "photos": [
@@ -2586,7 +2569,6 @@ window.PSWRLD = {
    "year": "2024",
    "order": 17,
    "featured": false,
-   "roll": false,
    "cover": "albums/fete-de-la-musique/web/_cover.jpg",
    "coverFrom": "pf-003",
    "photos": [
@@ -3356,7 +3338,6 @@ window.PSWRLD = {
    "year": "",
    "order": 18,
    "featured": false,
-   "roll": false,
    "cover": "albums/celebrations/web/_cover.jpg",
    "coverFrom": "pf-004",
    "photos": [
@@ -3461,7 +3442,6 @@ window.PSWRLD = {
    "year": "",
    "order": 19,
    "featured": false,
-   "roll": false,
    "cover": "albums/djs/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -3699,7 +3679,6 @@ window.PSWRLD = {
    "year": "",
    "order": 20,
    "featured": false,
-   "roll": false,
    "cover": "albums/concerts/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -3779,6 +3758,393 @@ window.PSWRLD = {
      "w": 1159,
      "h": 2000,
      "name": "pf-011"
+    }
+   ]
+  },
+  {
+   "slug": "yallah",
+   "title": "Yallah",
+   "subtitle": "Commercial shoot for Yallah",
+   "description": "A campaign for Nigerian fashion brand Yallah, bringing together models across different ages and genders to celebrate individuality and self-expression. Through expressive posing, considered styling and a playful creative approach, the shoot presents the brand through a diverse range of identities and perspectives. Blending fashion with character-led imagery, the campaign gives Yallah a distinctive visual identity while celebrating the people who bring it to life.",
+   "year": "2026",
+   "order": 21,
+   "featured": false,
+   "cover": "albums/yallah/web/_cover.jpg",
+   "coverFrom": "pf-1db1a8ea",
+   "photos": [
+    {
+     "src": "albums/yallah/web/pf-1db1a8ea.jpg",
+     "md": "albums/yallah/web/md/pf-1db1a8ea.jpg",
+     "w": 1259,
+     "h": 2000,
+     "name": "pf-1db1a8ea"
+    },
+    {
+     "src": "albums/yallah/web/pf-7d491f1e.jpg",
+     "md": "albums/yallah/web/md/pf-7d491f1e.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-7d491f1e"
+    },
+    {
+     "src": "albums/yallah/web/pf-157104d1.jpg",
+     "md": "albums/yallah/web/md/pf-157104d1.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-157104d1"
+    },
+    {
+     "src": "albums/yallah/web/pf-7a1c0f60.jpg",
+     "md": "albums/yallah/web/md/pf-7a1c0f60.jpg",
+     "w": 1271,
+     "h": 2000,
+     "name": "pf-7a1c0f60"
+    },
+    {
+     "src": "albums/yallah/web/pf-0096fcd5.jpg",
+     "md": "albums/yallah/web/md/pf-0096fcd5.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-0096fcd5"
+    },
+    {
+     "src": "albums/yallah/web/pf-643ae0ee.jpg",
+     "md": "albums/yallah/web/md/pf-643ae0ee.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-643ae0ee",
+     "fit": {
+      "s": 1.15,
+      "x": 100.0,
+      "y": 63.2
+     }
+    },
+    {
+     "src": "albums/yallah/web/pf-358cfa9e.jpg",
+     "md": "albums/yallah/web/md/pf-358cfa9e.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-358cfa9e"
+    },
+    {
+     "src": "albums/yallah/web/pf-318967a2.jpg",
+     "md": "albums/yallah/web/md/pf-318967a2.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-318967a2"
+    },
+    {
+     "src": "albums/yallah/web/pf-cb5e098a.jpg",
+     "md": "albums/yallah/web/md/pf-cb5e098a.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-cb5e098a"
+    },
+    {
+     "src": "albums/yallah/web/pf-3dfabc76.jpg",
+     "md": "albums/yallah/web/md/pf-3dfabc76.jpg",
+     "w": 1295,
+     "h": 2000,
+     "name": "pf-3dfabc76"
+    },
+    {
+     "src": "albums/yallah/web/pf-9cdf17e7.jpg",
+     "md": "albums/yallah/web/md/pf-9cdf17e7.jpg",
+     "w": 1271,
+     "h": 2000,
+     "name": "pf-9cdf17e7"
+    },
+    {
+     "src": "albums/yallah/web/pf-104a5fdd.jpg",
+     "md": "albums/yallah/web/md/pf-104a5fdd.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-104a5fdd"
+    },
+    {
+     "src": "albums/yallah/web/pf-5eb230e9.jpg",
+     "md": "albums/yallah/web/md/pf-5eb230e9.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5eb230e9"
+    },
+    {
+     "src": "albums/yallah/web/pf-cf23df13.jpg",
+     "md": "albums/yallah/web/md/pf-cf23df13.jpg",
+     "w": 1646,
+     "h": 2000,
+     "name": "pf-cf23df13"
+    },
+    {
+     "src": "albums/yallah/web/pf-791102b6.jpg",
+     "md": "albums/yallah/web/md/pf-791102b6.jpg",
+     "w": 1746,
+     "h": 2000,
+     "name": "pf-791102b6"
+    },
+    {
+     "src": "albums/yallah/web/pf-65922186.jpg",
+     "md": "albums/yallah/web/md/pf-65922186.jpg",
+     "w": 1646,
+     "h": 2000,
+     "name": "pf-65922186"
+    },
+    {
+     "src": "albums/yallah/web/pf-651bf983.jpg",
+     "md": "albums/yallah/web/md/pf-651bf983.jpg",
+     "w": 1920,
+     "h": 1955,
+     "name": "pf-651bf983"
+    },
+    {
+     "src": "albums/yallah/web/pf-518b18af.jpg",
+     "md": "albums/yallah/web/md/pf-518b18af.jpg",
+     "w": 1646,
+     "h": 2000,
+     "name": "pf-518b18af"
+    },
+    {
+     "src": "albums/yallah/web/pf-c028bf9b.jpg",
+     "md": "albums/yallah/web/md/pf-c028bf9b.jpg",
+     "w": 1646,
+     "h": 2000,
+     "name": "pf-c028bf9b"
+    },
+    {
+     "src": "albums/yallah/web/pf-91a8db84.jpg",
+     "md": "albums/yallah/web/md/pf-91a8db84.jpg",
+     "w": 1155,
+     "h": 2000,
+     "name": "pf-91a8db84"
+    },
+    {
+     "src": "albums/yallah/web/pf-27616315.jpg",
+     "md": "albums/yallah/web/md/pf-27616315.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-27616315"
+    },
+    {
+     "src": "albums/yallah/web/pf-bcdad065.jpg",
+     "md": "albums/yallah/web/md/pf-bcdad065.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-bcdad065"
+    },
+    {
+     "src": "albums/yallah/web/pf-d0c2ec83.jpg",
+     "md": "albums/yallah/web/md/pf-d0c2ec83.jpg",
+     "w": 1155,
+     "h": 2000,
+     "name": "pf-d0c2ec83"
+    },
+    {
+     "src": "albums/yallah/web/pf-f13e3592.jpg",
+     "md": "albums/yallah/web/md/pf-f13e3592.jpg",
+     "w": 1646,
+     "h": 2000,
+     "name": "pf-f13e3592"
+    }
+   ]
+  },
+  {
+   "slug": "twh",
+   "title": "TWH",
+   "subtitle": "",
+   "description": "",
+   "year": "2026",
+   "order": 22,
+   "featured": false,
+   "cover": "albums/twh/web/_cover.jpg",
+   "coverFrom": "pf-ef21eba0",
+   "photos": [
+    {
+     "src": "albums/twh/web/pf-4c62a4ad.jpg",
+     "md": "albums/twh/web/md/pf-4c62a4ad.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-4c62a4ad"
+    },
+    {
+     "src": "albums/twh/web/pf-1c4af286.jpg",
+     "md": "albums/twh/web/md/pf-1c4af286.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-1c4af286",
+     "fit": {
+      "s": 1.0,
+      "x": 59.8,
+      "y": 12.8
+     }
+    },
+    {
+     "src": "albums/twh/web/pf-a7197ddb.jpg",
+     "md": "albums/twh/web/md/pf-a7197ddb.jpg",
+     "w": 1286,
+     "h": 2000,
+     "name": "pf-a7197ddb"
+    },
+    {
+     "src": "albums/twh/web/pf-5eaacee6.jpg",
+     "md": "albums/twh/web/md/pf-5eaacee6.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5eaacee6",
+     "fit": {
+      "s": 1.0,
+      "x": 52.5,
+      "y": 34.2
+     }
+    },
+    {
+     "src": "albums/twh/web/pf-f8a2e0b5.jpg",
+     "md": "albums/twh/web/md/pf-f8a2e0b5.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-f8a2e0b5",
+     "fit": {
+      "s": 1.0,
+      "x": 49.6,
+      "y": 43.6
+     }
+    },
+    {
+     "src": "albums/twh/web/pf-1cba3360.jpg",
+     "md": "albums/twh/web/md/pf-1cba3360.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-1cba3360"
+    },
+    {
+     "src": "albums/twh/web/pf-185878e2.jpg",
+     "md": "albums/twh/web/md/pf-185878e2.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-185878e2"
+    },
+    {
+     "src": "albums/twh/web/pf-4c27769e.jpg",
+     "md": "albums/twh/web/md/pf-4c27769e.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-4c27769e"
+    },
+    {
+     "src": "albums/twh/web/pf-832775d9.jpg",
+     "md": "albums/twh/web/md/pf-832775d9.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-832775d9"
+    },
+    {
+     "src": "albums/twh/web/pf-88a734f2.jpg",
+     "md": "albums/twh/web/md/pf-88a734f2.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-88a734f2"
+    },
+    {
+     "src": "albums/twh/web/pf-96a45001.jpg",
+     "md": "albums/twh/web/md/pf-96a45001.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-96a45001"
+    },
+    {
+     "src": "albums/twh/web/pf-177a2a4c.jpg",
+     "md": "albums/twh/web/md/pf-177a2a4c.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-177a2a4c"
+    },
+    {
+     "src": "albums/twh/web/pf-716703c3.jpg",
+     "md": "albums/twh/web/md/pf-716703c3.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-716703c3",
+     "fit": {
+      "s": 1.0,
+      "x": 50.0,
+      "y": 46.4
+     }
+    },
+    {
+     "src": "albums/twh/web/pf-7504898b.jpg",
+     "md": "albums/twh/web/md/pf-7504898b.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-7504898b"
+    },
+    {
+     "src": "albums/twh/web/pf-ad83565d.jpg",
+     "md": "albums/twh/web/md/pf-ad83565d.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-ad83565d"
+    },
+    {
+     "src": "albums/twh/web/pf-b1a39d5b.jpg",
+     "md": "albums/twh/web/md/pf-b1a39d5b.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-b1a39d5b"
+    },
+    {
+     "src": "albums/twh/web/pf-b6701a33.jpg",
+     "md": "albums/twh/web/md/pf-b6701a33.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-b6701a33"
+    },
+    {
+     "src": "albums/twh/web/pf-ba7d18fa.jpg",
+     "md": "albums/twh/web/md/pf-ba7d18fa.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-ba7d18fa"
+    },
+    {
+     "src": "albums/twh/web/pf-bb2819d6.jpg",
+     "md": "albums/twh/web/md/pf-bb2819d6.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-bb2819d6"
+    },
+    {
+     "src": "albums/twh/web/pf-bee87245.jpg",
+     "md": "albums/twh/web/md/pf-bee87245.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-bee87245"
+    },
+    {
+     "src": "albums/twh/web/pf-cd2cf0c9.jpg",
+     "md": "albums/twh/web/md/pf-cd2cf0c9.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-cd2cf0c9"
+    },
+    {
+     "src": "albums/twh/web/pf-ef21eba0.jpg",
+     "md": "albums/twh/web/md/pf-ef21eba0.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-ef21eba0"
+    },
+    {
+     "src": "albums/twh/web/pf-fe241a28.jpg",
+     "md": "albums/twh/web/md/pf-fe241a28.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-fe241a28"
+    },
+    {
+     "src": "albums/twh/web/pf-93c3935e.jpg",
+     "md": "albums/twh/web/md/pf-93c3935e.jpg",
+     "w": 1437,
+     "h": 2000,
+     "name": "pf-93c3935e"
     }
    ]
   }
