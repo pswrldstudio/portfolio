@@ -1319,27 +1319,27 @@ window.PSWRLD = {
   {
    "slug": "headshots",
    "title": "Headshots",
-   "subtitle": "",
+   "subtitle": "Selection of commissioned headshots",
    "description": "",
-   "year": "",
+   "year": "2026",
    "order": 9,
    "featured": false,
    "cover": "albums/headshots/web/_cover.jpg",
-   "coverFrom": "pf-001",
+   "coverFrom": "pf-5e26de08",
    "photos": [
+    {
+     "src": "albums/headshots/web/pf-5e26de08.jpg",
+     "md": "albums/headshots/web/md/pf-5e26de08.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-5e26de08"
+    },
     {
      "src": "albums/headshots/web/pf-001.jpg",
      "md": "albums/headshots/web/md/pf-001.jpg",
      "w": 1333,
      "h": 2000,
      "name": "pf-001"
-    },
-    {
-     "src": "albums/headshots/web/pf-002.jpg",
-     "md": "albums/headshots/web/md/pf-002.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-002"
     },
     {
      "src": "albums/headshots/web/pf-003.jpg",
@@ -1354,6 +1354,13 @@ window.PSWRLD = {
      "w": 1333,
      "h": 2000,
      "name": "pf-006"
+    },
+    {
+     "src": "albums/headshots/web/pf-059a02cf.jpg",
+     "md": "albums/headshots/web/md/pf-059a02cf.jpg",
+     "w": 1333,
+     "h": 2000,
+     "name": "pf-059a02cf"
     },
     {
      "src": "albums/headshots/web/pf-007.jpg",
@@ -1405,25 +1412,11 @@ window.PSWRLD = {
      "name": "pf-05d9ae12"
     },
     {
-     "src": "albums/headshots/web/pf-5e26de08.jpg",
-     "md": "albums/headshots/web/md/pf-5e26de08.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-5e26de08"
-    },
-    {
      "src": "albums/headshots/web/pf-9d3f9b11.jpg",
      "md": "albums/headshots/web/md/pf-9d3f9b11.jpg",
      "w": 1333,
      "h": 2000,
      "name": "pf-9d3f9b11"
-    },
-    {
-     "src": "albums/headshots/web/pf-059a02cf.jpg",
-     "md": "albums/headshots/web/md/pf-059a02cf.jpg",
-     "w": 1333,
-     "h": 2000,
-     "name": "pf-059a02cf"
     },
     {
      "src": "albums/headshots/web/pf-97a4c6be.jpg",
@@ -1472,9 +1465,9 @@ window.PSWRLD = {
   {
    "slug": "sereno-del-sordo-ss25",
    "title": "Sereno Del Sordo SS25",
-   "subtitle": "",
+   "subtitle": "Paris Fashion Week",
    "description": "",
-   "year": "",
+   "year": "2024",
    "order": 10,
    "featured": false,
    "cover": "albums/sereno-del-sordo-ss25/web/_cover.jpg",
