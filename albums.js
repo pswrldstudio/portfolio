@@ -9,6 +9,7 @@ window.PSWRLD = {
    "year": "2024-2026",
    "order": 0,
    "featured": true,
+   "roll": false,
    "cover": "albums/crowned/web/pf-001.jpg",
    "coverFrom": "crowned/pf-001",
    "photos": [
@@ -217,6 +218,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 1,
    "featured": false,
+   "roll": false,
    "cover": "albums/crowned/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -356,6 +358,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 2,
    "featured": false,
+   "roll": false,
    "cover": "albums/blues-heartbreak/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -439,6 +442,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 3,
    "featured": false,
+   "roll": false,
    "cover": "albums/rubi-rose/web/_cover.jpg",
    "coverFrom": "pf-90a2dbef",
    "photos": [
@@ -595,6 +599,7 @@ window.PSWRLD = {
    "year": "2025",
    "order": 4,
    "featured": false,
+   "roll": false,
    "cover": "albums/tell-the-truth-ss26/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -889,6 +894,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 5,
    "featured": false,
+   "roll": false,
    "cover": "albums/after-hours/web/_cover.jpg",
    "coverFrom": "pf-73c5265a",
    "photos": [
@@ -1005,6 +1011,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 6,
    "featured": false,
+   "roll": false,
    "cover": "albums/toochi/web/_cover.jpg",
    "coverFrom": "pf-0eb79d5e",
    "photos": [
@@ -1060,6 +1067,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 7,
    "featured": false,
+   "roll": false,
    "cover": "albums/unity/web/_cover.jpg",
    "coverFrom": "pf-0db3f024",
    "photos": [
@@ -1178,6 +1186,7 @@ window.PSWRLD = {
    "year": "",
    "order": 8,
    "featured": false,
+   "roll": false,
    "cover": "albums/sona-blue-x-jt/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1324,6 +1333,7 @@ window.PSWRLD = {
    "year": "2026",
    "order": 9,
    "featured": false,
+   "roll": false,
    "cover": "albums/headshots/web/_cover.jpg",
    "coverFrom": "pf-5e26de08",
    "photos": [
@@ -1470,6 +1480,7 @@ window.PSWRLD = {
    "year": "2024",
    "order": 10,
    "featured": false,
+   "roll": false,
    "cover": "albums/sereno-del-sordo-ss25/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1567,6 +1578,7 @@ window.PSWRLD = {
    "year": "",
    "order": 11,
    "featured": false,
+   "roll": false,
    "cover": "albums/film/web/_cover.jpg",
    "coverFrom": "000114160021",
    "photos": [
@@ -1706,6 +1718,7 @@ window.PSWRLD = {
    "year": "",
    "order": 12,
    "featured": false,
+   "roll": false,
    "cover": "albums/cover-art/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -1775,6 +1788,7 @@ window.PSWRLD = {
    "year": "",
    "order": 13,
    "featured": false,
+   "roll": false,
    "cover": "albums/commercial/web/_cover.jpg",
    "coverFrom": "pf-a7b6864f",
    "photos": [
@@ -1921,6 +1935,7 @@ window.PSWRLD = {
    "year": "",
    "order": 14,
    "featured": false,
+   "roll": false,
    "cover": "albums/rendezvous/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -2067,6 +2082,7 @@ window.PSWRLD = {
    "year": "",
    "order": 15,
    "featured": false,
+   "roll": false,
    "cover": "albums/graduations/web/_cover.jpg",
    "coverFrom": "pf-009",
    "photos": [
@@ -2248,6 +2264,7 @@ window.PSWRLD = {
    "year": "",
    "order": 16,
    "featured": false,
+   "roll": false,
    "cover": "albums/events/web/_cover.jpg",
    "coverFrom": "pf-037",
    "photos": [
@@ -2569,6 +2586,7 @@ window.PSWRLD = {
    "year": "2024",
    "order": 17,
    "featured": false,
+   "roll": false,
    "cover": "albums/fete-de-la-musique/web/_cover.jpg",
    "coverFrom": "pf-003",
    "photos": [
@@ -3338,6 +3356,7 @@ window.PSWRLD = {
    "year": "",
    "order": 18,
    "featured": false,
+   "roll": false,
    "cover": "albums/celebrations/web/_cover.jpg",
    "coverFrom": "pf-004",
    "photos": [
@@ -3442,6 +3461,7 @@ window.PSWRLD = {
    "year": "",
    "order": 19,
    "featured": false,
+   "roll": false,
    "cover": "albums/djs/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
@@ -3679,6 +3699,7 @@ window.PSWRLD = {
    "year": "",
    "order": 20,
    "featured": false,
+   "roll": false,
    "cover": "albums/concerts/web/_cover.jpg",
    "coverFrom": "pf-001",
    "photos": [
