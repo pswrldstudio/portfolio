@@ -692,3 +692,20 @@ body.archive-open { overflow: hidden; }
   .vc-scrub { order: -1; flex-basis: 100%; height: 8px; }
   .vc-time { min-width: 0; }
 }
+/* film controls: small, clean, glassy */
+.vhs-ctl { gap: 10px; padding: 8px 12px; border-radius: 99px; background: rgba(255,255,255,.06); border: 1px solid rgba(239,235,228,.12);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-sizing: border-box; }
+.vhs-ctl button { width: 32px; height: 32px; border: 0; background: transparent; color: rgba(239,235,228,.85); font-size: 0; transition: background .2s, color .2s, transform .15s; }
+.vhs-ctl button:hover { background: rgba(239,235,228,.12); color: #fff; }
+.vhs-ctl button:active { transform: scale(.92); }
+.vhs-ctl button small { display: none; }
+.vhs-ctl .vc-play { width: 36px; height: 36px; background: #efebe4; color: #0b0b0b; }
+.vhs-ctl .vc-play:hover { background: #fff; color: #0b0b0b; }
+.vc-scrub { height: 4px; }
+.vc-scrub::-webkit-slider-thumb { width: 12px; height: 12px; box-shadow: 0 0 0 2px rgba(255,59,48,.45); }
+.vc-scrub::-moz-range-thumb { width: 12px; height: 12px; }
+.vc-time { font: 600 10px/1 monospace; color: rgba(239,235,228,.7); min-width: 78px; }
+@media (max-width: 760px) {
+  .vhs-ctl { border-radius: 18px; padding: 10px 12px 8px; }
+  .vc-scrub { height: 5px; }
+}

@@ -846,6 +846,15 @@
   });
 
   // ---- VHS player ----
+  // film control icons: thin line style
+  var PLAY_SVG = '<svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></svg>';
+  var PAUSE_SVG = '<svg viewBox="0 0 24 24" width="14" height="14"><rect x="6" y="4.5" width="4" height="15" rx="1.2" fill="currentColor"/><rect x="14" y="4.5" width="4" height="15" rx="1.2" fill="currentColor"/></svg>';
+  function SKIP_SVG(d) {
+    var flip = d < 0 ? ' transform="translate(24 0) scale(-1 1)"' : "";
+    return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+      '<g' + flip + '><path d="M19.2 9.5A8 8 0 1 0 20 13"/><path d="M19.6 4.8v4.9h-4.9"/></g>' +
+      '<text x="12" y="15.6" text-anchor="middle" font-size="7.2" font-family="sans-serif" font-weight="700" fill="currentColor" stroke="none">10</text></svg>';
+  }
   function openVHS(from) {
     var box = document.createElement("div");
     box.className = "vhs";
@@ -857,9 +866,9 @@
       '<div class="vhs-screen"><video playsinline></video>' +
       '<div class="vhs-osd"><span class="rec">&#9679; REC</span><span class="tc">SP 00:00:00</span></div>' +
       '<div class="vhs-msg">' + (videos.length ? "PLAY &#9654;" : "NO TAPE<br><small>Put video files in pswrld-site/videos/ and run the add-photos script</small>") + '</div></div>' +
-      (videos.length ? '<div class="vhs-ctl"><button class="vc-back" aria-label="Back 10 seconds">&#8634;<small>10</small></button>' +
-        '<button class="vc-play" aria-label="Play or pause"><span class="vc-i">&#10074;&#10074;</span></button>' +
-        '<button class="vc-fwd" aria-label="Forward 10 seconds">&#8635;<small>10</small></button>' +
+      (videos.length ? '<div class="vhs-ctl"><button class="vc-back" aria-label="Back 10 seconds">' + SKIP_SVG(-1) + '</button>' +
+        '<button class="vc-play" aria-label="Play or pause"><span class="vc-i">' + PAUSE_SVG + '</span></button>' +
+        '<button class="vc-fwd" aria-label="Forward 10 seconds">' + SKIP_SVG(1) + '</button>' +
         '<input class="vc-scrub" type="range" min="0" max="1000" value="0" aria-label="Scrub through the film">' +
         '<span class="vc-time">00:00 / 00:00</span></div>' : '') +
       '<div class="vhs-title">' + esc(TX.cam_label || "Creative Directed") + '</div><div class="vhs-tapes">' + tapes + '</div><button class="vhs-x" aria-label="Close">&times;</button>';
@@ -946,7 +955,7 @@
     }
     function skip(sec) { if (vid.duration) { vid.currentTime = Math.max(0, Math.min(vid.duration - 0.1, vid.currentTime + sec)); showTime(); } }
     function toggle() { if (vid.paused) vid.play().catch(function () {}); else vid.pause(); }
-    function playIcon() { if (vplay) { vplay.querySelector(".vc-i").innerHTML = vid.paused ? "&#9654;" : "&#10074;&#10074;"; box.classList.toggle("paused", vid.paused); } }
+    function playIcon() { if (vplay) { vplay.querySelector(".vc-i").innerHTML = vid.paused ? PLAY_SVG : PAUSE_SVG; box.classList.toggle("paused", vid.paused); } }
     if (scrub) {
       box.querySelector(".vc-back").onclick = function () { skip(-10); };
       box.querySelector(".vc-fwd").onclick = function () { skip(10); };

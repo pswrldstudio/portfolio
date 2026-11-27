@@ -300,7 +300,7 @@
       pos = from + d * curve(t, m0);
       if (now > lastNow) { curV = (pos - lastP) / (now - lastNow); lastP = pos; lastNow = now; }
       place();
-      if (t < 1) anim = requestAnimationFrame(step); else { running = false; multiTurn = false; curV = 0; }
+      if (t < 1) anim = requestAnimationFrame(step); else { running = false; multiTurn = false; curV = 0; if (!cmax) measureConcept(); }
     })(start);
   }
   function go(d) {
@@ -433,8 +433,13 @@
     stage.style.setProperty("--cy", cy.toFixed(1) + "px");
     stage.style.setProperty("--ctt", (cmax ? cy / cmax : 0).toFixed(4));
   }
+  var conceptTries = 0;
   function measureConcept() {
-    var cc = stage.querySelector(".concept"); if (!cc) return;
+    var all = stage.querySelectorAll(".concept"); if (!all.length) return;
+    // measure the copy you can actually see (the flat page); the bending strips' copies are hidden while it lies still
+    var cc = [].find.call(all, function (c) { return c.clientHeight > 0; });
+    if (!cc) { if (conceptTries++ < 20) setTimeout(function () { if (alive()) measureConcept(); }, 300); return; }
+    conceptTries = 0;
     var inner = cc.firstChild;
     cmax = Math.max(0, inner.offsetHeight - cc.clientHeight);
     stage.style.setProperty("--cth", cmax ? (cc.clientHeight / inner.offsetHeight * 100).toFixed(1) + "%" : "0%");
