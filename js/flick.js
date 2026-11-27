@@ -73,7 +73,7 @@
       case "intro":
         return '<div class="introleaf"><h1>' + esc(album.title) + '</h1><p>' + esc(album.subtitle || "Photographed by PSWRLD") +
           (album.year ? " &middot; " + esc(album.year) : "") + '</p>' +
-          (album.description ? '<div class="concept">' + esc(album.description) + '</div>' : '') + '</div>';
+          (album.description ? '<div class="concept"><div class="concept-in">' + esc(album.description) + '</div></div>' : '') + '</div>';
       case "photo":
         return '<img class="fill" alt="' + esc(album.title) + ' ' + pg.n + '" data-name="' + esc(pg.p.name) + '" style="' + fitCSS(pg.p.fit) + '" data-src="' + esc(pg.p.md || pg.p.src) + '" decoding="async" draggable="false">';
       case "placeholder":
@@ -373,20 +373,43 @@
   // ---- drag & flick ----
   var dragging = false, x0 = 0, p0 = 0, lastX = 0, lastT = 0, vel = 0, moved = 0;
   var touches = {}, grab = null;
+  // ---- the description box scrolls by moving the text (one number shared by every strip's copy) ----
+  // Smooth on phones: no real scrolling inside the 3D page, just a transform, plus a flick that glides.
+  var cy = 0, cmax = 0, glide = null;
+  function setCY(v) {
+    cy = clamp(v, 0, cmax);
+    stage.style.setProperty("--cy", cy.toFixed(1) + "px");
+    stage.style.setProperty("--ctt", (cmax ? cy / cmax : 0).toFixed(4));
+  }
+  function measureConcept() {
+    var cc = stage.querySelector(".concept"); if (!cc) return;
+    var inner = cc.firstChild;
+    cmax = Math.max(0, inner.offsetHeight - cc.clientHeight);
+    stage.style.setProperty("--cth", cmax ? (cc.clientHeight / inner.offsetHeight * 100).toFixed(1) + "%" : "0%");
+    stage.querySelectorAll(".concept").forEach(function (c) { c.classList.toggle("scrolls", cmax > 0); });
+    setCY(cy);
+  }
+  function overText(e) { var cc = e.target.closest && e.target.closest(".concept"); return cc && cmax > 0 ? cc : null; }
   document.addEventListener("pointermove", function (e) {
-    if (!grab || !alive()) return;
-    grab.el.scrollTop = grab.t - (e.clientY - grab.y);
+    if (!grab || !alive() || e.pointerId !== grab.id) return;
+    var now = performance.now(), y = e.clientY;
+    grab.v = 0.7 * grab.v + 0.3 * ((grab.ly - y) / Math.max(1, now - grab.lt));
+    grab.ly = y; grab.lt = now;
+    setCY(grab.t - (y - grab.y));
   });
-  document.addEventListener("pointerup", function () { if (grab) { grab.el.classList.remove("grabbing"); grab = null; } });
-  // each page is made of strips, each with its own copy of the text: scrolling one scrolls them all
-  var syncing = false;
-  stage.addEventListener("scroll", function (e) {
-    var c = e.target;
-    if (syncing || !c.classList || !c.classList.contains("concept")) return;
-    syncing = true;
-    stage.querySelectorAll(".concept").forEach(function (o) { if (o !== c) o.scrollTop = c.scrollTop; });
-    syncing = false;
-  }, true);
+  function letGo(e) {
+    if (!grab || e.pointerId !== grab.id) return;
+    var v = grab.v; grab.el.classList.remove("grabbing"); grab = null;
+    if (Math.abs(v) < 0.05) return;
+    var last = performance.now();
+    (function step(now) {                              // the flick keeps gliding and slows down
+      var dt = now - last; last = now;
+      setCY(cy + v * dt); v *= Math.pow(0.995, dt);
+      if (Math.abs(v) > 0.02 && cy > 0 && cy < cmax) glide = requestAnimationFrame(step);
+    })(last);
+  }
+  document.addEventListener("pointerup", letGo);
+  document.addEventListener("pointercancel", letGo);
   stage.addEventListener("pointerdown", function (e) {
     if (e.pointerType === "touch") {
       touches[e.pointerId] = e;
@@ -401,11 +424,12 @@
     }
     if (e.target.closest("[data-nav]")) return;
     // the description box: grab, scroll and read it without turning the page
-    var cc = e.target.closest(".concept");
-    if (cc && cc.scrollHeight > cc.clientHeight + 2) {
-      clearPeel();
-      if (e.pointerType === "mouse") { grab = { el: cc, y: e.clientY, t: cc.scrollTop }; cc.classList.add("grabbing"); e.preventDefault(); }
-      return;                                      // fingers scroll it natively
+    var cc = overText(e);
+    if (cc) {
+      clearPeel(); cancelAnimationFrame(glide);
+      grab = { el: cc, id: e.pointerId, y: e.clientY, t: cy, ly: e.clientY, lt: performance.now(), v: 0 };
+      cc.classList.add("grabbing"); e.preventDefault();
+      return;
     }
     if (atRest() || peel.on) {   // grabbed a corner: peel it instead of flicking
       var hit = cornerHit(e, Math.min(W, H) * (e.pointerType === "mouse" ? 0.22 : 0.3));
@@ -482,10 +506,9 @@
   stage.addEventListener("pointerup", function (e) { delete touches[e.pointerId]; });
   stage.addEventListener("pointercancel", function (e) { delete touches[e.pointerId]; });
   stage.addEventListener("wheel", function (e) {
-    var cc = e.target.closest && e.target.closest(".concept");
-    if (cc && cc.scrollHeight > cc.clientHeight + 2 && !e.ctrlKey) {   // the wheel scrolls the text, never the pages
-      e.preventDefault(); e.stopPropagation();
-      cc.scrollTop += e.deltaY || e.deltaX;
+    if (overText(e) && !e.ctrlKey) {                 // the wheel scrolls the text, never the pages
+      e.preventDefault(); e.stopPropagation(); cancelAnimationFrame(glide);
+      setCY(cy + (e.deltaMode === 1 ? 32 : 1) * (e.deltaY || e.deltaX));
       if (embedded) { stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 6000); }
       return;
     }
@@ -516,7 +539,7 @@
   function hideHint() { if (hint) hint.classList.add("gone"); }
   if (prevBtn) prevBtn.addEventListener("click", function () { go(-1); });
   if (nextBtn) nextBtn.addEventListener("click", function () { go(1); });
-  window.addEventListener("resize", function () { if (alive()) { measure(); place(); } });
+  window.addEventListener("resize", function () { if (alive()) { measure(); place(); measureConcept(); } });
   // the Favourites book on the home page stays open and flicks through by itself
   var auto = null, idle = null, hovering = false, onScreen = true;
   if (embedded && "IntersectionObserver" in window)   // Favourites rests while it's scrolled off screen
@@ -718,7 +741,8 @@
     peel.key = "";
   };
 
-  measure(); place();
+  measure(); place(); measureConcept();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (alive()) measureConcept(); });
 
   // when the book comes into view: pages fan out, then the cover opens all the way
   var atEnd = !embedded && window.__flickAtEnd; window.__flickAtEnd = false;
