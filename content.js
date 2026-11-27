@@ -1,7 +1,7 @@
 // Site text. Edit with tools/edit_site.py (or by hand).
 window.PSWRLD_TEXT = {
  "hero_left": "Photography & Creative Direction",
- "hero_middle": "Fashion, film, music & events",
+ "hero_middle": "Fashion, Editorial & Commercial",
  "hero_right": "Scroll to open the albums ↓",
  "fav_left": "Favourites",
  "fav_title": "Open the book",
@@ -48,7 +48,7 @@ window.PSWRLD_TEXT = {
  "style_ib_sub_works": "{\"z\":0.8}",
  "style_ib_label_contact": "{\"z\":2.1}",
  "style_ib_sub_tiktok": "",
- "marquee": "Fashion, Music, DJs, Concerts, Events, Film, Creative Direction, Lookbooks",
+ "marquee": "Editorials, Commissions, Commercial, Film, Creative Direction",
  "tapes": "peak mood 2025\nGalacta melanin paris 2026\nwe in paris: mel wood 2025\nGalacta melanin paris 2025",
  "style_album_back": "",
  "instagram": "@pswrld.png",
@@ -66,5 +66,14 @@ window.PSWRLD_TEXT = {
  "style_hero_middle": "{\"z\":1.6,\"a\":\"right\"}",
  "style_ib_label_about": "{\"z\":2.6}",
  "style_ib_label_works": "{\"z\":3}",
- "rollfit": "{\"graduations-cover\":{\"s\":1.07,\"x\":50,\"y\":50}}"
+ "rollfit": "{\"graduations-cover\":{\"s\":1.07,\"x\":50,\"y\":50}}",
+ "roll_label": "Shot on Film",
+ "cat_editorials": "Runway & Editorials",
+ "cat_commercial": "Commercial",
+ "cat_commissions": "Commissions",
+ "style_cat_editorials": "{\"z\":1.1,\"a\":\"center\"}",
+ "shelf_cats": "{\"montfrd\":\"commercial\",\"twh\":\"commercial\",\"yallah\":\"commercial\",\"rendezvous\":\"commissions\",\"headshots\":\"commissions\",\"rubi-rose\":\"commissions\",\"toochi\":\"commissions\",\"sona-blue-x-jt\":\"commissions\",\"commercial\":\"commercial\"}",
+ "style_ib_label_archives": "{\"z\":2.4}",
+ "ib_sub_archives": "5 books",
+ "ib_label_archives": "Archives"
 };

@@ -567,3 +567,47 @@ body.roll-open { overflow: hidden; }
 /* the film roll stands on the top of the bookcase (its base rests on the wood, not sunk into it) */
 .roll { bottom: 10px; }
 @media (max-width: 760px) { .roll { bottom: 11px; } }
+
+/* bookcase sections: a title strip above each group of shelves */
+.case-label { position: relative; padding: 30px clamp(8px, 2vw, 24px) 0; display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; scroll-margin-top: 90px; }
+.case-label h3 { font: 400 italic clamp(26px, 3vw, 40px)/1 var(--serif); color: #efebe4; }
+.case-label p { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #a39e97; max-width: 60ch; }
+.case-label + .case-row { padding-top: 22px; }
+.case-label.drop-here, .case-empty.drop-here { outline: 2px dashed #e8823c; outline-offset: -4px; }
+.case-empty .case-books { min-height: 160px; }
+@media (max-width: 760px) {
+  .case-label { padding-top: 22px; gap: 6px; flex-direction: column; }
+  .case-label p { font-size: 9px; letter-spacing: .12em; }
+  .case-empty .case-books { min-height: 110px; }
+}
+#work, .roll, .cam { scroll-margin-top: 90px; }
+/* section titles: just the name, bold and centred across the top of the shelf */
+.case-label { justify-content: center; text-align: center; flex-direction: row; }
+.case-label h3 { font: 600 clamp(16px, 2vw, 24px)/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: #efebe4; width: 100%; }
+@media (max-width: 760px) { .case-label h3 { font-size: 14px; letter-spacing: .12em; } }
+/* section titles: the italic serif, at the size set in the editor (2.5x), same for all three */
+.case-label h3 { font: 400 italic clamp(40px, 5vw, 60px)/1 var(--serif); letter-spacing: 0; text-transform: none; }
+@media (max-width: 760px) { .case-label h3 { font-size: 35px; letter-spacing: 0; } }
+
+/* Archives: the flat book on the bottom shelf opens a 2 x 2 spread of the archived books */
+.archive-view { position: fixed; inset: 0; z-index: 500; background: rgba(6,6,6,.93); display: grid; place-items: center; align-content: center; gap: 22px;
+  padding: 70px 20px 30px; opacity: 0; transition: opacity .35s; }
+.archive-view.on { opacity: 1; }
+body.archive-open { overflow: hidden; }
+.av-head { display: flex; align-items: baseline; gap: 14px; color: #efebe4; }
+.av-head b { font: 400 italic clamp(30px, 4vw, 48px)/1 var(--serif); }
+.av-head span { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #8d8a85; }
+.av-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 3vw, 34px); width: min(560px, 90vw, calc((100svh - 220px) * .8)); }
+.av-book { position: relative; display: block; aspect-ratio: 4 / 5; color: #efebe4; text-decoration: none; perspective: 900px;
+  opacity: 0; transform: translateY(24px) rotate(-2deg); transition: transform .6s cubic-bezier(.2,.8,.2,1) var(--d), opacity .5s var(--d); }
+.archive-view.on .av-book { opacity: 1; transform: none; }
+.av-cover { position: absolute; inset: 0; border-radius: 3px 10px 10px 3px; background: #1b1a19 center/cover; transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s;
+  box-shadow: inset 6px 0 10px rgba(0,0,0,.45), 0 22px 40px -18px rgba(0,0,0,.9); transform-origin: left center; }
+.av-cover::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgba(0,0,0,.45), rgba(255,255,255,.1) 4%, transparent 9%), linear-gradient(transparent 55%, rgba(0,0,0,.75)); }
+.av-book:hover .av-cover { transform: translateY(-10px) rotateY(-12deg) scale(1.03); box-shadow: inset 6px 0 10px rgba(0,0,0,.45), 0 34px 50px -18px rgba(0,0,0,.95); }
+.av-name { position: absolute; left: 10%; right: 8%; bottom: 13%; font: 600 clamp(14px, 2.2vw, 22px)/1.05 var(--display); text-transform: uppercase; pointer-events: none; }
+.av-book small { position: absolute; left: 10%; bottom: 6%; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: #c9c4bc; pointer-events: none; }
+.av-x { position: absolute; top: 14px; right: 18px; background: none; border: 0; color: #efebe4; font-size: 36px; cursor: pointer; }
+/* archive spread: 2 x 2 for four books, 3 across when there are more, always fits the screen */
+.av-grid { grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+  width: min(calc(var(--cols, 2) * 280px), 92vw, calc((100svh - 200px) / var(--rows, 2) * .8 * var(--cols, 2))); }

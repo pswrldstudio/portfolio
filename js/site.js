@@ -7,6 +7,12 @@
   // words like "DJs" or "Film" link straight to the matching book
   window.PSWRLD_LINK = function (word) {
     var w = String(word).toLowerCase().replace(/&amp;/g, "&").trim();
+    // the bookcase sections, the film roll and the camcorder
+    if (/^editorial/.test(w)) return "#editorials";
+    if (/^commercial/.test(w)) return "#commercial";
+    if (/^commission/.test(w)) return "#commissions";
+    if (/^film( photo)?s?$/.test(w)) return "#roll";
+    if (/creative|direct/.test(w)) return "#films";
     var hit = data.filter(function (a) { return !a.featured && !a.roll; }).find(function (a) {
       var t = a.title.toLowerCase();
       return w.length > 2 && (w.indexOf(t) > -1 || t.indexOf(w) > -1);
@@ -33,6 +39,14 @@
       .map(function (x) { return "<li>" + x.replace(/</g, "&lt;") + "</li>"; }).join("");
   });
   // (the skills under About are plain text bubbles, not links)
+  // "#roll" pulls out the film roll
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#roll"]');
+    if (!a) return;
+    e.preventDefault();
+    var r = document.querySelector(".roll");
+    if (r) { r.scrollIntoView({ behavior: "smooth", block: "center" }); setTimeout(function () { if (window.PSWRLD_OPEN_ROLL) window.PSWRLD_OPEN_ROLL(); }, 800); }
+  });
   // "#films" opens the camcorder
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest('a[href="#films"]');

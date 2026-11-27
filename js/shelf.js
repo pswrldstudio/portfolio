@@ -1,7 +1,11 @@
 // The bookshelf: every album is a book standing on a shelf, with the camcorder on top.
 // Hover a book: it lifts as if someone picked it up. Click: it comes off the shelf and opens.
 (function () {
-  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured && !a.roll; });
+  // books kept inside the flat "Archives" book on the bottom shelf instead of standing on the shelves
+  var ARCH = (function () { try { return JSON.parse((window.PSWRLD_TEXT || {}).archive || "null") || ["graduations", "cover-art", "djs", "concerts", "celebrations"]; } catch (e) { return []; } })();
+  var archived = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return ARCH.indexOf(a.slug) > -1; })
+    .sort(function (a, b) { return ARCH.indexOf(a.slug) - ARCH.indexOf(b.slug); });
+  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured && !a.roll && ARCH.indexOf(a.slug) < 0; });
   var videos = (window.PSWRLD && window.PSWRLD.videos) || [];
   var TX = window.PSWRLD_TEXT || {};
   var root = document.getElementById("shelf");
@@ -35,6 +39,7 @@
     var el = document.createElement("a");
     el.className = "bk bk-face";
     el.href = "album.html?a=" + encodeURIComponent(a.slug);
+    el.dataset.slug = a.slug;
     el.dataset.cursor = "Open";
     el.dataset.w = 200; el.dataset.h = 250;
     el.style.setProperty("--t", thick + "px");
@@ -157,6 +162,7 @@
     var x = f.x == null ? 50 : f.x, y = f.y == null ? 50 : f.y, k = f.s || 1;
     return "object-position:" + x + "% " + y + "%;transform-origin:" + x + "% " + y + "%" + (k !== 1 ? ";transform:scale(" + k + ")" : "");
   }
+  window.PSWRLD_OPEN_ROLL = function () { if (ROLL && ROLL.photos.length) openRoll(); };
   function rollFits() { try { return JSON.parse((window.PSWRLD_TEXT || {}).rollfit || "{}"); } catch (e) { return {}; } }
   function openRoll() {
     var P = ROLL.photos, RF = rollFits();
@@ -436,6 +442,7 @@
 
   // ---- bottom shelf: About me, profile, contact and socials as bright type-only books ----
   var T = window.PSWRLD_TEXT || {};
+  if (/^\d+ books?$/.test(T.ib_sub_archives || "")) T.ib_sub_archives = archived.length + " books";   // the count stays right
   var INFO = [
     { key: "instagram", lean: "r", label: "Instagram", sub: "Socials", color: "#f4ec5c", w: 50, h: 250, tilt: 0, href: T.instagram_url, open: "contact", kind: "tag" },
     { key: "profile", label: "Personal Profile", sub: "2026", color: "#d8b8f5", w: 74, h: 210, open: "about", kind: "profile" },
@@ -443,7 +450,8 @@
     { key: "about", label: "About Me", sub: "PSWRLD", color: "#f29be0", w: 66, h: 290, open: "about", kind: "big" },
     { key: "contact", lean: "l", label: "Contact", sub: "Bookings", color: "#9fc3f5", w: 70, h: 236, open: "contact", kind: "big" },
     { key: "tiktok", stack: true, label: "TikTok", sub: "Socials", color: "#e6f4dc", w: 50, h: 276, href: T.tiktok_url, open: "contact", kind: "serif" },
-    { key: "year", stack: true, label: "2022–" + new Date().getFullYear(), sub: "PSWRLD", color: "#4fa85c", w: 50, h: 262, href: "#top", kind: "year" }
+    { key: "year", stack: true, label: "2022–" + new Date().getFullYear(), sub: "PSWRLD", color: "#4fa85c", w: 50, h: 262, href: "#top", kind: "year" },
+    { key: "archives", stack: true, label: "Archives", sub: archived.length + " books", color: "#e8c27a", w: 54, h: 270, href: "#archives", kind: "serif", archive: true }
   ];
   var infoBooks = INFO.map(function (b) {
     var el = document.createElement("a");
@@ -459,6 +467,14 @@
       '<span class="ib-sub" data-edit="ib_sub_' + b.key + '">' + esc(T["ib_sub_" + b.key] || b.sub) + '</span>' + icon +
       '<span class="ib-label" data-edit="ib_label_' + b.key + '">' + esc(T["ib_label_" + b.key] || b.label) + '</span>' +
       '<span class="ib-foot">PSWRLD</span></div></div>';
+    if (b.archive) {                                  // opens the archive: its books laid out 2 x 2
+      el.dataset.cursor = "Open";
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (document.body.classList.contains("editing") && e.target.closest("[data-edit]")) return;
+        openArchive();
+      });
+    }
     if (b.open && !(b.href && /^https?:/.test(b.href))) {
       el.addEventListener("click", function (e) {
         e.preventDefault();
@@ -468,6 +484,39 @@
     }
     return el;
   });
+
+  // ---- the Archives book: pick one of the archived books from a 2 x 2 spread ----
+  function openArchive() {
+    if (!archived.length) return;
+    var box = document.createElement("div");
+    box.className = "archive-view";
+    box.innerHTML = '<div class="av-head"><b>' + esc(T.ib_label_archives || "Archives") + '</b><span>' + archived.length + ' books</span></div>' +
+      '<div class="av-grid" style="--cols:' + (archived.length > 4 ? 3 : 2) + ';--rows:' + Math.ceil(archived.length / (archived.length > 4 ? 3 : 2)) + '">' + archived.map(function (a, i) {
+        return '<a class="av-book" href="album.html?a=' + encodeURIComponent(a.slug) + '" data-i="' + i + '" style="--d:' + (i * 70) + 'ms">' +
+          '<span class="av-cover"' + (a.cover ? ' style="background-image:url(&quot;' + esc(a.cover) + '&quot;)"' : "") + '></span>' +
+          '<span class="av-name">' + esc(a.title) + '</span><small>' + (a.year ? esc(a.year) + " &middot; " : "") + a.photos.length + ' photos</small></a>';
+      }).join("") + '</div><button class="av-x" aria-label="Close">&times;</button>';
+    document.body.appendChild(box);
+    document.body.classList.add("archive-open");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { box.classList.add("on"); }); });
+    function close() {
+      box.classList.remove("on");
+      document.removeEventListener("keydown", key);
+      setTimeout(function () { box.remove(); document.body.classList.remove("archive-open"); }, 350);
+    }
+    function key(e) { if (e.key === "Escape") close(); }
+    document.addEventListener("keydown", key);
+    box.querySelector(".av-x").onclick = close;
+    box.addEventListener("click", function (e) {
+      if (e.target === box || e.target.classList.contains("av-grid")) return close();
+      var bk = e.target.closest(".av-book");
+      if (!bk || e.metaKey || e.ctrlKey || document.body.classList.contains("editing")) return;   // the editor opens the book page
+      e.preventDefault();
+      var a = archived[+bk.dataset.i];
+      close();
+      setTimeout(function () { openInPage(a); }, 250);   // the book opens on the page, music keeps going
+    });
+  }
 
   // About and Contact open as panels over the page
   function openDrawer(id) {
@@ -496,6 +545,27 @@
       // normal anchor scroll
     });
   });
+
+  // ---- the bookcase is split into sections; each book belongs to one (set by dragging in the editor) ----
+  var CATS = [
+    { key: "editorials", title: "Editorials", sub: "Personal projects, fashion stories and conceptual photography." },
+    { key: "commissions", title: "Commissions", sub: "Paid collaborations, artist portraits, creative direction and commissioned photography." },
+    { key: "commercial", title: "Commercial", sub: "Brand campaigns, e-commerce and advertising." }
+  ];
+  function catMap() { try { return JSON.parse(TX.shelf_cats || "{}"); } catch (e) { return {}; } }
+  var CAT = catMap();
+  function catOf(slug) { var c = CAT[slug]; return CATS.some(function (x) { return x.key === c; }) ? c : CATS[0].key; }
+  function saveCats() {
+    var json = JSON.stringify(CAT);
+    TX.shelf_cats = json;
+    return fetch("/api/text", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ shelf_cats: json }) });
+  }
+  function catLabel(c) {
+    var d = document.createElement("div");
+    d.className = "case-label"; d.id = c.key; d.dataset.cat = c.key;
+    d.innerHTML = '<h3 data-edit="cat_' + c.key + '">' + esc(TX["cat_" + c.key] || c.title) + '</h3>';
+    return d;
+  }
 
   // ---- lay the books onto shelves that fit the screen ----
   function layout() {
@@ -542,11 +612,24 @@
       root.appendChild(r);
       row = []; used = 0;
     }
-    books.forEach(function (b) {
-      if (row.length >= per) flush();
-      row.push(b);
+    var shelfNo = 0;
+    CATS.forEach(function (c) {                     // each section: its title, then its shelves
+      root.appendChild(catLabel(c));
+      var mine = books.filter(function (b) { return catOf(b.dataset.slug) === c.key; });
+      mine.forEach(function (b) {
+        var num = b.querySelector(".bk-top span");   // numbered in the order they stand on the shelves
+        if (num) num.textContent = String(++shelfNo).padStart(2, "0");
+        if (row.length >= per) flush();
+        row.push(b);
+      });
+      if (!mine.length) {                           // an empty section still shows its shelf
+        var r = document.createElement("div");
+        r.className = "case-row case-empty"; r.dataset.cat = c.key;
+        r.innerHTML = '<div class="case-books"></div><div class="plank"></div>';
+        root.appendChild(r);
+      }
+      flush();
     });
-    flush();
     // bottom shelf: about / contact / socials (some lean, some lie in a pile)
     var pile = null;
     infoBooks.forEach(function (b) {
@@ -601,6 +684,28 @@
       el.appendChild(x);
     });
     var dragSlug = null;
+    // drop a book on a section's title (or its empty shelf) to move it to the end of that section
+    root.addEventListener("dragover", function (e) {
+      var t = e.target.closest && e.target.closest(".case-label, .case-empty");
+      if (t && dragSlug) { e.preventDefault(); t.classList.add("drop-here"); }
+    });
+    root.addEventListener("dragleave", function (e) {
+      var t = e.target.closest && e.target.closest(".case-label, .case-empty"); if (t) t.classList.remove("drop-here");
+    });
+    root.addEventListener("drop", function (e) {
+      var t = e.target.closest && e.target.closest(".case-label, .case-empty");
+      if (!t || !dragSlug) return;
+      e.preventDefault(); t.classList.remove("drop-here");
+      CAT[dragSlug] = t.dataset.cat;
+      var from = books.findIndex(function (b) { return b.dataset.slug === dragSlug; });
+      var moved = books.splice(from, 1)[0];
+      var last = -1;
+      books.forEach(function (b, k) { if (catOf(b.dataset.slug) === t.dataset.cat) last = k; });
+      books.splice(last + 1, 0, moved);
+      layout(); saveCats();
+      fetch("/api/order", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order: books.map(function (b) { return b.dataset.slug; }) }) });
+    });
     books.forEach(function (el, i) {
       var slug = data[i].slug;
       el.dataset.slug = slug;
@@ -612,6 +717,7 @@
       el.addEventListener("drop", function (e) {
         e.preventDefault(); el.classList.remove("drop-here");
         if (!dragSlug || dragSlug === slug) return;
+        if (catOf(dragSlug) !== catOf(slug)) { CAT[dragSlug] = catOf(slug); saveCats(); }   // joins this book's section
         var from = books.findIndex(function (b) { return b.dataset.slug === dragSlug; });
         var moved = books.splice(from, 1)[0];
         var to = books.indexOf(el);
