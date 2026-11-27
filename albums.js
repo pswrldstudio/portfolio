@@ -31,7 +31,12 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-018.jpg",
      "w": 1030,
      "h": 2000,
-     "name": "tell-the-truth-ss26/pf-018"
+     "name": "tell-the-truth-ss26/pf-018",
+     "fit": {
+      "s": 1.01,
+      "x": 52.9,
+      "y": 68.3
+     }
     },
     {
      "src": "albums/after-hours/web/pf-73c5265a.jpg",
@@ -493,14 +498,24 @@ window.PSWRLD = {
      "md": "albums/rubi-rose/web/md/pf-4782a55d.jpg",
      "w": 1260,
      "h": 1890,
-     "name": "pf-4782a55d"
+     "name": "pf-4782a55d",
+     "fit": {
+      "s": 1.0,
+      "x": 50.7,
+      "y": 39.6
+     }
     },
     {
      "src": "albums/rubi-rose/web/pf-934986a5.jpg",
      "md": "albums/rubi-rose/web/md/pf-934986a5.jpg",
      "w": 966,
      "h": 1795,
-     "name": "pf-934986a5"
+     "name": "pf-934986a5",
+     "fit": {
+      "s": 1.0,
+      "x": 52.9,
+      "y": 12.3
+     }
     },
     {
      "src": "albums/rubi-rose/web/pf-acce09a9.jpg",
@@ -667,7 +682,12 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-014.jpg",
      "w": 1077,
      "h": 2000,
-     "name": "pf-014"
+     "name": "pf-014",
+     "fit": {
+      "s": 1.0,
+      "x": 50.0,
+      "y": 32.9
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-015.jpg",
@@ -681,7 +701,12 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-016.jpg",
      "w": 1430,
      "h": 2000,
-     "name": "pf-016"
+     "name": "pf-016",
+     "fit": {
+      "s": 1.16,
+      "x": 51.9,
+      "y": 92.6
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-017.jpg",
@@ -695,14 +720,24 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-018.jpg",
      "w": 1030,
      "h": 2000,
-     "name": "pf-018"
+     "name": "pf-018",
+     "fit": {
+      "s": 1.01,
+      "x": 52.9,
+      "y": 68.3
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-019.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-019.jpg",
      "w": 1095,
      "h": 2000,
-     "name": "pf-019"
+     "name": "pf-019",
+     "fit": {
+      "s": 1.09,
+      "x": 55.8,
+      "y": 61.5
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-020.jpg",
@@ -716,21 +751,36 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-021.jpg",
      "w": 1333,
      "h": 2000,
-     "name": "pf-021"
+     "name": "pf-021",
+     "fit": {
+      "s": 1.08,
+      "x": 52.4,
+      "y": 100.0
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-022.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-022.jpg",
      "w": 1333,
      "h": 2000,
-     "name": "pf-022"
+     "name": "pf-022",
+     "fit": {
+      "s": 1.25,
+      "x": 48.5,
+      "y": 44.7
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-023.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-023.jpg",
      "w": 1422,
      "h": 2000,
-     "name": "pf-023"
+     "name": "pf-023",
+     "fit": {
+      "s": 1.25,
+      "x": 54.3,
+      "y": 69.8
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-024.jpg",
@@ -744,21 +794,36 @@ window.PSWRLD = {
      "md": "albums/tell-the-truth-ss26/web/md/pf-025.jpg",
      "w": 1484,
      "h": 2000,
-     "name": "pf-025"
+     "name": "pf-025",
+     "fit": {
+      "s": 1.13,
+      "x": 45.0,
+      "y": 100.0
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-026.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-026.jpg",
      "w": 1558,
      "h": 2000,
-     "name": "pf-026"
+     "name": "pf-026",
+     "fit": {
+      "s": 1.25,
+      "x": 47.1,
+      "y": 45.1
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-027.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-027.jpg",
      "w": 1333,
      "h": 2000,
-     "name": "pf-027"
+     "name": "pf-027",
+     "fit": {
+      "s": 1.24,
+      "x": 62.6,
+      "y": 67.1
+     }
     },
     {
      "src": "albums/tell-the-truth-ss26/web/pf-028.jpg",
