@@ -396,3 +396,10 @@ html[data-theme="light"] .vhs-title,
 html[data-theme="light"] .vhs .tape,
 html[data-theme="light"] .vhs-x { color: #efebe4; }
 html[data-theme="light"] .vhs .tape.on { background: #efebe4; color: #0b0b0b; }
+
+/* zoom viewer on laptops / desktops: the whole photo fits inside a frame 12% in from every edge */
+@media (min-width: 761px) and (pointer: fine) {
+  .zoom-stage { inset: 12vh 12vw; }
+}
+/* the photo always fits whole inside its frame (it used to spill past the bottom) */
+.zoom-stage img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; object-fit: contain; border-radius: 0; }
