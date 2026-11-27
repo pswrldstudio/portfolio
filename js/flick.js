@@ -620,11 +620,24 @@
     }
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
-      if (dragging || peel.held || grab || stage.querySelector(".concept:hover") || document.hidden || !onScreen || document.body.classList.contains("zooming") || document.body.classList.contains("album-open")) return;   // pauses while you hold a page or zoom
+      if (performance.now() - lastInput < IDLE || dragging || peel.held || grab || stage.querySelector(".concept:hover") || document.hidden || !onScreen || document.body.classList.contains("zooming") || document.body.classList.contains("album-open")) return;   // pauses while you hold a page or zoom
       if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);   // only the Favourites book: loop back to its start
     }, 2800);
   }
   function stopAuto() { if (auto !== -1) { clearInterval(auto); auto = null; } }
+  var lastInput = -1e9, IDLE = 3000;
+  function touched() {
+    if (!embedded || !alive()) return;
+    lastInput = performance.now();
+    stopAuto(); clearTimeout(idle);
+    idle = setTimeout(resumeAuto, IDLE);
+  }
+  function resumeAuto() {                         // left alone for 3 seconds: the next page turns now, then the usual rhythm
+    if (!alive() || auto) return;
+    if (performance.now() - lastInput < IDLE - 20 || dragging || peel.held || grab || document.body.classList.contains("zooming")) { idle = setTimeout(resumeAuto, 500); return; }
+    if (onScreen && !document.hidden) { if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1); }
+    startAuto();
+  }
   // the finished book slides away and the next book slides in, then keeps flicking
   function swipeToNextBook() {
     stopAuto(); auto = -1;
@@ -646,17 +659,18 @@
   if (embedded) {
     var beat = setInterval(function () {
       if (!alive()) { clearInterval(beat); return; }
-      if (!auto && !dragging && !peel.held) startAuto();
+      if (!auto && !dragging && !peel.held && performance.now() - lastInput >= IDLE) startAuto();
     }, 4000);   // never stays stopped
     setTimeout(function () { if (!alive()) return; if (fan < 1) { fan = 1; place(); } startAuto(); }, 0);   // start straight away
   }
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
     stage.addEventListener("pointerleave", function () { hovering = false; });
-    stage.addEventListener("pointerdown", function (e) {   // you took over: pause, resume after a while (longer when reading)
-      var reading = e.target.closest && e.target.closest(".concept");
-      stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, reading ? 9000 : 2500);
-    });
+    // any touch, drag, scroll, button or key stops the auto-turning; 3 seconds with no interaction and it carries on
+    ["pointerdown", "pointerup", "wheel"].forEach(function (t) { stage.addEventListener(t, touched, { passive: true }); });
+    stage.addEventListener("pointermove", function () { if (dragging || peel.held || grab) touched(); }, { passive: true });
+    [prevBtn, nextBtn, document.getElementById("zoomBtn")].forEach(function (b) { if (b) b.addEventListener("click", touched); });
+    document.addEventListener("keydown", function (e) { if (alive() && onScreen && /Arrow/.test(e.key)) touched(); });
   }
 
   // ---- zoom: see each photo big, pinch / scroll / double-tap to zoom, swipe to flick ----
@@ -699,7 +713,7 @@
       if (scale === 1) { tx = 0; ty = 0; }
     }
     function close() {
-      z.remove(); document.body.classList.remove("zooming");
+      z.remove(); document.body.classList.remove("zooming"); touched();
       document.removeEventListener("keydown", key, true);
       var k = i + 2;                                    // photo i is on page i+2
       animateTo(k % 2 ? (k + 1) / 2 : k / 2, 700);       // the book opens where you left off
@@ -763,7 +777,7 @@
     counter.parentNode.insertBefore(zb, counter.nextSibling);
   }
   var zbtn = document.getElementById("zoomBtn");
-  if (zbtn) zbtn.onclick = function () { if (alive()) openZoomAt(true); };
+  if (zbtn) zbtn.onclick = function () { if (alive()) { touched(); openZoomAt(true); } };
 
   window.PSWRLD_REFIT = function (name, fit) {   // the editor changed how a photo sits on its page
     album.photos.forEach(function (p) { if (p.name === name) p.fit = fit; });
