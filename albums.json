@@ -26,6 +26,13 @@
      "name": "blues-heartbreak/pf-001"
     },
     {
+     "src": "albums/favourites/web/000114160021.jpg",
+     "md": "albums/favourites/web/md/000114160021.jpg",
+     "w": 1326,
+     "h": 2000,
+     "name": "000114160021"
+    },
+    {
      "src": "albums/tell-the-truth-ss26/web/pf-018.jpg",
      "md": "albums/tell-the-truth-ss26/web/md/pf-018.jpg",
      "w": 1030,
@@ -42,7 +49,12 @@
      "md": "albums/after-hours/web/md/pf-73c5265a.jpg",
      "w": 1125,
      "h": 2000,
-     "name": "after-hours/pf-73c5265a"
+     "name": "after-hours/pf-73c5265a",
+     "fit": {
+      "s": 1.0,
+      "x": 51.1,
+      "y": 41.3
+     }
     },
     {
      "src": "albums/toochi/web/pf-9d1aac30.jpg",
