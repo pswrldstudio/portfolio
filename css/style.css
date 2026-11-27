@@ -290,3 +290,7 @@ footer { padding: 28px clamp(18px, 4vw, 48px); display: flex; justify-content: s
   white-space: pre-line; max-height: 46%; overflow: auto; overscroll-behavior: contain; padding-right: 4px; }
 
 .contact-big { font-size: clamp(24px, 4.2vw, 60px); }
+
+/* a page lying still is one flat sheet; only the page that's turning uses the bending strips (js/flick.js) */
+.oflat { position: absolute; left: 0; top: 0; width: var(--W); height: var(--H); transform-style: preserve-3d; }
+.oflat .sf { left: 0; right: 0; }

@@ -94,11 +94,11 @@
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
-  // phones: 3 strips (smoothness first: far fewer moving layers); laptops: 7 for the finest curve.
-  // The blended shading keeps the strips from showing as blocks either way.
-  var STRIPS = LITE ? 3 : 7;
+  // Only the page that's turning bends: it switches to a fine chain of strips (a smooth paper curve).
+  // Every page lying still is one flat sheet (2 layers), so there's very little to draw and nothing lags.
+  var STRIPS = LITE ? 8 : 12;
   stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
-  var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [], litsOf = [];
+  var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [], litsOf = [], flatOf = [], modeOf = [];
   for (var s = 0; s < n; s++) {
     var el = document.createElement("div");
     el.className = "osheet";
@@ -120,14 +120,29 @@
       st.children[0].lastChild.style.background = "linear-gradient(90deg, rgba(0,0,0," + lo.toFixed(3) + "), #000)";
       st.children[1].lastChild.style.background = "linear-gradient(270deg, rgba(0,0,0," + lo.toFixed(3) + "), #000)";
     }
+    list[0].style.display = "none";                 // the strip chain only shows while this page bends
+    var flat = document.createElement("div");       // the page lying still: one flat sheet, front and back
+    flat.className = "oflat";
+    flat.innerHTML =
+      '<div class="sf"><div class="' + fCls + '" style="left:0">' + fHTML + '</div><i class="lit flat-lit"></i></div>' +
+      '<div class="sf back"><div class="' + bCls + '" style="left:0">' + bHTML + '</div><i class="lit flat-lit"></i></div>';
+    el.appendChild(flat);
     book.appendChild(el);
     sheets.push(el); stripsOf.push(list); bendOf.push(null); litsOf.push(lits);
+    flatOf.push([flat, flat.children[0].lastChild, flat.children[1].lastChild]); modeOf.push("flat");
   }
   // bend: positive = page curls away from the reader, negative = edge lifts towards the left
   function bendSheet(j, B, light) {
     var key = B.toFixed(1) + "|" + light.toFixed(2);
     if (bendOf[j] === key) return;
     bendOf[j] = key;
+    var F = flatOf[j];
+    if (Math.abs(B) < 0.3) {                          // lying still: the flat sheet
+      if (modeOf[j] !== "flat") { modeOf[j] = "flat"; stripsOf[j][0].style.display = "none"; F[0].style.display = ""; }
+      var fo = (light * 0.7).toFixed(3); F[1].style.opacity = fo; F[2].style.opacity = fo;
+      return;
+    }
+    if (modeOf[j] !== "bend") { modeOf[j] = "bend"; F[0].style.display = "none"; stripsOf[j][0].style.display = ""; }
     var list = stripsOf[j], L = litsOf[j], tri = STRIPS * (STRIPS - 1) / 2;
     for (var i = 0; i < STRIPS; i++) {
       list[i].style.transform = i ? "rotateY(" + (B * i / tri).toFixed(2) + "deg)" : "";
@@ -167,19 +182,19 @@
       if (t <= 0) {            // still to come: fanned slivers off the right edge, gently curled
         var k = j - pos;
         x = k * sliver * fan; ry = Math.min(k * 4, 34) * fan; z = 100 + n - j;
-        B = Math.min(k, 1) * 14 * fan; light = Math.min(k * 0.08, 0.3) * fan;
+        light = Math.min(k * 0.08, 0.3) * fan;
       } else if (t >= 1) {     // already seen: fanned off the left edge
         var k2 = pos - (j + 1);
         x = -k2 * sliver * fan; ry = -180 - Math.min(k2 * 4, 34) * fan; z = 100 + j;
-        B = -Math.min(k2, 1) * 14 * fan; light = Math.min(k2 * 0.08, 0.3) * fan;
+        light = Math.min(k2 * 0.08, 0.3) * fan;
       } else {                 // the page in the air: it bends, the free edge leads
         var lift = Math.sin(Math.PI * t);
-        B = -dir * (LITE ? 48 : 70) * lift;            // a gentler bend on phones, so 3 strips still read as a curve
+        B = -dir * 70 * lift;
         ry += dir * 26 * lift;
         light = 0.45 * lift; z = 1000;
       }
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
-      var hide = far > (LITE ? 3 : 6);                 // phones draw only the pages near the one you're on
+      var hide = far > (LITE ? 4 : 6);                 // only the pages near the one you're on are drawn
       if (hide !== el._hid) { el._hid = hide; el.style.visibility = hide ? "hidden" : "visible"; }
       if (!hide) {                                       // only touch the pages you can see
         var tf = "translateX(" + x.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg)";
