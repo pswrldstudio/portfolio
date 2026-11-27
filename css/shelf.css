@@ -611,3 +611,16 @@ body.archive-open { overflow: hidden; }
 /* archive spread: 2 x 2 for four books, 3 across when there are more, always fits the screen */
 .av-grid { grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
   width: min(calc(var(--cols, 2) * 280px), 92vw, calc((100svh - 200px) / var(--rows, 2) * .8 * var(--cols, 2))); }
+
+/* ---------- phone fixes ---------- */
+@media (max-width: 760px) {
+  /* "My albums" and its line sit in their normal place (the editor's desktop nudges don't apply on phones) */
+  #work .section-head [data-edit] { translate: none !important; }
+  /* hero line: one line across the phone (js/site.js sizes it to fit) */
+  .hero-meta em[data-edit="hero_middle"] { zoom: 1 !important; white-space: nowrap; display: block; text-align: center !important; width: 100%; }
+  /* Archives: the word runs across the whole flat book */
+  .ib.lying[href="#archives"] .ib-sub, .ib.lying[href="#archives"] .ib-foot, .ib.lying[href="#archives"] .ib-ring { display: none !important; }
+  .ib.lying[href="#archives"] .ib-spine { justify-content: center; padding: 0 8px; }
+  .ib.lying[href="#archives"] .ib-label { zoom: 1 !important; flex: 1; width: auto; max-width: none; text-align: center; overflow: visible;
+    font-size: calc(var(--h) * .72) !important; line-height: 1; letter-spacing: .08em; }
+}

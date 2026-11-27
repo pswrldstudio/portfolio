@@ -5,7 +5,7 @@
   var ARCH = (function () { try { return JSON.parse((window.PSWRLD_TEXT || {}).archive || "null") || ["graduations", "cover-art", "djs", "concerts", "celebrations"]; } catch (e) { return []; } })();
   var archived = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return ARCH.indexOf(a.slug) > -1; })
     .sort(function (a, b) { return ARCH.indexOf(a.slug) - ARCH.indexOf(b.slug); });
-  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured && !a.roll && ARCH.indexOf(a.slug) < 0; });
+  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured && !a.roll && a.slug !== "film" && ARCH.indexOf(a.slug) < 0; });   // Film feeds the film roll
   var videos = (window.PSWRLD && window.PSWRLD.videos) || [];
   var TX = window.PSWRLD_TEXT || {};
   var root = document.getElementById("shelf");

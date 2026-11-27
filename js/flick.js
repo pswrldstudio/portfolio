@@ -20,7 +20,7 @@
   var album = albums.find(function (a) { return a.slug === slug; }) || albums.find(function (a) { return !a.featured && !a.roll; });
   if (!album) { stage.textContent = "No albums yet. Run tools/add_photos.py"; return; }
   window.PSWRLD_CURRENT = album;
-  var others = albums.filter(function (a) { return !a.featured && !a.roll; });
+  var others = albums.filter(function (a) { return !a.featured && !a.roll && a.slug !== "film"; });
   var nextAlbum = others[(others.indexOf(album) + 1) % others.length] || others[0];
   var prevAlbum = others[(others.indexOf(album) - 1 + others.length) % others.length] || others[0];
   if (!embedded) {

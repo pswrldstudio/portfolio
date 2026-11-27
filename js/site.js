@@ -83,6 +83,25 @@
     while (e.scrollWidth > room && fs > 11 && n++ < 80) { fs -= 1; e.style.fontSize = fs + "px"; }
   }
   fitEmail();
+  // phones: the hero's middle line ("Fashion, Editorial & Commercial") fits on one line across the screen
+  function fitHeroLine() {
+    var e = document.querySelector('.hero-meta [data-edit="hero_middle"]');
+    if (!e) return;
+    e.style.fontSize = "";
+    if (innerWidth > 760) return;
+    var ps = getComputedStyle(e.parentElement);
+    var room = e.parentElement.clientWidth - parseFloat(ps.paddingLeft) - parseFloat(ps.paddingRight) - 6, fs = 40, n = 0;
+    var probe = document.createElement("span");          // measure the text itself, not the line it sits on
+    probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap;font:inherit";
+    probe.textContent = e.textContent; e.appendChild(probe);
+    probe.style.fontSize = fs + "px";
+    while (probe.offsetWidth > room && fs > 12 && n++ < 80) { fs -= 0.5; probe.style.fontSize = fs + "px"; }
+    probe.remove();
+    e.style.fontSize = fs + "px";
+  }
+  fitHeroLine();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeroLine);
+  addEventListener("resize", fitHeroLine);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitEmail);
   addEventListener("resize", fitEmail);
   // the bookshelf itself is built by js/shelf.js
