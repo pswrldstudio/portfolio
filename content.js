@@ -53,7 +53,7 @@ window.PSWRLD_TEXT = {
  "style_album_back": "",
  "instagram": "@pswrld.png",
  "tiktok": "@pswrld.png",
- "style_albums_title": "{\"x\":-8,\"y\":-59}",
+ "style_albums_title": "{\"x\":76,\"y\":-412}",
  "style_albums_text": "{\"x\":-9,\"y\":-62}",
  "style_cam_label": "{\"x\":-174,\"y\":-514}",
  "style_email": "{\"a\":\"center\",\"z\":1.5}",
@@ -65,5 +65,6 @@ window.PSWRLD_TEXT = {
  "style_contact_tag": "{\"z\":1}",
  "style_hero_middle": "{\"z\":1.6,\"a\":\"right\"}",
  "style_ib_label_about": "{\"z\":2.6}",
- "style_ib_label_works": "{\"z\":3}"
+ "style_ib_label_works": "{\"z\":3}",
+ "rollfit": "{\"graduations-cover\":{\"s\":1.07,\"x\":50,\"y\":50}}"
 };

@@ -3,7 +3,7 @@
 (function () {
   if (location.port !== "5190") return; // edit mode only inside tools/edit_site.py
   fetch("/api/ping", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (j) { if (j && j.edit) start(); }).catch(function () {});
+    .then(function (j) { if (j && j.edit) { window.PSWRLD_EDITOR_V = j.v || 1; start(); } }).catch(function () {});
 
   function el(tag, attrs, html) {
     var e = document.createElement(tag);
@@ -18,6 +18,7 @@
   function esc(s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
   function start() {
+    window.PSWRLD_ADJUST = adjustPhoto;   // the film roll uses the same Adjust tool
     document.body.classList.add("editing");
     document.head.appendChild(el("style", {}, CSS));
     if (document.getElementById("stage") && !document.getElementById("stage").dataset.album) albumEditor();
@@ -226,7 +227,7 @@
           draw();
         };
         var ab = d.querySelector(".ed-adj");
-        if (ab) ab.onclick = function (e) { e.stopPropagation(); adjustPhoto(p, function () { draw(); }); };
+        if (ab) ab.onclick = function (e) { e.stopPropagation(); adjustPhoto(p, function () { draw(); }, { slug: A.slug }); };
         var fb = d.querySelector(".ed-fav");
         if (fb) fb.onclick = function (e) {
           e.stopPropagation();
@@ -262,61 +263,6 @@
     drop.addEventListener("dragleave", function () { drop.classList.remove("over"); });
     drop.addEventListener("drop", function (e) { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); });
 
-    // ---- Adjust: drag the photo to choose which part shows, scroll or use the slider to scale it ----
-    function adjustPhoto(p, done) {
-      var aspect = window.PSWRLD_ASPECT || 0.8, f0 = p.fit || {}, f = { s: f0.s || 1, x: f0.x == null ? 50 : f0.x, y: f0.y == null ? 50 : f0.y };
-      var box = el("div", { class: "ed-fitbox" },
-        '<div class="ed-fit-card"><b>Adjust photo</b><span class="ed-fit-tip">Drag to move. Scroll or use the slider to scale.</span>' +
-        '<div class="ed-fit-frame"><img alt="" draggable="false"></div>' +
-        '<label class="ed-fit-row">Scale <input type="range" min="30" max="300" step="1"><em></em></label>' +
-        '<div class="ed-fit-btns"><button data-a="whole" class="ed-ghost2">Whole photo</button><button data-a="fill" class="ed-ghost2">Fill page</button>' +
-        '<button data-a="cancel" class="ed-ghost2">Cancel</button><button data-a="save" class="ed-fit-save">Save</button></div></div>');
-      document.body.appendChild(box);
-      var frame = box.querySelector(".ed-fit-frame"), img = frame.querySelector("img"), range = box.querySelector("input"), out = box.querySelector("em");
-      var H = Math.min(innerHeight * 0.62, 620), W = H * aspect;
-      if (W > innerWidth * 0.86) { W = innerWidth * 0.86; H = W / aspect; }
-      frame.style.width = W + "px"; frame.style.height = H + "px";
-      img.src = p.src;
-      var fitCSS = window.PSWRLD_FITCSS || function () { return ""; };
-      function paint() {
-        img.setAttribute("style", fitCSS(f));
-        range.value = Math.round(f.s * 100); out.textContent = Math.round(f.s * 100) + "%";
-      }
-      paint();
-      range.oninput = function () { f.s = range.value / 100; paint(); };
-      frame.addEventListener("wheel", function (e) { e.preventDefault(); f.s = Math.max(0.3, Math.min(3, f.s * (e.deltaY < 0 ? 1.06 : 1 / 1.06))); paint(); }, { passive: false });
-      var drag = null;
-      frame.addEventListener("pointerdown", function (e) { frame.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, fx: f.x, fy: f.y }; });
-      frame.addEventListener("pointermove", function (e) {
-        if (!drag) return;
-        var k = (f.s < 1 ? 1 : -1) * 100 / Math.max(0.35, Math.abs(f.s - 1) < 0.02 ? 1 : f.s);   // the photo follows your finger
-        f.x = Math.max(0, Math.min(100, drag.fx + (e.clientX - drag.x) / W * k));
-        f.y = Math.max(0, Math.min(100, drag.fy + (e.clientY - drag.y) / H * k));
-        paint();
-      });
-      frame.addEventListener("pointerup", function () { drag = null; });
-      function close() { box.remove(); }
-      box.addEventListener("click", function (e) {
-        var a = e.target.dataset && e.target.dataset.a;
-        if (e.target === box || a === "cancel") return close();
-        if (a === "whole") {                           // the whole photo shows on the page, nothing cropped
-          var r = (p.w || 1) / (p.h || 1);
-          f = { s: Math.min(r / aspect, aspect / r), x: 50, y: 50 }; paint();
-        }
-        if (a === "fill") { f = { s: 1, x: 50, y: 50 }; paint(); }
-        if (a === "save") {
-          var plain = Math.abs(f.s - 1) < 0.005 && Math.abs(f.x - 50) < 0.5 && Math.abs(f.y - 50) < 0.5;
-          var fit = plain ? null : { s: +f.s.toFixed(3), x: +f.x.toFixed(1), y: +f.y.toFixed(1) };
-          e.target.disabled = true; e.target.textContent = "Saving...";
-          post("/api/fit", JSON.stringify({ slug: A.slug, name: p.name, fit: fit })).then(function () {
-            p.fit = fit || undefined;
-            if (window.PSWRLD_REFIT) window.PSWRLD_REFIT(p.name, fit);
-            msg("Photo adjusted ✓"); close(); if (done) done();
-          }).catch(function (er) { msg("Not saved: " + er.message); close(); });
-        }
-      });
-    }
-
     document.getElementById("ed-save").onclick = function () {
       var btn = this; btn.disabled = true;
       var uploaded = [], i = 0;
@@ -343,6 +289,65 @@
       }).then(function () { msg("Saved ✓ Reloading..."); setTimeout(function () { location.reload(); }, 500); })
         .catch(function (e) { msg("Not saved: " + e.message); btn.disabled = false; });
     };
+  }
+
+  // ---- Adjust: drag the photo to choose which part shows, scroll or use the slider to scale it ----
+  // opt: { slug, aspect, kind: "roll" for the film roll (its own setting, the book page keeps its own) }
+  function adjustPhoto(p, done, opt) {
+    opt = opt || {};
+    var key = opt.kind === "roll" ? "rollfit" : "fit";
+    var aspect = opt.aspect || window.PSWRLD_ASPECT || 0.8, f0 = p[key] || {}, f = { s: f0.s || 1, x: f0.x == null ? 50 : f0.x, y: f0.y == null ? 50 : f0.y };
+    var box = el("div", { class: "ed-fitbox" },
+      '<div class="ed-fit-card"><b>Adjust photo</b><span class="ed-fit-tip">Drag to move. Scroll or use the slider to scale.</span>' +
+      '<div class="ed-fit-frame"><img alt="" draggable="false"></div>' +
+      '<label class="ed-fit-row">Scale <input type="range" min="30" max="300" step="1"><em></em></label>' +
+      '<div class="ed-fit-btns"><button data-a="whole" class="ed-ghost2">Whole photo</button><button data-a="fill" class="ed-ghost2">Fill ' + (opt.kind === "roll" ? "frame" : "page") + '</button>' +
+      '<button data-a="cancel" class="ed-ghost2">Cancel</button><button data-a="save" class="ed-fit-save">Save</button></div></div>');
+    document.body.appendChild(box);
+    var frame = box.querySelector(".ed-fit-frame"), img = frame.querySelector("img"), range = box.querySelector("input"), out = box.querySelector("em");
+    var H = Math.min(innerHeight * 0.62, 620), W = H * aspect;
+    if (W > innerWidth * 0.86) { W = innerWidth * 0.86; H = W / aspect; }
+    frame.style.width = W + "px"; frame.style.height = H + "px";
+    if (opt.kind === "roll") frame.style.borderRadius = "2px";
+    img.src = p.src;
+    var fitCSS = window.PSWRLD_FITCSS || function () { return ""; };
+    function paint() {
+      img.setAttribute("style", fitCSS(f));
+      range.value = Math.round(f.s * 100); out.textContent = Math.round(f.s * 100) + "%";
+    }
+    paint();
+    range.oninput = function () { f.s = range.value / 100; paint(); };
+    frame.addEventListener("wheel", function (e) { e.preventDefault(); f.s = Math.max(0.3, Math.min(3, f.s * (e.deltaY < 0 ? 1.06 : 1 / 1.06))); paint(); }, { passive: false });
+    var drag = null;
+    frame.addEventListener("pointerdown", function (e) { frame.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, fx: f.x, fy: f.y }; });
+    frame.addEventListener("pointermove", function (e) {
+      if (!drag) return;
+      var k = (f.s < 1 ? 1 : -1) * 100 / Math.max(0.35, Math.abs(f.s - 1) < 0.02 ? 1 : f.s);   // the photo follows your finger
+      f.x = Math.max(0, Math.min(100, drag.fx + (e.clientX - drag.x) / W * k));
+      f.y = Math.max(0, Math.min(100, drag.fy + (e.clientY - drag.y) / H * k));
+      paint();
+    });
+    frame.addEventListener("pointerup", function () { drag = null; });
+    function close() { box.remove(); }
+    box.addEventListener("click", function (e) {
+      var a = e.target.dataset && e.target.dataset.a;
+      if (e.target === box || a === "cancel") return close();
+      if (a === "whole") {                           // the whole photo shows on the page, nothing cropped
+        var r = (p.w || 1) / (p.h || 1);
+        f = { s: Math.min(r / aspect, aspect / r), x: 50, y: 50 }; paint();
+      }
+      if (a === "fill") { f = { s: 1, x: 50, y: 50 }; paint(); }
+      if (a === "save") {
+        var plain = Math.abs(f.s - 1) < 0.005 && Math.abs(f.x - 50) < 0.5 && Math.abs(f.y - 50) < 0.5;
+        var fit = plain ? null : { s: +f.s.toFixed(3), x: +f.x.toFixed(1), y: +f.y.toFixed(1) };
+        e.target.disabled = true; e.target.textContent = "Saving...";
+        post("/api/fit", JSON.stringify({ slug: opt.slug, name: p.name, fit: fit, kind: opt.kind || "" })).then(function () {
+          p[key] = fit || undefined;
+          if (key === "fit" && window.PSWRLD_REFIT) window.PSWRLD_REFIT(p.name, fit);
+          msg("Photo adjusted ✓"); close(); if (done) done();
+        }).catch(function (er) { msg("Not saved: " + er.message); close(); });
+      }
+    });
   }
 
   // ---- style bar: size, alignment and position for the text you're editing ----

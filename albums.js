@@ -1568,8 +1568,15 @@ window.PSWRLD = {
    "order": 11,
    "featured": false,
    "cover": "albums/film/web/_cover.jpg",
-   "coverFrom": "pf-001",
+   "coverFrom": "000114160021",
    "photos": [
+    {
+     "src": "albums/film/web/000114160021.jpg",
+     "md": "albums/film/web/md/000114160021.jpg",
+     "w": 1326,
+     "h": 2000,
+     "name": "000114160021"
+    },
     {
      "src": "albums/film/web/pf-001.jpg",
      "md": "albums/film/web/md/pf-001.jpg",
@@ -1578,11 +1585,32 @@ window.PSWRLD = {
      "name": "pf-001"
     },
     {
+     "src": "albums/film/web/out-da-way.jpg",
+     "md": "albums/film/web/md/out-da-way.jpg",
+     "w": 1284,
+     "h": 1264,
+     "name": "out-da-way"
+    },
+    {
+     "src": "albums/film/web/000596260020.jpg",
+     "md": "albums/film/web/md/000596260020.jpg",
+     "w": 1256,
+     "h": 2000,
+     "name": "000596260020"
+    },
+    {
      "src": "albums/film/web/pf-002.jpg",
      "md": "albums/film/web/md/pf-002.jpg",
      "w": 1325,
      "h": 2000,
      "name": "pf-002"
+    },
+    {
+     "src": "albums/film/web/graduations-cover.jpg",
+     "md": "albums/film/web/md/graduations-cover.jpg",
+     "w": 1326,
+     "h": 2000,
+     "name": "graduations-cover"
     },
     {
      "src": "albums/film/web/pf-003.jpg",
@@ -1599,6 +1627,13 @@ window.PSWRLD = {
      "name": "pf-004"
     },
     {
+     "src": "albums/film/web/000596280011.jpg",
+     "md": "albums/film/web/md/000596280011.jpg",
+     "w": 1326,
+     "h": 2000,
+     "name": "000596280011"
+    },
+    {
      "src": "albums/film/web/pf-005.jpg",
      "md": "albums/film/web/md/pf-005.jpg",
      "w": 1325,
@@ -1606,11 +1641,11 @@ window.PSWRLD = {
      "name": "pf-005"
     },
     {
-     "src": "albums/film/web/pf-006.jpg",
-     "md": "albums/film/web/md/pf-006.jpg",
-     "w": 1325,
+     "src": "albums/film/web/000596280003.jpg",
+     "md": "albums/film/web/md/000596280003.jpg",
+     "w": 1326,
      "h": 2000,
-     "name": "pf-006"
+     "name": "000596280003"
     },
     {
      "src": "albums/film/web/pf-007.jpg",
@@ -1618,6 +1653,13 @@ window.PSWRLD = {
      "w": 1125,
      "h": 2000,
      "name": "pf-007"
+    },
+    {
+     "src": "albums/film/web/pf-006.jpg",
+     "md": "albums/film/web/md/pf-006.jpg",
+     "w": 1325,
+     "h": 2000,
+     "name": "pf-006"
     },
     {
      "src": "albums/film/web/pf-008.jpg",
@@ -1634,11 +1676,18 @@ window.PSWRLD = {
      "name": "pf-009"
     },
     {
-     "src": "albums/film/web/pf-010.jpg",
-     "md": "albums/film/web/md/pf-010.jpg",
-     "w": 1325,
+     "src": "albums/film/web/009227360008.jpg",
+     "md": "albums/film/web/md/009227360008.jpg",
+     "w": 1326,
      "h": 2000,
-     "name": "pf-010"
+     "name": "009227360008"
+    },
+    {
+     "src": "albums/film/web/pink-slips.jpg",
+     "md": "albums/film/web/md/pink-slips.jpg",
+     "w": 1268,
+     "h": 1266,
+     "name": "pink-slips"
     },
     {
      "src": "albums/film/web/pf-011.jpg",
@@ -2362,13 +2411,6 @@ window.PSWRLD = {
      "w": 1326,
      "h": 2000,
      "name": "pf-023"
-    },
-    {
-     "src": "albums/events/web/pf-024.jpg",
-     "md": "albums/events/web/md/pf-024.jpg",
-     "w": 1920,
-     "h": 1428,
-     "name": "pf-024"
     },
     {
      "src": "albums/events/web/pf-025.jpg",

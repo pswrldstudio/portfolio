@@ -1,7 +1,7 @@
 // The bookshelf: every album is a book standing on a shelf, with the camcorder on top.
 // Hover a book: it lifts as if someone picked it up. Click: it comes off the shelf and opens.
 (function () {
-  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured; });
+  var data = ((window.PSWRLD && window.PSWRLD.albums) || []).filter(function (a) { return !a.featured && !a.roll; });
   var videos = (window.PSWRLD && window.PSWRLD.videos) || [];
   var TX = window.PSWRLD_TEXT || {};
   var root = document.getElementById("shelf");
@@ -77,6 +77,363 @@
   });
 
 
+  // ---- the film roll on top of the bookcase (left): pull the film out of it (or tap it) and the strip unrolls ----
+  // It shows the Film book's photos (or an album marked "roll": true), so editing the Film book edits the roll too.
+  var ALL = (window.PSWRLD && window.PSWRLD.albums) || [];
+  var ROLL = ALL.find(function (a) { return a.roll; }) || ALL.find(function (a) { return a.slug === "film"; });
+  var ROLL_SVG = '<svg class="roll-svg" viewBox="0 0 132 150" aria-hidden="true">' +
+    '<defs><linearGradient id="rlBody" x1="0" x2="1"><stop offset="0" stop-color="#0d0d0d"/><stop offset=".45" stop-color="#3a3836"/><stop offset="1" stop-color="#0d0d0d"/></linearGradient>' +
+    '<linearGradient id="rlMetal" x1="0" x2="1"><stop offset="0" stop-color="#6d6b68"/><stop offset=".4" stop-color="#e6e3de"/><stop offset="1" stop-color="#5d5b58"/></linearGradient>' +
+    '<linearGradient id="rlLabel" x1="0" x2="1"><stop offset="0" stop-color="#8f3a17"/><stop offset=".42" stop-color="#f07a3d"/><stop offset="1" stop-color="#7a3012"/></linearGradient></defs>' +
+    '<g class="roll-leader"><path d="M70 64 H116 Q128 64 128 76 V94 Q128 104 116 104 H70 Z" fill="#2b2622"/>' +
+    '<path d="M70 64 H116 Q128 64 128 76 V94 Q128 104 116 104 H70 Z" fill="none" stroke="#4a423b" stroke-width="1"/>' +
+    [76, 86, 96, 106].map(function (x) { return '<rect x="' + x + '" y="67" width="5" height="5" rx="1" fill="#0b0b0b"/><rect x="' + x + '" y="96" width="5" height="5" rx="1" fill="#0b0b0b"/>'; }).join("") +
+    '<rect x="74" y="75" width="40" height="19" fill="#5a3b22" opacity=".55"/></g>' +
+    '<rect x="44" y="3" width="22" height="12" rx="2" fill="url(#rlMetal)"/>' +
+    '<path d="M48 4v10M52 4v10M56 4v10M60 4v10" stroke="#55524e" stroke-width="1"/>' +
+    '<rect x="14" y="13" width="82" height="13" rx="3" fill="url(#rlMetal)"/>' +
+    '<rect x="18" y="25" width="74" height="104" fill="url(#rlBody)"/>' +
+    '<rect x="18" y="42" width="74" height="70" fill="url(#rlLabel)"/>' +
+    '<text x="55" y="62" text-anchor="middle" font-family="Unbounded, sans-serif" font-weight="600" font-size="11" fill="#111">PSWRLD</text>' +
+    '<text x="55" y="88" text-anchor="middle" font-family="Instrument Serif, serif" font-style="italic" font-size="26" fill="#111">400</text>' +
+    '<text x="55" y="104" text-anchor="middle" font-family="monospace" font-size="7" letter-spacing="1" fill="#111">36 EXP</text>' +
+    '<rect x="14" y="127" width="82" height="13" rx="3" fill="url(#rlMetal)"/></svg>';
+  var roll = document.createElement("button");
+  roll.className = "roll";
+  roll.dataset.cursor = "Pull";
+  roll.setAttribute("aria-label", "Open the film roll");
+  roll.innerHTML = ROLL_SVG + '<span class="roll-tag"><span data-edit="roll_label">' + esc(TX.roll_label || "Shot on Film") + '</span>' +
+    (ROLL && ROLL.photos.length ? " &middot; " + ROLL.photos.length : "") + '</span>';
+  if (!ROLL || !ROLL.photos.length) roll.style.display = "none";
+  // grab the canister and pull sideways: the film comes out under your finger. Let go far enough and it unrolls.
+  var pull = null;
+  roll.addEventListener("pointerdown", function (e) {
+    if (e.target.closest("[data-edit]") || !ROLL) return;
+    var r = roll.querySelector(".roll-svg").getBoundingClientRect();
+    pull = { id: e.pointerId, x: e.clientX, y: e.clientY, d: 0, r: r, el: null, axis: null };
+    try { roll.setPointerCapture(e.pointerId); } catch (er) {}
+  });
+  roll.addEventListener("pointermove", function (e) {
+    if (!pull || e.pointerId !== pull.id) return;
+    var dx = e.clientX - pull.x, dy = e.clientY - pull.y;
+    if (!pull.axis && Math.hypot(dx, dy) > 8) pull.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    if (pull.axis !== "x") return;
+    pull.d = Math.max(0, dx);
+    if (!pull.el) {                                   // the film strip leaves the canister's slot
+      var h = pull.r.height * 0.3;
+      pull.el = document.createElement("div");
+      pull.el.className = "roll-pull";
+      pull.el.style.cssText = "left:" + (pull.r.left + pull.r.width * 0.66) + "px;top:" + (pull.r.top + pull.r.height * 0.56 - h / 2) + "px;height:" + h + "px;--ph:" + h + "px";
+      pull.el.innerHTML = '<div class="rp-film">' + ROLL.photos.slice(0, 14).map(function (p) {
+        return '<img alt="" draggable="false" src="' + esc(p.md || p.src) + '">'; }).join("") + '</div>';
+      document.body.appendChild(pull.el);
+      roll.classList.add("pulling");
+    }
+    pull.el.style.width = (pull.d + pull.r.width * 0.32) + "px";
+  });
+  function letGoRoll(e) {
+    if (!pull || e.pointerId !== pull.id) return;
+    var p = pull; pull = null;
+    if (p.axis === "x" && p.el) {
+      if (p.d > Math.min(110, innerWidth * 0.18)) {   // pulled far enough: the whole roll unrolls
+        p.el.classList.add("gone"); setTimeout(function () { p.el.remove(); roll.classList.remove("pulling"); }, 300);
+        openRoll();
+      } else {                                        // not far enough: it winds back in
+        p.el.classList.add("back"); p.el.style.width = "0px";
+        setTimeout(function () { p.el.remove(); roll.classList.remove("pulling"); }, 420);
+      }
+      roll._noTap = true; setTimeout(function () { roll._noTap = false; }, 50);
+    } else if (!p.axis && !e.target.closest("[data-edit]") && ROLL && e.type === "pointerup") {
+      roll._noTap = true; setTimeout(function () { roll._noTap = false; }, 50);
+      openRoll();                                     // a plain tap opens it too
+    }
+  }
+  roll.addEventListener("pointerup", letGoRoll);
+  roll.addEventListener("pointercancel", letGoRoll);
+  roll.addEventListener("click", function (e) { e.preventDefault(); });
+
+  function fitStyle(f) {
+    if (!f) return "";
+    var x = f.x == null ? 50 : f.x, y = f.y == null ? 50 : f.y, k = f.s || 1;
+    return "object-position:" + x + "% " + y + "%;transform-origin:" + x + "% " + y + "%" + (k !== 1 ? ";transform:scale(" + k + ")" : "");
+  }
+  function rollFits() { try { return JSON.parse((window.PSWRLD_TEXT || {}).rollfit || "{}"); } catch (e) { return {}; } }
+  function openRoll() {
+    var P = ROLL.photos, RF = rollFits();
+    P.forEach(function (p) { if (RF[p.name]) p.rollfit = RF[p.name]; });
+    var editing = location.port === "5190" && document.body.classList.contains("editing");
+    function framesHTML() {
+      return P.map(function (p, i) {
+        var r = p.w / p.h, tall = r < 0.92, sq = !tall && r < 1.08;   // square covers get square frames
+        return '<div class="rf' + (tall ? " tall" : sq ? " sq" : "") + '" role="button" tabindex="0" data-i="' + i + '"><span class="rf-n">' + (i + 1) + '</span><span class="rf-a">' + (i + 1) + 'A &#9656;</span>' +
+          '<span class="rf-pic"><img alt="" draggable="false" loading="' + (i < 6 ? "eager" : "lazy") + '" src="' + esc(p.md || p.src) + '" style="' + fitStyle(p.rollfit) + '"></span>' +
+          (editing ? '<span class="rf-del" title="Remove from the roll">&times;</span><span class="rf-adj' + (p.rollfit ? " on" : "") + '" title="Scale and move this photo in its frame">&#10530;</span>' : "") + '</div>';
+      }).join("") +
+        (editing ? '<label class="rf rf-add tall"><input type="file" accept="image/*" multiple hidden><b>+</b><span>Add photos</span><small>or drop them here</small></label>' : "") +
+        '<i class="rv-end"></i>';
+    }
+    var frames = framesHTML();
+    var box = document.createElement("div");
+    box.className = "roll-view";
+    box.innerHTML =
+      '<div class="rv-head"><b>' + esc(ROLL.title) + '</b><span>' + P.length + ' frames &middot; drag, scroll or swipe</span></div>' +
+      '<div class="rv-scroll"><div class="rv-can">' + ROLL_SVG + '</div><div class="rv-strip">' + frames + '</div></div>' +
+      '<button class="rv-x" aria-label="Close">&times;</button>';
+    document.body.appendChild(box);
+    document.body.classList.add("roll-open");
+    var sc = box.querySelector(".rv-scroll");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { box.classList.add("on"); }); });   // the strip unrolls
+    // mouse: grab and throw the strip; wheel scrolls it sideways (fingers scroll it natively)
+    var drag = null, glide = 0, movedPx = 0;
+    sc.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "mouse") return;
+      if (editing && e.target.closest(".rf")) return;   // editor: frames are picked up to move them instead
+      cancelAnimationFrame(glide);
+      drag = { x: e.clientX, s: sc.scrollLeft, lx: e.clientX, lt: performance.now(), v: 0 }; movedPx = 0;
+      sc.classList.add("grabbing");
+    });
+    function onMove(e) {
+      if (!drag) return;
+      var now = performance.now();
+      drag.v = 0.7 * drag.v + 0.3 * ((drag.lx - e.clientX) / Math.max(1, now - drag.lt));
+      drag.lx = e.clientX; drag.lt = now;
+      movedPx = Math.max(movedPx, Math.abs(e.clientX - drag.x));
+      sc.scrollLeft = drag.s - (e.clientX - drag.x);
+    }
+    function onUp() {
+      if (!drag) return;
+      var v = performance.now() - drag.lt > 80 ? 0 : drag.v; drag = null; sc.classList.remove("grabbing");
+      var last = performance.now();
+      (function step(now) {
+        var dt = now - last; last = now;
+        sc.scrollLeft += v * dt; v *= Math.pow(0.996, dt);
+        if (Math.abs(v) > 0.02) glide = requestAnimationFrame(step);
+      })(last);
+    }
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    sc.addEventListener("wheel", function (e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); cancelAnimationFrame(glide); sc.scrollLeft += e.deltaY; }
+    }, { passive: false });
+    if (editing) rollEditor();
+    sc.addEventListener("click", function (e) {
+      if (e.target.closest(".rf-del, .rf-add, .rf-adj, .rf-bar, .adjusting")) return;
+      var f = e.target.closest(".rf");
+      if (!f || movedPx > 6) return;
+      bigFrame(+f.dataset.i);
+    });
+    // ---- editor only: x removes a photo from the roll, + adds new ones (saved straight into the Film book) ----
+    function rollEditor() {
+      box.classList.add("rv-editing");
+      var strip = box.querySelector(".rv-strip"), info = box.querySelector(".rv-head span");
+      function say(t) { info.textContent = t; }
+      say("Editing: drag frames to reorder · × removes · + adds");
+      function post(url, body, type) {
+        return fetch(url, { method: "POST", headers: { "Content-Type": type || "application/json" }, body: body })
+          .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || r.status); return j; }); });
+      }
+      function refresh() {                           // fresh photo list after the editor rebuilt the site data
+        return fetch("albums.json?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
+          if (adjusting) finishAdjust(true);
+          var a = d.albums.find(function (x) { return x.slug === ROLL.slug; }), RF2 = rollFits();
+          if (a) { ROLL.photos = a.photos; P = a.photos; P.forEach(function (p) { if (RF2[p.name]) p.rollfit = RF2[p.name]; }); }
+          strip.innerHTML = framesHTML(); wire();
+          var tag = roll.querySelector(".roll-tag"); if (tag) tag.lastChild.textContent = " · " + P.length;
+          say(P.length + " frames · drag to reorder · × removes · + adds");
+        });
+      }
+      function addFiles(list) {
+        var files = [].filter.call(list, function (f) { return /^image\//.test(f.type); });
+        if (!files.length) return;
+        var names = [], k = 0;
+        (function next() {
+          if (k >= files.length) {
+            say("Saving...");
+            return post("/api/album", JSON.stringify({ slug: ROLL.slug, order: P.map(function (p) { return p.name; }).concat(names) }))
+              .then(refresh).then(function () { sc.scrollTo({ left: sc.scrollWidth, behavior: "smooth" }); })
+              .catch(function (er) { say("Not saved: " + er.message); });
+          }
+          var f = files[k++];
+          say("Uploading " + k + " of " + files.length + "...");
+          post("/api/upload?album=" + encodeURIComponent(ROLL.slug) + "&name=" + encodeURIComponent(f.name), f, "application/octet-stream")
+            .then(function (j) { names.push(j.name); next(); })
+            .catch(function (er) { say("Not added: " + er.message); });
+        })();
+      }
+      function wire() {
+        strip.querySelectorAll(".rf-del").forEach(function (x) {
+          x.addEventListener("click", function (e) {
+            e.stopPropagation(); e.preventDefault();
+            var p = P[+x.closest(".rf").dataset.i];
+            var ask = window.PSWRLD_CONFIRM || function (q) { return Promise.resolve(confirm(q)); };
+            ask("Remove this photo from the roll? It moves to albums/_removed/" + ROLL.slug + ", so you can bring it back.", "Remove").then(function (ok) {
+              if (!ok) return;
+              say("Removing...");
+              post("/api/album", JSON.stringify({ slug: ROLL.slug, remove: [p.name], order: P.filter(function (q) { return q !== p; }).map(function (q) { return q.name; }) }))
+                .then(refresh).catch(function (er) { say("Not removed: " + er.message); });
+            });
+          });
+        });
+        strip.querySelectorAll(".rf-adj").forEach(function (x) {   // scale / move the photo right here in its frame
+          x.addEventListener("click", function (e) {
+            e.stopPropagation(); e.preventDefault();
+            var f = x.closest(".rf");
+            if (adjusting && adjusting.f === f) finishAdjust(true); else startAdjust(f);
+          });
+        });
+        // drag a frame along the strip to move it; the new order saves when you let go
+        var moving = null;
+        strip.querySelectorAll(".rf[data-i]").forEach(function (f) {
+          f.draggable = true;
+          f.addEventListener("dragstart", function (e) {
+            if (f.classList.contains("adjusting")) { e.preventDefault(); return; }
+            moving = f; f.classList.add("moving");
+            e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", f.dataset.i);
+          });
+          f.addEventListener("dragover", function (e) {
+            if (!moving || moving === f) return;
+            e.preventDefault();
+            var r = f.getBoundingClientRect(), after = e.clientX > r.left + r.width / 2;
+            if (after ? f.nextSibling !== moving : f.previousSibling !== moving) strip.insertBefore(moving, after ? f.nextSibling : f);
+          });
+          f.addEventListener("dragend", function () {
+            if (!moving) return;
+            moving.classList.remove("moving");
+            var order = [].map.call(strip.querySelectorAll(".rf[data-i]"), function (x) { return P[+x.dataset.i].name; });
+            moving = null;
+            if (order.join("|") === P.map(function (p) { return p.name; }).join("|")) return;
+            say("Saving the new order...");
+            post("/api/album", JSON.stringify({ slug: ROLL.slug, order: order })).then(refresh)
+              .catch(function (er) { say("Not saved: " + er.message); });
+          });
+        });
+        var add = strip.querySelector(".rf-add");
+        if (add) add.querySelector("input").onchange = function (e) { addFiles(e.target.files); e.target.value = ""; };
+      }
+      // ---- scaling a frame in place: scroll = scale, drag = move, Whole / Reset / Done ----
+      var adjusting = null;
+      function startAdjust(f) {
+        if (adjusting) finishAdjust(true);
+        var p = P[+f.dataset.i], o = p.rollfit || {}, fit = { s: o.s || 1, x: o.x == null ? 50 : o.x, y: o.y == null ? 50 : o.y };
+        var img = f.querySelector("img");
+        f.classList.add("adjusting"); f.draggable = false;
+        var bar = document.createElement("div");
+        bar.className = "rf-bar";
+        bar.innerHTML = '<button data-a="whole">Whole</button><button data-a="reset">Reset</button>' +
+          '<input type="range" min="30" max="300" aria-label="Scale"><em></em><button data-a="done" class="rf-done">Done</button>';
+        f.appendChild(bar);
+        var range = bar.querySelector("input"), pct = bar.querySelector("em");
+        function paint() { img.setAttribute("style", fitStyle(fit)); range.value = Math.round(fit.s * 100); pct.textContent = Math.round(fit.s * 100) + "%"; }
+        paint();
+        say("Frame " + (+f.dataset.i + 1) + ": scroll to scale, drag to move, then Done");
+        function wheel(e) { e.preventDefault(); e.stopPropagation(); fit.s = Math.max(0.3, Math.min(3, fit.s * (e.deltaY < 0 ? 1.06 : 1 / 1.06))); paint(); }
+        var drag = null;
+        function down(e) {
+          if (e.target.closest(".rf-bar, .rf-del, .rf-adj")) return;
+          e.preventDefault(); e.stopPropagation();
+          try { f.setPointerCapture(e.pointerId); } catch (er) {}
+          drag = { x: e.clientX, y: e.clientY, fx: fit.x, fy: fit.y };
+        }
+        function move(e) {
+          if (!drag) return;
+          var k = (fit.s < 1 ? 1 : -1) * 100 / Math.max(0.35, Math.abs(fit.s - 1) < 0.02 ? 1 : fit.s);   // the photo follows the mouse
+          fit.x = Math.max(0, Math.min(100, drag.fx + (e.clientX - drag.x) / f.offsetWidth * k));
+          fit.y = Math.max(0, Math.min(100, drag.fy + (e.clientY - drag.y) / f.offsetHeight * k));
+          paint();
+        }
+        function up() { drag = null; }
+        f.addEventListener("wheel", wheel, { passive: false });
+        f.addEventListener("pointerdown", down);
+        f.addEventListener("pointermove", move);
+        f.addEventListener("pointerup", up);
+        range.addEventListener("input", function () { fit.s = range.value / 100; paint(); });
+        bar.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+        bar.addEventListener("click", function (e) {
+          e.stopPropagation(); e.preventDefault();
+          var a = e.target.dataset && e.target.dataset.a;
+          if (a === "whole") {                            // the whole photo inside the frame, nothing cropped
+            var fr = f.offsetWidth / f.offsetHeight, r = p.w / p.h;
+            fit = { s: Math.min(r / fr, fr / r), x: 50, y: 50 }; paint();
+          }
+          if (a === "reset") { fit = { s: 1, x: 50, y: 50 }; paint(); }
+          if (a === "done") finishAdjust(true);
+        });
+        adjusting = { f: f, p: p, fit: function () { return fit; }, bar: bar, off: function () {
+          f.removeEventListener("wheel", wheel); f.removeEventListener("pointerdown", down);
+          f.removeEventListener("pointermove", move); f.removeEventListener("pointerup", up);
+        } };
+      }
+      function finishAdjust(save) {
+        var a = adjusting; if (!a) return;
+        adjusting = null; a.off(); a.bar.remove();
+        a.f.classList.remove("adjusting"); a.f.draggable = true;
+        if (!save) return;
+        var fit = a.fit(), plain = Math.abs(fit.s - 1) < 0.005 && Math.abs(fit.x - 50) < 0.5 && Math.abs(fit.y - 50) < 0.5;
+        a.p.rollfit = plain ? undefined : { s: +fit.s.toFixed(3), x: +fit.x.toFixed(1), y: +fit.y.toFixed(1) };
+        a.f.querySelector(".rf-adj").classList.toggle("on", !plain);
+        var map = rollFits();                           // saved with the site text, so it works with any editor
+        if (a.p.rollfit) map[a.p.name] = a.p.rollfit; else delete map[a.p.name];
+        var json = JSON.stringify(map);
+        say("Saving...");
+        post("/api/text", JSON.stringify({ rollfit: json })).then(function () {
+          (window.PSWRLD_TEXT = window.PSWRLD_TEXT || {}).rollfit = json;
+          say("Frame " + (+a.f.dataset.i + 1) + " saved \u2713");
+        }).catch(function (er) { say("Not saved: " + er.message); });
+      }
+      box.addEventListener("pointerdown", function (e) {   // clicking off the frame finishes it
+        if (adjusting && !e.target.closest(".adjusting")) finishAdjust(true);
+      }, true);
+      wire();
+      sc.addEventListener("dragover", function (e) {
+        var edge = 90, x = e.clientX;
+        if (x < edge) sc.scrollLeft -= (edge - x) * 0.4; else if (x > innerWidth - edge) sc.scrollLeft += (x - innerWidth + edge) * 0.4;
+      });
+      strip.addEventListener("dragover", function (e) { if (e.dataTransfer && [].indexOf.call(e.dataTransfer.types, "Files") > -1) { e.preventDefault(); strip.classList.add("over"); } });
+      strip.addEventListener("dragleave", function () { strip.classList.remove("over"); });
+      strip.addEventListener("drop", function (e) { e.preventDefault(); strip.classList.remove("over"); addFiles(e.dataTransfer.files); });
+    }
+    function close() {
+      document.removeEventListener("pointermove", onMove); document.removeEventListener("pointerup", onUp);
+      document.removeEventListener("keydown", key);
+      box.classList.remove("on"); box.classList.add("off");
+      setTimeout(function () { box.remove(); document.body.classList.remove("roll-open"); }, 450);
+    }
+    function key(e) { if (e.key === "Escape" && !box.querySelector(".rv-big")) close(); }
+    document.addEventListener("keydown", key);
+    box.querySelector(".rv-x").onclick = close;
+    box.addEventListener("click", function (e) { if (e.target === box || e.target.classList.contains("rv-head")) close(); });
+
+    // one frame big: arrows / swipe / keys to move along the roll
+    function bigFrame(i) {
+      var b = document.createElement("div");
+      b.className = "rv-big";
+      b.innerHTML = '<img alt=""><button class="rv-bx" aria-label="Close">&times;</button>' +
+        '<button class="rv-bp" aria-label="Previous">&larr;</button><button class="rv-bn" aria-label="Next">&rarr;</button><span class="rv-bc"></span>';
+      box.appendChild(b);
+      var img = b.querySelector("img"), cnt = b.querySelector(".rv-bc");
+      function show(k) {
+        i = (k + P.length) % P.length;
+        img.src = P[i].src; cnt.textContent = String(i + 1).padStart(2, "0") + " / " + String(P.length).padStart(2, "0");
+        var f = sc.querySelector('.rf[data-i="' + i + '"]');      // the strip follows along underneath
+        if (f) sc.scrollTo({ left: f.offsetLeft - (sc.clientWidth - f.offsetWidth) / 2, behavior: "smooth" });
+      }
+      function shut() { b.remove(); document.removeEventListener("keydown", k2, true); }
+      function k2(e) {
+        if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(i + 1); else if (e.key === "ArrowLeft") show(i - 1); else return;
+        e.preventDefault(); e.stopPropagation();
+      }
+      document.addEventListener("keydown", k2, true);
+      b.querySelector(".rv-bx").onclick = shut;
+      b.querySelector(".rv-bp").onclick = function () { show(i - 1); };
+      b.querySelector(".rv-bn").onclick = function () { show(i + 1); };
+      b.addEventListener("click", function (e) { if (e.target === b) shut(); });
+      var sx = null;
+      b.addEventListener("pointerdown", function (e) { sx = e.clientX; });
+      b.addEventListener("pointerup", function (e) { if (sx == null) return; var d = e.clientX - sx; sx = null; if (d < -50) show(i + 1); else if (d > 50) show(i - 1); });
+      show(i);
+    }
+  }
+
   // ---- bottom shelf: About me, profile, contact and socials as bright type-only books ----
   var T = window.PSWRLD_TEXT || {};
   var INFO = [
@@ -146,6 +503,7 @@
     var top = document.createElement("div");
     top.className = "case-top";
     top.appendChild(cam);
+    top.appendChild(roll);
     root.appendChild(top);
     var small = root.clientWidth < 700, k = small ? 0.66 : 1;
     var avail = root.clientWidth - (small ? 24 : 48), row = [], used = 0;

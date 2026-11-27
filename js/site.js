@@ -7,7 +7,7 @@
   // words like "DJs" or "Film" link straight to the matching book
   window.PSWRLD_LINK = function (word) {
     var w = String(word).toLowerCase().replace(/&amp;/g, "&").trim();
-    var hit = data.filter(function (a) { return !a.featured; }).find(function (a) {
+    var hit = data.filter(function (a) { return !a.featured && !a.roll; }).find(function (a) {
       var t = a.title.toLowerCase();
       return w.length > 2 && (w.indexOf(t) > -1 || t.indexOf(w) > -1);
     });
