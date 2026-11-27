@@ -211,8 +211,8 @@
   {
    "slug": "crowned",
    "title": "Crowned",
-   "subtitle": "",
-   "description": "",
+   "subtitle": "PERSONAL PROJECT",
+   "description": "Crowned celebrates the cultural significance of African hair and adornment within Black identity. Challenging society's negative perceptions, the shoot reclaims braids, locs, gold teeth and grills as expressions of heritage, resistance and self-expression. It is an exploration of cultural pride, embracing our roots and owning the beauty of who we are.",
    "year": "2026",
    "order": 1,
    "featured": false,
@@ -350,9 +350,9 @@
   {
    "slug": "blues-heartbreak",
    "title": "Blue's Heartbreak",
-   "subtitle": "",
-   "description": "",
-   "year": "",
+   "subtitle": "Commission work for Sona Blue",
+   "description": "Blues Heartbreak was developed in collaboration with Sona Blue as part of the creative direction for her album release. Exploring the quiet complexities of heartbreak, vulnerability and emotional concealment, the project translates the emotional themes of her music into a visual narrative. Through considered styling, portraiture and visual storytelling, the imagery captures the contrast between what we present to the world and what we carry within, creating a visual extension of the album's identity and themes.",
+   "year": "2026",
    "order": 2,
    "featured": false,
    "cover": "albums/blues-heartbreak/web/_cover.jpg",
@@ -434,7 +434,7 @@
    "slug": "rubi-rose",
    "title": "Rubi Rose",
    "subtitle": "Paris Fashion Week 2026",
-   "description": "",
+   "description": "A two-day commissioned collaboration with Rubi Rose during Paris Fashion Week, combining fashion photography and styling. Working closely on her visual presentation, the project explores the relationship between personal style and contemporary fashion, using considered wardrobe choices, composition and portraiture to create a cohesive visual narrative. The intention was to capture her individuality and presence while bringing a distinct editorial perspective to her image. Spanning multiple looks and settings, the shoot documents both the polished and candid moments of her time in Paris, reflecting the energy and visual culture of Fashion Week.",
    "year": "2026",
    "order": 3,
    "featured": false,
@@ -589,9 +589,9 @@
   {
    "slug": "tell-the-truth-ss26",
    "title": "Tell The Truth SS26",
-   "subtitle": "",
+   "subtitle": "Berlin Fashion Week",
    "description": "",
-   "year": "",
+   "year": "2025",
    "order": 4,
    "featured": false,
    "cover": "albums/tell-the-truth-ss26/web/_cover.jpg",
@@ -883,8 +883,8 @@
   {
    "slug": "after-hours",
    "title": "After Hours",
-   "subtitle": "",
-   "description": "",
+   "subtitle": "PERSONAL PROJECT",
+   "description": "After Hours explores the tension between societal expectations and individual freedom. Through a character-led visual narrative, the project examines the roles we find ourselves playing and the expectations that shape our everyday lives. Blending fashion imagery with conceptual storytelling, it explores the desire to break away from routine, challenge convention and reclaim a sense of individuality. At its core, the project is about finding the freedom to exist beyond the roles imposed on us.",
    "year": "2026",
    "order": 5,
    "featured": false,
@@ -896,7 +896,12 @@
      "md": "albums/after-hours/web/md/pf-73c5265a.jpg",
      "w": 1125,
      "h": 2000,
-     "name": "pf-73c5265a"
+     "name": "pf-73c5265a",
+     "fit": {
+      "s": 1.0,
+      "x": 51.5,
+      "y": 36.5
+     }
     },
     {
      "src": "albums/after-hours/web/pf-5dd6a80d.jpg",

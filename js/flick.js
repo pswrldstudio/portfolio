@@ -372,7 +372,21 @@
 
   // ---- drag & flick ----
   var dragging = false, x0 = 0, p0 = 0, lastX = 0, lastT = 0, vel = 0, moved = 0;
-  var touches = {};
+  var touches = {}, grab = null;
+  document.addEventListener("pointermove", function (e) {
+    if (!grab || !alive()) return;
+    grab.el.scrollTop = grab.t - (e.clientY - grab.y);
+  });
+  document.addEventListener("pointerup", function () { if (grab) { grab.el.classList.remove("grabbing"); grab = null; } });
+  // each page is made of strips, each with its own copy of the text: scrolling one scrolls them all
+  var syncing = false;
+  stage.addEventListener("scroll", function (e) {
+    var c = e.target;
+    if (syncing || !c.classList || !c.classList.contains("concept")) return;
+    syncing = true;
+    stage.querySelectorAll(".concept").forEach(function (o) { if (o !== c) o.scrollTop = c.scrollTop; });
+    syncing = false;
+  }, true);
   stage.addEventListener("pointerdown", function (e) {
     if (e.pointerType === "touch") {
       touches[e.pointerId] = e;
@@ -386,6 +400,13 @@
       }
     }
     if (e.target.closest("[data-nav]")) return;
+    // the description box: grab, scroll and read it without turning the page
+    var cc = e.target.closest(".concept");
+    if (cc && cc.scrollHeight > cc.clientHeight + 2) {
+      clearPeel();
+      if (e.pointerType === "mouse") { grab = { el: cc, y: e.clientY, t: cc.scrollTop }; cc.classList.add("grabbing"); e.preventDefault(); }
+      return;                                      // fingers scroll it natively
+    }
     if (atRest() || peel.on) {   // grabbed a corner: peel it instead of flicking
       var hit = cornerHit(e, Math.min(W, H) * (e.pointerType === "mouse" ? 0.22 : 0.3));
       if (hit) {
@@ -402,6 +423,7 @@
     stage.setPointerCapture(e.pointerId);
   });
   stage.addEventListener("pointermove", function (e) {
+    if (grab) return;
     if (peel.held) { drawPeel(pageLocal(e, peel.side)); return; }
     if (!dragging) {             // mouse hover near a corner lifts it a little
       if (e.pointerType !== "mouse" || !atRest()) return;
@@ -460,6 +482,13 @@
   stage.addEventListener("pointerup", function (e) { delete touches[e.pointerId]; });
   stage.addEventListener("pointercancel", function (e) { delete touches[e.pointerId]; });
   stage.addEventListener("wheel", function (e) {
+    var cc = e.target.closest && e.target.closest(".concept");
+    if (cc && cc.scrollHeight > cc.clientHeight + 2 && !e.ctrlKey) {   // the wheel scrolls the text, never the pages
+      e.preventDefault(); e.stopPropagation();
+      cc.scrollTop += e.deltaY || e.deltaX;
+      if (embedded) { stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 6000); }
+      return;
+    }
     if (e.ctrlKey && e.deltaY < 0) {                  // trackpad pinch-out
       e.preventDefault();
       var r = stage.getBoundingClientRect();
@@ -537,7 +566,7 @@
     }
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
-      if (dragging || peel.held || document.hidden || !onScreen || document.body.classList.contains("zooming") || document.body.classList.contains("album-open")) return;   // pauses while you hold a page or zoom
+      if (dragging || peel.held || grab || stage.querySelector(".concept:hover") || document.hidden || !onScreen || document.body.classList.contains("zooming") || document.body.classList.contains("album-open")) return;   // pauses while you hold a page or zoom
       if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);   // only the Favourites book: loop back to its start
     }, 2800);
   }
@@ -570,8 +599,9 @@
   if (embedded) {
     stage.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") hovering = true; });
     stage.addEventListener("pointerleave", function () { hovering = false; });
-    stage.addEventListener("pointerdown", function () {   // you took over: pause, resume after a while
-      stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, 2500);
+    stage.addEventListener("pointerdown", function (e) {   // you took over: pause, resume after a while (longer when reading)
+      var reading = e.target.closest && e.target.closest(".concept");
+      stopAuto(); clearTimeout(idle); idle = setTimeout(startAuto, reading ? 9000 : 2500);
     });
   }
 

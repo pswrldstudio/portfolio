@@ -14,7 +14,7 @@ window.PSWRLD_TEXT = {
  "contact_tag": "Bookings, collaborations, commissions.",
  "footer": "All photographs by Petter maciala",
  "instagram_url": "https://www.instagram.com/pswrld.png/",
- "tiktok_url": "https://www.tiktok.com/@pswrld.png1",
+ "tiktok_url": "https://www.tiktok.com/@pswrld.png",
  "disciplines": "Directing, Production, Commercials, Fashion Shows, Editorials, Music, Film Photography",
  "email": "PSWRLD.PNG@GMAIL.COM",
  "location": "pARIS/DUBLIN",
@@ -44,9 +44,9 @@ window.PSWRLD_TEXT = {
  "ib_sub_year": "PSWRLD",
  "ib_label_year": "2024–2026",
  "style_ib_sub_instagram": "{\"z\":0.7}",
- "style_ib_label_profile": "{\"z\":0.7}",
+ "style_ib_label_profile": "{\"z\":1.5}",
  "style_ib_sub_works": "{\"z\":0.8}",
- "style_ib_label_contact": "",
+ "style_ib_label_contact": "{\"z\":2.1}",
  "style_ib_sub_tiktok": "",
  "marquee": "Fashion, Music, DJs, Concerts, Events, Film, Creative Direction, Lookbooks",
  "tapes": "peak mood 2025\nGalacta melanin paris 2026\nwe in paris: mel wood 2025\nGalacta melanin paris 2025",
@@ -63,5 +63,7 @@ window.PSWRLD_TEXT = {
  "music_off": "",
  "music_youtube": "https://www.youtube.com/watch?v=MSNNtIHCexE",
  "style_contact_tag": "{\"z\":1}",
- "style_hero_middle": "{\"z\":1.6,\"a\":\"right\"}"
+ "style_hero_middle": "{\"z\":1.6,\"a\":\"right\"}",
+ "style_ib_label_about": "{\"z\":2.6}",
+ "style_ib_label_works": "{\"z\":3}"
 };
