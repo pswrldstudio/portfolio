@@ -94,7 +94,9 @@
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
-  var STRIPS = LITE ? 6 : 7;   // more, narrower strips = a smooth curve instead of visible blocks
+  // phones: 3 strips (smoothness first: far fewer moving layers); laptops: 7 for the finest curve.
+  // The blended shading keeps the strips from showing as blocks either way.
+  var STRIPS = LITE ? 3 : 7;
   stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [], litsOf = [];
   for (var s = 0; s < n; s++) {
@@ -172,12 +174,12 @@
         B = -Math.min(k2, 1) * 14 * fan; light = Math.min(k2 * 0.08, 0.3) * fan;
       } else {                 // the page in the air: it bends, the free edge leads
         var lift = Math.sin(Math.PI * t);
-        B = -dir * 70 * lift;
+        B = -dir * (LITE ? 48 : 70) * lift;            // a gentler bend on phones, so 3 strips still read as a curve
         ry += dir * 26 * lift;
         light = 0.45 * lift; z = 1000;
       }
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
-      var hide = far > (LITE ? 4 : 6);
+      var hide = far > (LITE ? 3 : 6);                 // phones draw only the pages near the one you're on
       if (hide !== el._hid) { el._hid = hide; el.style.visibility = hide ? "hidden" : "visible"; }
       if (!hide) {                                       // only touch the pages you can see
         var tf = "translateX(" + x.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg)";
