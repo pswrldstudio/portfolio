@@ -563,3 +563,7 @@ body.roll-open { overflow: hidden; }
 .rf-pic { position: absolute; inset: 0; overflow: hidden; border-radius: 2px; pointer-events: none; }
 .rf.adjusting { overflow: visible; }
 .rf-bar { bottom: auto; top: calc(100% + 6px); z-index: 6; }
+
+/* the film roll stands on the top of the bookcase (its base rests on the wood, not sunk into it) */
+.roll { bottom: 10px; }
+@media (max-width: 760px) { .roll { bottom: 11px; } }
