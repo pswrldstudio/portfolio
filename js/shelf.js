@@ -307,8 +307,55 @@
       veil.classList.add("on");
       Object.assign(fly.style, { left: (vw - W) / 2 + "px", top: (vh - H) / 2 + "px", width: W + "px", height: H + "px" });
     }); });
-    setTimeout(function () { location.href = el.href; }, 900);
+    setTimeout(function () {
+      if (!window.PSWRLD_FLICK) { location.href = el.href; return; }
+      openInPage(a);                                   // the book opens right here, so the music never stops
+      setTimeout(function () { fly.remove(); veil.remove(); el.classList.remove("taken"); }, 450);
+    }, 900);
   }
+
+  // ---- a book opened from the shelf sits on top of the home page (no page load) ----
+  var FAV_IDS = ["stage", "prev", "next", "count", "hint", "zoomBtn"], view = null, homeURL = "", homeTitle = "";
+  function openInPage(a) {
+    if (view) return;
+    FAV_IDS.forEach(function (id) {                    // the Favourites book steps aside while this one is open
+      var e = document.getElementById(id);
+      if (e) { e.dataset.favId = id; e.id = "fav-" + id; }
+    });
+    view = document.createElement("div");
+    view.className = "album-view";
+    view.innerHTML =
+      '<header class="top av-top"><a class="backlink" href="index.html#work">&larr; All albums</a><span class="album-title" id="albumTitle"></span><span></span></header>' +
+      '<div class="stage" id="stage"></div>' +
+      '<div class="controls"><button id="prev" aria-label="Previous page">&larr;</button><span class="count" id="count"></span><button id="next" aria-label="Next page">&rarr;</button></div>' +
+      '<p class="hint" id="hint">' + esc(TX.album_hint || "Drag, flick or swipe through the pages") + '</p>';
+    document.body.appendChild(view);
+    document.body.classList.add("album-open");
+    view.querySelector(".backlink").addEventListener("click", function (e) { e.preventDefault(); closeAlbum(); });
+    homeURL = location.href; homeTitle = document.title;
+    try { history.pushState({ pswrldAlbum: a.slug }, "", "album.html?a=" + encodeURIComponent(a.slug)); } catch (e) {}
+    window.__flickSlug = a.slug;
+    window.PSWRLD_FLICK();
+    document.getElementById("albumTitle").textContent = (window.PSWRLD_CURRENT || a).title;
+    requestAnimationFrame(function () { view.classList.add("on"); });
+  }
+  function shut() {
+    if (!view) return;
+    view.remove(); view = null;
+    document.body.classList.remove("album-open");
+    document.title = homeTitle;
+    document.querySelectorAll("[data-fav-id]").forEach(function (e) { e.id = e.dataset.favId; delete e.dataset.favId; });
+    var fav = document.getElementById("stage");      // Favourites starts again
+    if (fav) { var fresh = fav.cloneNode(false); fav.replaceWith(fresh); window.__flickSlug = null; window.PSWRLD_FLICK(); }
+  }
+  function closeAlbum() {
+    if (history.state && history.state.pswrldAlbum) history.back();   // the back button closes it the same way
+    else { try { history.replaceState(null, "", homeURL); } catch (e) {} shut(); }
+  }
+  window.PSWRLD_CLOSE_ALBUM = closeAlbum;
+  window.addEventListener("popstate", function () {
+    if (view && !(history.state && history.state.pswrldAlbum)) shut();
+  });
   window.addEventListener("pageshow", function (e) { // coming back with the browser's back button
     if (e.persisted) { document.querySelectorAll(".fly,.veil").forEach(function (x) { x.remove(); }); books.forEach(function (b) { b.classList.remove("taken"); }); }
   });

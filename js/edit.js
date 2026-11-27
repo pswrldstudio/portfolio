@@ -125,7 +125,7 @@
       e.addEventListener("click", function (ev) { ev.preventDefault(); ev.stopPropagation(); });
       e.addEventListener("keydown", function (ev) { ev.stopPropagation(); });
     });
-    var photos = A.photos.map(function (p) { return { name: p.name, src: p.src }; });
+    var photos = A.photos.map(function (p) { return { name: p.name, src: p.src, w: p.w, h: p.h, fit: p.fit }; });
     var coverName = (A.cover && A.photos.length) ? null : "";
     var removed = {}, newFiles = [];
     var info = A; // title / subtitle / year
@@ -139,7 +139,7 @@
       '<label>Subtitle <input id="ed-sub" placeholder="e.g. Shot for ..."></label>' +
       '<label>Description <textarea id="ed-desc" rows="6" placeholder="The concept behind this book..."></textarea></label>' +
       '<label>Year <input id="ed-year"></label>' +
-      '<p class="ed-tip">Drag photos to change the order. Click a photo to make it the cover. &times; removes it.' +
+      '<p class="ed-tip">Drag photos to change the order. Click a photo to make it the cover. &times; removes it. &#10530; moves and scales a photo on its page.' +
       (A.featured ? ' Photos you starred in other albums show here too.' : ' &#9733; adds a photo to your Favourites book.') + '</p>' +
       '<div class="ed-grid" id="ed-grid"></div>' +
       (A.featured ? '<button id="ed-lib" class="ed-libbtn">+ Select from library</button>' : '') +
@@ -217,6 +217,7 @@
       all.forEach(function (p, i) {
         var d = el("div", { class: "ed-th" + (removed[p.name] ? " gone" : "") + (p.name === currentCover ? " cover" : ""), draggable: "true" },
           '<img src="' + esc(p.src) + '" alt=""><button class="ed-del" title="Remove">&times;</button>' +
+          (!p.isNew ? '<button class="ed-adj' + (p.fit ? " on" : "") + '" title="Adjust: move and scale the photo on its page">&#10530;</button>' : "") +
           (!A.featured && !p.isNew ? '<button class="ed-fav' + (picks[A.slug + "/" + p.name] ? " on" : "") + '" title="Favourite">&#9733;</button>' : "") +
           (p.name === currentCover ? '<span class="ed-badge">Cover</span>' : "") + (p.isNew ? '<span class="ed-badge new">New</span>' : ""));
         d.querySelector(".ed-del").onclick = function (e) {
@@ -224,6 +225,8 @@
           if (p.isNew) newFiles.splice(i - photos.length, 1); else removed[p.name] = !removed[p.name];
           draw();
         };
+        var ab = d.querySelector(".ed-adj");
+        if (ab) ab.onclick = function (e) { e.stopPropagation(); adjustPhoto(p, function () { draw(); }); };
         var fb = d.querySelector(".ed-fav");
         if (fb) fb.onclick = function (e) {
           e.stopPropagation();
@@ -258,6 +261,61 @@
     ["dragover", "dragenter"].forEach(function (t) { drop.addEventListener(t, function (e) { if (e.dataTransfer && e.dataTransfer.types.indexOf("Files") > -1) { e.preventDefault(); drop.classList.add("over"); } }); });
     drop.addEventListener("dragleave", function () { drop.classList.remove("over"); });
     drop.addEventListener("drop", function (e) { e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); });
+
+    // ---- Adjust: drag the photo to choose which part shows, scroll or use the slider to scale it ----
+    function adjustPhoto(p, done) {
+      var aspect = window.PSWRLD_ASPECT || 0.8, f0 = p.fit || {}, f = { s: f0.s || 1, x: f0.x == null ? 50 : f0.x, y: f0.y == null ? 50 : f0.y };
+      var box = el("div", { class: "ed-fitbox" },
+        '<div class="ed-fit-card"><b>Adjust photo</b><span class="ed-fit-tip">Drag to move. Scroll or use the slider to scale.</span>' +
+        '<div class="ed-fit-frame"><img alt="" draggable="false"></div>' +
+        '<label class="ed-fit-row">Scale <input type="range" min="30" max="300" step="1"><em></em></label>' +
+        '<div class="ed-fit-btns"><button data-a="whole" class="ed-ghost2">Whole photo</button><button data-a="fill" class="ed-ghost2">Fill page</button>' +
+        '<button data-a="cancel" class="ed-ghost2">Cancel</button><button data-a="save" class="ed-fit-save">Save</button></div></div>');
+      document.body.appendChild(box);
+      var frame = box.querySelector(".ed-fit-frame"), img = frame.querySelector("img"), range = box.querySelector("input"), out = box.querySelector("em");
+      var H = Math.min(innerHeight * 0.62, 620), W = H * aspect;
+      if (W > innerWidth * 0.86) { W = innerWidth * 0.86; H = W / aspect; }
+      frame.style.width = W + "px"; frame.style.height = H + "px";
+      img.src = p.src;
+      var fitCSS = window.PSWRLD_FITCSS || function () { return ""; };
+      function paint() {
+        img.setAttribute("style", fitCSS(f));
+        range.value = Math.round(f.s * 100); out.textContent = Math.round(f.s * 100) + "%";
+      }
+      paint();
+      range.oninput = function () { f.s = range.value / 100; paint(); };
+      frame.addEventListener("wheel", function (e) { e.preventDefault(); f.s = Math.max(0.3, Math.min(3, f.s * (e.deltaY < 0 ? 1.06 : 1 / 1.06))); paint(); }, { passive: false });
+      var drag = null;
+      frame.addEventListener("pointerdown", function (e) { frame.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, fx: f.x, fy: f.y }; });
+      frame.addEventListener("pointermove", function (e) {
+        if (!drag) return;
+        var k = (f.s < 1 ? 1 : -1) * 100 / Math.max(0.35, Math.abs(f.s - 1) < 0.02 ? 1 : f.s);   // the photo follows your finger
+        f.x = Math.max(0, Math.min(100, drag.fx + (e.clientX - drag.x) / W * k));
+        f.y = Math.max(0, Math.min(100, drag.fy + (e.clientY - drag.y) / H * k));
+        paint();
+      });
+      frame.addEventListener("pointerup", function () { drag = null; });
+      function close() { box.remove(); }
+      box.addEventListener("click", function (e) {
+        var a = e.target.dataset && e.target.dataset.a;
+        if (e.target === box || a === "cancel") return close();
+        if (a === "whole") {                           // the whole photo shows on the page, nothing cropped
+          var r = (p.w || 1) / (p.h || 1);
+          f = { s: Math.min(r / aspect, aspect / r), x: 50, y: 50 }; paint();
+        }
+        if (a === "fill") { f = { s: 1, x: 50, y: 50 }; paint(); }
+        if (a === "save") {
+          var plain = Math.abs(f.s - 1) < 0.005 && Math.abs(f.x - 50) < 0.5 && Math.abs(f.y - 50) < 0.5;
+          var fit = plain ? null : { s: +f.s.toFixed(3), x: +f.x.toFixed(1), y: +f.y.toFixed(1) };
+          e.target.disabled = true; e.target.textContent = "Saving...";
+          post("/api/fit", JSON.stringify({ slug: A.slug, name: p.name, fit: fit })).then(function () {
+            p.fit = fit || undefined;
+            if (window.PSWRLD_REFIT) window.PSWRLD_REFIT(p.name, fit);
+            msg("Photo adjusted ✓"); close(); if (done) done();
+          }).catch(function (er) { msg("Not saved: " + er.message); close(); });
+        }
+      });
+    }
 
     document.getElementById("ed-save").onclick = function () {
       var btn = this; btn.disabled = true;
@@ -421,6 +479,18 @@
     ".ed-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:0;background:#000b;color:#fff;cursor:pointer;line-height:1}",
     ".ed-fav{position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;border:0;background:#000b;color:#fff;cursor:pointer;font-size:13px;line-height:1}",
     ".ed-fav.on{background:#f4c84a;color:#000}",
+    ".ed-adj{position:absolute;bottom:4px;right:4px;width:24px;height:24px;border-radius:50%;border:0;background:#000b;color:#fff;cursor:pointer;font-size:13px;line-height:1}",
+    ".ed-adj.on{background:#7de0a0;color:#000}",
+    ".ed-fitbox{position:fixed;inset:0;z-index:950;background:rgba(0,0,0,.78);display:grid;place-items:center}",
+    ".ed-fit-card{background:#151515;border:1px solid rgba(239,235,228,.2);border-radius:14px;padding:18px;color:#efebe4;font:14px/1.4 var(--sans);display:grid;gap:12px;justify-items:center;box-shadow:0 30px 60px rgba(0,0,0,.7)}",
+    ".ed-fit-card>b{justify-self:start;font:400 italic 24px var(--serif)}.ed-fit-tip{justify-self:start;color:#8d8a85;font-size:12px;margin-top:-8px}",
+    ".ed-fit-frame{position:relative;overflow:hidden;background:#1a1918;border-radius:0 12px 12px 0;cursor:grab;touch-action:none;box-shadow:inset 0 0 0 1px rgba(239,235,228,.15)}",
+    ".ed-fit-frame:active{cursor:grabbing}.ed-fit-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}",
+    ".ed-fit-row{display:flex;align-items:center;gap:10px;width:100%;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8d8a85}",
+    ".ed-fit-row input{flex:1}.ed-fit-row em{font-style:normal;color:#efebe4;width:44px;text-align:right}",
+    ".ed-fit-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;width:100%}",
+    ".ed-fit-btns button{border-radius:99px;padding:9px 16px;font-weight:700;cursor:pointer;border:0;font-size:12px}",
+    ".ed-fit-save{background:#4fa85c;color:#fff}",
     ".ed-danger{background:none;border:1px solid #c0392b;color:#ff6b5b;border-radius:99px;padding:9px 14px;cursor:pointer;font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-top:10px}",
     ".ed-danger:hover{background:#c0392b;color:#fff}",
     ".bk-del{position:absolute;top:-10px;right:-10px;z-index:6;width:28px;height:28px;border-radius:50%;border:0;background:#c0392b;color:#fff;font-size:17px;line-height:1;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.6)}",

@@ -62,5 +62,6 @@ window.PSWRLD_TEXT = {
  "cl_location": "Location",
  "music_off": "",
  "music_youtube": "https://www.youtube.com/watch?v=MSNNtIHCexE",
- "style_contact_tag": "{\"z\":1}"
+ "style_contact_tag": "{\"z\":1}",
+ "style_hero_middle": "{\"z\":1.6,\"a\":\"right\"}"
 };

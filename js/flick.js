@@ -3,12 +3,14 @@
 // slivers off the outer edges. Drag / flick / swipe turns pages around the spine;
 // arrow keys, trackpad scroll and the buttons work too.
 (function run() {
+  window.PSWRLD_FLICK = run;   // the shelf opens books in the page with this (the music keeps playing)
   var GEN = window.__flickGen = (window.__flickGen || 0) + 1;   // a newer book replaces this one
   function alive() { return GEN === window.__flickGen; }
   var albums = (window.PSWRLD && window.PSWRLD.albums) || [];
   var stage = document.getElementById("stage");
   if (!stage) return;
-  if (!stage.dataset.album) { // album page: apply edited page text
+  var overlay = !!stage.closest(".album-view");   // a book opened from the shelf, on top of the home page
+  if (!stage.dataset.album && !overlay) { // album page: apply edited page text
     var PT = window.PSWRLD_TEXT || {};
     document.querySelectorAll("[data-edit]").forEach(function (el) { if (PT[el.dataset.edit]) el.textContent = PT[el.dataset.edit]; });
     applyTextStyles(PT);
@@ -20,6 +22,7 @@
   window.PSWRLD_CURRENT = album;
   var others = albums.filter(function (a) { return !a.featured; });
   var nextAlbum = others[(others.indexOf(album) + 1) % others.length] || others[0];
+  var prevAlbum = others[(others.indexOf(album) - 1 + others.length) % others.length] || others[0];
   if (!embedded) {
     document.title = album.title + " | PSWRLD";
     var t = document.getElementById("albumTitle"); if (t) t.textContent = album.title;
@@ -37,12 +40,20 @@
       if (st.x || st.y) { el.style.position = el.style.position || "relative"; el.style.translate = (st.x || 0) + "px " + (st.y || 0) + "px"; }
     });
   }
+  // how a photo sits on its page, set in the editor: s = scale, x / y = which part shows (0-100)
+  function fitCSS(f) {
+    if (!f) return "";
+    var x = f.x == null ? 50 : f.x, y = f.y == null ? 50 : f.y, k = f.s || 1;
+    return "object-position:" + x + "% " + y + "%;transform-origin:" + x + "% " + y + "%" + (k !== 1 ? ";transform:scale(" + k + ")" : "");
+  }
+  window.PSWRLD_FITCSS = fitCSS;
   function esc(s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
   // page shape follows the album's photos so they fill the page with little cropping
   var ratios = album.photos.map(function (p) { return p.w / p.h; }).sort(function (a, b) { return a - b; });
   var aspect = ratios.length ? ratios[Math.floor(ratios.length / 2)] : 0.8;
   aspect = Math.min(1.25, Math.max(0.7, aspect));
+  window.PSWRLD_ASPECT = aspect;
 
   // ---- pages: cover, inside title, photos, end, (blank), back cover ----
   var coverImg = album.cover || (album.photos[0] && album.photos[0].src) || "";
@@ -64,7 +75,7 @@
           (album.year ? " &middot; " + esc(album.year) : "") + '</p>' +
           (album.description ? '<div class="concept">' + esc(album.description) + '</div>' : '') + '</div>';
       case "photo":
-        return '<img class="fill" alt="' + esc(album.title) + ' ' + pg.n + '" data-src="' + esc(pg.p.md || pg.p.src) + '" decoding="async" draggable="false">';
+        return '<img class="fill" alt="' + esc(album.title) + ' ' + pg.n + '" data-name="' + esc(pg.p.name) + '" style="' + fitCSS(pg.p.fit) + '" data-src="' + esc(pg.p.md || pg.p.src) + '" decoding="async" draggable="false">';
       case "placeholder":
         return '<div class="ph"><b>' + String(pg.n).padStart(2, "0") + '</b>Placeholder<br>your photo goes here</div>';
       case "end":
@@ -83,7 +94,7 @@
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
-  var STRIPS = LITE ? 4 : 6;
+  var STRIPS = LITE ? 4 : 5;
   stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [];
   for (var s = 0; s < n; s++) {
@@ -159,11 +170,15 @@
         ry += dir * 26 * lift;
         light = 0.45 * lift; z = 1000;
       }
-      el.style.transform = "translateX(" + x.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg)";
-      el.style.zIndex = z;
-      bendSheet(j, B, light);
       var far = Math.min(Math.abs(j - pos), Math.abs(j + 1 - pos));
-      el.style.visibility = far > (LITE ? 5 : 9) ? "hidden" : "visible";
+      var hide = far > (LITE ? 4 : 6);
+      if (hide !== el._hid) { el._hid = hide; el.style.visibility = hide ? "hidden" : "visible"; }
+      if (!hide) {                                       // only touch the pages you can see
+        var tf = "translateX(" + x.toFixed(1) + "px) rotateY(" + ry.toFixed(2) + "deg)";
+        if (tf !== el._tf) { el._tf = tf; el.style.transform = tf; }
+        if (z !== el._z) { el._z = z; el.style.zIndex = z; }
+        bendSheet(j, B, light);
+      }
       if (!el._loaded && far < (LITE ? 4 : 8)) {
         el._loaded = true;
         el.querySelectorAll("img[data-src]").forEach(function (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); });
@@ -171,8 +186,8 @@
     }
     var cur = Math.round(pos);
     if (counter) counter.textContent = cur === 0 ? "Cover" : cur === n ? "Back" : String(cur).padStart(2, "0") + " / " + String(n - 1).padStart(2, "0");
-    if (prevBtn) prevBtn.disabled = cur <= 0;
-    if (nextBtn) nextBtn.disabled = cur >= n;
+    if (prevBtn) prevBtn.disabled = embedded && cur <= 0;   // album pages: past the ends you get the next / previous book
+    if (nextBtn) nextBtn.disabled = embedded && cur >= n;
   }
 
   // ---- animation ----
@@ -244,26 +259,32 @@
     hideHint();
     var target = (running ? tgt : Math.round(pos)) + d;
     if (!embedded && d > 0 && target > n - 1 && Math.round(pos) >= n - 1) { closeThenNext(); return; }
+    if (!embedded && d < 0 && target < 1 && Math.round(pos) <= 1) { closeThenPrev(); return; }
     animateTo(target);
   }
   var leaving = false;
-  function closeThenNext() {
+  function closeThenNext() { swapBook(1); }
+  function closeThenPrev() { swapBook(-1); }
+  // past the last page the book closes and swipes away, and the next book swipes in.
+  // Before the first page it goes the other way: the previous book comes back, open at its end.
+  function swapBook(d) {
     if (leaving || embedded) return;
     leaving = true;
-    var wait = 0;
-    if (Math.round(pos) < n) { animateTo(n, 900); wait = 1050; }        // the book closes on its back cover
+    var to = d > 0 ? nextAlbum : prevAlbum, wait = 0, shut = d > 0 ? n : 0;
+    if (Math.abs(pos - shut) > 0.01) { animateTo(shut, 800, true); wait = 900; }   // the book closes
     setTimeout(function () {
-      stage.classList.add("swipe-out");                                  // ...and slides away
+      stage.classList.add(d > 0 ? "swipe-out" : "swipe-out-r");        // ...and slides away
       setTimeout(function () {
-        window.__flickSlug = nextAlbum.slug;
-        try { history.replaceState(null, "", "album.html?a=" + encodeURIComponent(nextAlbum.slug)); } catch (e) {}
+        window.__flickSlug = to.slug;
+        window.__flickAtEnd = d < 0;
+        try { history.replaceState(history.state, "", "album.html?a=" + encodeURIComponent(to.slug)); } catch (e) {}
         var fresh = stage.cloneNode(false);
-        fresh.classList.remove("swipe-out");
-        fresh.classList.add("swipe-in");
+        fresh.classList.remove("swipe-out", "swipe-out-r");
+        fresh.classList.add(d > 0 ? "swipe-in" : "swipe-in-l");
         stage.replaceWith(fresh);
-        run();                                                             // the next book slides in, closed
+        run();                                                             // the other book slides in
         fresh.getBoundingClientRect();
-        requestAnimationFrame(function () { fresh.classList.remove("swipe-in"); });
+        requestAnimationFrame(function () { fresh.classList.remove("swipe-in", "swipe-in-l"); });
       }, 650);
     }, wait);
   }
@@ -423,8 +444,14 @@
     var throwPages = -vel * 240 / (W * 1.1);
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
     if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
+    if (!embedded && target < 1 && throwPages < 0 && p0 <= 1.5) { closeThenPrev(); return; }
     animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110));
   }
+  stage.addEventListener("click", function (e) {   // "Next: ..." on the last page swipes to it in place
+    var a = e.target.closest && e.target.closest("[data-nav]");
+    if (!a || embedded) return;
+    e.preventDefault(); closeThenNext();
+  });
   stage.addEventListener("pointerup", release);
   stage.addEventListener("pointercancel", release);
   stage.addEventListener("pointerleave", function (e) { if (!peel.held && peel.on && e.pointerType === "mouse") peelBack(); });
@@ -452,7 +479,7 @@
     if (embedded) { var r = stage.getBoundingClientRect(); if (r.bottom < 80 || r.top > innerHeight - 80) return; }
     if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
     if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    if (e.key === "Escape" && !embedded) location.href = "index.html";
+    if (e.key === "Escape" && !embedded) { if (overlay && window.PSWRLD_CLOSE_ALBUM) window.PSWRLD_CLOSE_ALBUM(); else location.href = "index.html"; }
   });
 
   var counter = document.getElementById("count"), prevBtn = document.getElementById("prev"), nextBtn = document.getElementById("next");
@@ -462,7 +489,9 @@
   if (nextBtn) nextBtn.addEventListener("click", function () { go(1); });
   window.addEventListener("resize", function () { if (alive()) { measure(); place(); } });
   // the Favourites book on the home page stays open and flicks through by itself
-  var auto = null, idle = null, hovering = false;
+  var auto = null, idle = null, hovering = false, onScreen = true;
+  if (embedded && "IntersectionObserver" in window)   // Favourites rests while it's scrolled off screen
+    new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; }).observe(stage);
   var riffled = true, startedOnce = false;   // no opening flick-through: the Favourites book starts open and turns page by page
   function startAuto() {
     if (!embedded || auto) return;
@@ -508,7 +537,7 @@
     }
     auto = setInterval(function () {
       if (!alive()) { clearInterval(auto); return; }
-      if (dragging || peel.held || document.hidden || document.body.classList.contains("zooming")) return;   // pauses while you hold a page or zoom
+      if (dragging || peel.held || document.hidden || !onScreen || document.body.classList.contains("zooming") || document.body.classList.contains("album-open")) return;   // pauses while you hold a page or zoom
       if (Math.round(pos) >= n - 1) animateTo(1, 1600); else go(1);   // only the Favourites book: loop back to its start
     }, 2800);
   }
@@ -557,13 +586,13 @@
     if (album.photos.length) openZoom(idx);
   }
   function openZoom(i) {
-    var P = album.photos, scale = 1, tx = 0, ty = 0;
+    var P = album.photos, scale = 1, tx = 0, ty = 0, openedAt = performance.now();
     var z = document.createElement("div");
     z.className = "zoom";
     z.innerHTML = '<div class="zoom-stage"><img alt=""></div>' +
       '<button class="zoom-x" aria-label="Close">&times;</button>' +
       '<button class="zoom-prev" aria-label="Previous">&larr;</button><button class="zoom-next" aria-label="Next">&rarr;</button>' +
-      '<div class="zoom-bar"><span class="zoom-n"></span><span class="zoom-tip">Pinch, scroll or double-tap to zoom</span></div>';
+      '<div class="zoom-bar"><span class="zoom-n"></span><span class="zoom-tip">' + (matchMedia("(pointer: fine)").matches ? "Scroll or double-click to zoom" : "Pinch or double-tap to zoom") + '</span></div>';
     document.body.appendChild(z);
     document.body.classList.add("zooming");
     var img = z.querySelector("img"), zs = z.querySelector(".zoom-stage"), num = z.querySelector(".zoom-n");
@@ -603,7 +632,9 @@
     z.querySelector(".zoom-prev").onclick = function () { show(i - 1, 1); };
     z.querySelector(".zoom-next").onclick = function () { show(i + 1, 1); };
     zs.addEventListener("wheel", function (e) { e.preventDefault(); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY); apply(false); }, { passive: false });
-    zs.addEventListener("dblclick", function (e) { if (scale > 1) { scale = 1; tx = ty = 0; } else zoomAt(2.5, e.clientX, e.clientY); apply(true); });
+    zs.addEventListener("dblclick", function (e) {
+      if (performance.now() - openedAt < 600) return;   // the double-click that opened the viewer: keep the whole photo
+      if (scale > 1) { scale = 1; tx = ty = 0; } else zoomAt(2.5, e.clientX, e.clientY); apply(true); });
     // drag to pan (zoomed) or swipe to flick (not zoomed); two fingers pinch
     var pts = {}, sx = 0, sy = 0, st = 0, pinch0 = 0, lastTap = 0;
     zs.addEventListener("pointerdown", function (e) {
@@ -650,15 +681,25 @@
   var zbtn = document.getElementById("zoomBtn");
   if (zbtn) zbtn.onclick = function () { if (alive()) openZoomAt(true); };
 
+  window.PSWRLD_REFIT = function (name, fit) {   // the editor changed how a photo sits on its page
+    album.photos.forEach(function (p) { if (p.name === name) p.fit = fit; });
+    var css = fitCSS(fit);
+    document.querySelectorAll("img[data-name]").forEach(function (im) { if (im.dataset.name === name) im.setAttribute("style", css); });
+    peel.key = "";
+  };
+
   measure(); place();
 
   // when the book comes into view: pages fan out, then the cover opens all the way
+  var atEnd = !embedded && window.__flickAtEnd; window.__flickAtEnd = false;
+  if (atEnd) { pos = n; place(); }
   function intro() {
     var start = performance.now();
     (function step(now) {
       var t = Math.min(1, (now - start) / 500);
       fan = ease(t); place();
       if (t < 1) requestAnimationFrame(step);
+      else if (atEnd) animateTo(n - 1, 800);                       // the previous book opens on its last pages
       else if (pos === 0 && !embedded) { animateTo(1, 800); setTimeout(startAuto, 850); }
       else startAuto();
     })(start);

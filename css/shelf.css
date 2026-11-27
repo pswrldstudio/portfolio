@@ -375,3 +375,24 @@ html[data-theme="light"] .music-vol::-webkit-slider-thumb { background: #151413;
 /* skills under About: plain bubbles */
 .disciplines li, .disciplines li:hover { cursor: default; background: none; color: inherit; }
 html[data-theme="light"] .disciplines li:hover { background: none; color: inherit; }
+
+/* the previous book swipes back in from the left */
+.album-page .stage.swipe-out-r, .album-view .stage.swipe-out-r { transform: translateX(45%) rotate(3deg); opacity: 0; }
+.album-page .stage.swipe-in-l, .album-view .stage.swipe-in-l { transform: translateX(-45%) rotate(-3deg); opacity: 0; transition: none; }
+
+/* a book opened from the shelf: on top of the home page, so the music keeps playing */
+.album-view { position: fixed; inset: 0; z-index: 395; height: 100svh; display: flex; flex-direction: column; opacity: 0; transition: opacity .45s; }
+.album-view.on { opacity: 1; }
+.album-view .top { position: relative; mix-blend-mode: normal; color: var(--bone); }
+.album-view .stage { transition: transform .65s cubic-bezier(.6,0,.3,1), opacity .65s; }
+.album-view .stage.swipe-out { transform: translateX(-45%) rotate(-3deg); opacity: 0; }
+.album-view .stage.swipe-in { transform: translateX(45%) rotate(3deg); opacity: 0; transition: none; }
+body.album-open { overflow: hidden; }
+body.album-open > main, body.album-open > footer, body.album-open > header.top, body.album-open > .marquee { visibility: hidden; }
+.music-ctl { z-index: 420; }
+
+/* light mode: the camcorder's film player keeps its words white on the dark screen */
+html[data-theme="light"] .vhs-title,
+html[data-theme="light"] .vhs .tape,
+html[data-theme="light"] .vhs-x { color: #efebe4; }
+html[data-theme="light"] .vhs .tape.on { background: #efebe4; color: #0b0b0b; }
