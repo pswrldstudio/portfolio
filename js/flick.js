@@ -94,7 +94,7 @@
   stage.appendChild(book);
   // Each page is a chain of thin strips so it can bend like paper while it turns.
   var LITE = matchMedia("(max-width: 760px), (pointer: coarse)").matches;   // phones: lighter build
-  var STRIPS = LITE ? 4 : 5;
+  var STRIPS = LITE ? 6 : 7;   // more, narrower strips = a smooth curve instead of visible blocks
   stage.style.setProperty("--strips", STRIPS);   // strip width must match the strip count
   var n = pages.length / 2, sheets = [], stripsOf = [], bendOf = [], litsOf = [];
   for (var s = 0; s < n; s++) {
@@ -113,6 +113,10 @@
       parent = st;
       list.push(st);
       lits.push([st.children[0].lastChild, st.children[1].lastChild]);
+      // each strip's shadow fades into the next one's, so the shading is one smooth sweep (no steps between strips)
+      var lo = (0.35 + 0.65 * i / STRIPS) / (0.35 + 0.65 * (i + 1) / STRIPS);
+      st.children[0].lastChild.style.background = "linear-gradient(90deg, rgba(0,0,0," + lo.toFixed(3) + "), #000)";
+      st.children[1].lastChild.style.background = "linear-gradient(270deg, rgba(0,0,0," + lo.toFixed(3) + "), #000)";
     }
     book.appendChild(el);
     sheets.push(el); stripsOf.push(list); bendOf.push(null); litsOf.push(lits);
@@ -125,7 +129,7 @@
     var list = stripsOf[j], L = litsOf[j], tri = STRIPS * (STRIPS - 1) / 2;
     for (var i = 0; i < STRIPS; i++) {
       list[i].style.transform = i ? "rotateY(" + (B * i / tri).toFixed(2) + "deg)" : "";
-      var o = (light * (0.35 + 0.65 * i / STRIPS)).toFixed(3);
+      var o = (light * (0.35 + 0.65 * (i + 1) / STRIPS)).toFixed(3);
       L[i][0].style.opacity = o; L[i][1].style.opacity = o;
     }
   }
