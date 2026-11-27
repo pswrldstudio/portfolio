@@ -666,7 +666,7 @@ body.archive-open { overflow: hidden; }
 /* ---------- Favourites on phones ---------- */
 @media (max-width: 760px) {
   /* the background holds still while the Favourites book is on screen (smooth like the other books) */
-  body.fav-live .drift i, body.fav-live .drift b, body.fav-live .drift i svg, body.fav-live .mq-track i { animation-play-state: paused; }
+  body.fav-live .drift i, body.fav-live .drift b, body.fav-live .drift i svg { animation-play-state: paused; }
   body.fav-live .hero-logo { animation-play-state: paused; }
   /* "Open the book": bigger, and right above the book instead of 200px away */
   #favourites { padding-top: 56px; }
