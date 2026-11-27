@@ -568,7 +568,12 @@
   // the Favourites book on the home page stays open and flicks through by itself
   var auto = null, idle = null, hovering = false, onScreen = true;
   if (embedded && "IntersectionObserver" in window)   // Favourites rests while it's scrolled off screen
-    new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; }).observe(stage);
+    new IntersectionObserver(function (en) {
+      onScreen = en[0].isIntersecting;
+      // phones: while Favourites is on screen the background (stars, moving words) holds still, so the pages turn
+      // as smoothly as a book opened from the shelf (those open with the rest of the page hidden)
+      if (LITE) document.body.classList.toggle("fav-live", en[0].intersectionRatio > 0.35);
+    }, { threshold: [0, 0.35, 0.6] }).observe(stage);
   var riffled = true, startedOnce = false;   // no opening flick-through: the Favourites book starts open and turns page by page
   function startAuto() {
     if (!embedded || auto) return;

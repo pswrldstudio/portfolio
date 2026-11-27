@@ -64,7 +64,7 @@
     }, { passive: false });
     (function run(now) {
       requestAnimationFrame(run);
-      if (!seen || document.hidden || document.body.classList.contains("album-open")) { lastY = scrollY; prevT = now; return; }
+      if (!seen || document.hidden || document.body.classList.contains("album-open") || document.body.classList.contains("fav-live")) { lastY = scrollY; prevT = now; return; }
       var k = prevT ? Math.min(3, (now - prevT) / 16.7) : 1; prevT = now;   // same speed on 60 and 120 Hz screens
       var dy = scrollY - lastY; lastY = scrollY;
       boost = boost * 0.92 + Math.abs(dy) * 0.06;

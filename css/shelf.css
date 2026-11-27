@@ -662,3 +662,15 @@ body.archive-open { overflow: hidden; }
   .ib-serif:not(.lying) .ib-label { font-size: clamp(14px, calc(var(--w) * .42), 26px); }
   .ib-big:not(.lying) .ib-label { font-size: clamp(16px, calc(var(--w) * .5), 30px); }
 }
+
+/* ---------- Favourites on phones ---------- */
+@media (max-width: 760px) {
+  /* the background holds still while the Favourites book is on screen (smooth like the other books) */
+  body.fav-live .drift i, body.fav-live .drift b, body.fav-live .drift i svg, body.fav-live .mq-track i { animation-play-state: paused; }
+  body.fav-live .hero-logo { animation-play-state: paused; }
+  /* "Open the book": bigger, and right above the book instead of 200px away */
+  #favourites { padding-top: 56px; }
+  #favourites .featured-head em { font-size: 40px; line-height: 1; }
+  #favourites .stage { height: min(100vw, 62svh); margin-top: 4px; }
+  #favourites .stage { contain: layout paint; }
+}
