@@ -351,7 +351,7 @@
   }
   function poly(pts) { return "polygon(" + pts.map(function (p) { return p.x.toFixed(1) + "px " + p.y.toFixed(1) + "px"; }).join(",") + ")"; }
   function drawPeel(P) {
-    P = { x: P.x, y: peel.C.y };                       // pages stay square to the spine: they never tilt up or down
+    if (!peel.touch) P = { x: P.x, y: peel.C.y };      // mouse: pages stay square to the spine (fingers bend the corner freely)
     var C = peel.C, A = { x: peel.side > 0 ? 0 : W, y: C.y };   // spine corner on the same edge
     var dA = Math.hypot(P.x - A.x, P.y - A.y);
     if (dA > W) P = { x: A.x + (P.x - A.x) * W / dA, y: A.y + (P.y - A.y) * W / dA }; // paper can't stretch
@@ -444,12 +444,13 @@
       cc.classList.add("grabbing"); e.preventDefault();
       return;
     }
-    if (false) {   // (corner peel on drag switched off: every drag turns the page around the spine, like a real book)
-      var hit = null;
+    // fingers (phones / tablets): grab a corner and bend it back like paper. The mouse turns pages around the spine.
+    if (e.pointerType !== "mouse" && (atRest() || peel.on)) {
+      var hit = cornerHit(e, Math.min(W, H) * 0.3);
       if (hit) {
         cancelAnimationFrame(peelAnim);
-        setupPeel(hit.side, hit.C); peel.on = peel.held = true; drawPeel(hit.L);
-        stage.setPointerCapture(e.pointerId); hideHint();
+        setupPeel(hit.side, hit.C); peel.on = peel.held = true; peel.touch = true; drawPeel(hit.L);
+        try { stage.setPointerCapture(e.pointerId); } catch (er) {} hideHint();
         return;
       }
     }
@@ -457,7 +458,7 @@
     lastScrub = null;
     dragging = true; moved = 0; x0 = lastX = e.clientX; p0 = pos; lastT = performance.now(); vel = 0;
     cancelAnimationFrame(anim); running = false;
-    stage.setPointerCapture(e.pointerId);
+    try { stage.setPointerCapture(e.pointerId); } catch (er) {}
   });
   stage.addEventListener("pointermove", function (e) {
     if (grab) return;
@@ -465,7 +466,7 @@
     if (!dragging) {             // mouse hover near a corner lifts it a little
       if (e.pointerType !== "mouse" || !atRest()) return;
       var hit = cornerHit(e, Math.min(W, H) * 0.22);
-      if (hit) { cancelAnimationFrame(peelAnim); setupPeel(hit.side, hit.C); peel.on = true; drawPeel(hit.L); }
+      if (hit) { cancelAnimationFrame(peelAnim); setupPeel(hit.side, hit.C); peel.on = true; peel.touch = false; drawPeel(hit.L); }
       else if (peel.on) peelBack();
       return;
     }
