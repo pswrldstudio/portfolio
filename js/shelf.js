@@ -289,6 +289,27 @@
   window.addEventListener("resize", function () { if (Math.abs(root.clientWidth - lastW) > 40) { lastW = root.clientWidth; layout(); } });
   lastW = root.clientWidth; layout();
 
+  // a cover with a white / light background behind the number and year: those turn dark so they stay readable
+  books.forEach(function (el, i) {
+    var a = data[i];
+    if (!a || !a.cover) return;
+    var img = new Image();
+    img.onload = function () {
+      try {
+        var c = document.createElement("canvas"), w = 40, h = 50;
+        c.width = w; c.height = h;
+        var g = c.getContext("2d", { willReadFrequently: true });
+        var r = w / h, iw = img.naturalWidth, ih = img.naturalHeight, sw = iw, sh = ih;   // same centred crop as the cover
+        if (iw / ih > r) sw = ih * r; else sh = iw / r;
+        g.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, 0, 0, w, h);
+        var px = g.getImageData(0, 0, w, Math.round(h * 0.16)).data, sum = 0, cnt = 0;   // the strip the number and year sit on
+        for (var k = 0; k < px.length; k += 4) { sum += 0.2126 * px[k] + 0.7152 * px[k + 1] + 0.0722 * px[k + 2]; cnt++; }
+        if (sum / cnt > 150) el.classList.add("light-top");
+      } catch (e) {}
+    };
+    img.src = a.cover;
+  });
+
   // ---- click: the book comes off the shelf, turns to show its cover, then opens ----
   function pullOut(el, a) {
     var r = el.querySelector(".bk-body").getBoundingClientRect();

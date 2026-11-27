@@ -427,3 +427,7 @@ html[data-theme="light"] .introleaf .concept.scrolls::after { background: rgba(2
 /* page turns: keep the book's repaints inside the book */
 .stage { contain: layout paint; }
 .obook { contain: layout style; }
+
+/* light / white cover: the book number and year go dark grey (set by js/shelf.js) */
+.bk-face.light-top .bk-cover .bk-top,
+html[data-theme="light"] .bk-face.light-top .bk-cover .bk-top { color: #2a2826; opacity: .9; }

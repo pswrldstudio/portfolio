@@ -351,6 +351,7 @@
   }
   function poly(pts) { return "polygon(" + pts.map(function (p) { return p.x.toFixed(1) + "px " + p.y.toFixed(1) + "px"; }).join(",") + ")"; }
   function drawPeel(P) {
+    P = { x: P.x, y: peel.C.y };                       // pages stay square to the spine: they never tilt up or down
     var C = peel.C, A = { x: peel.side > 0 ? 0 : W, y: C.y };   // spine corner on the same edge
     var dA = Math.hypot(P.x - A.x, P.y - A.y);
     if (dA > W) P = { x: A.x + (P.x - A.x) * W / dA, y: A.y + (P.y - A.y) * W / dA }; // paper can't stretch
@@ -443,8 +444,8 @@
       cc.classList.add("grabbing"); e.preventDefault();
       return;
     }
-    if (atRest() || peel.on) {   // grabbed a corner: peel it instead of flicking
-      var hit = cornerHit(e, Math.min(W, H) * (e.pointerType === "mouse" ? 0.22 : 0.3));
+    if (false) {   // (corner peel on drag switched off: every drag turns the page around the spine, like a real book)
+      var hit = null;
       if (hit) {
         cancelAnimationFrame(peelAnim);
         setupPeel(hit.side, hit.C); peel.on = peel.held = true; drawPeel(hit.L);
@@ -486,7 +487,16 @@
       peel.held = false;
       var P = peel.P || peel.C, side = peel.side;
       var turned = side > 0 ? P.x < W * 0.45 : P.x > W * 0.55;
-      if (turned) { clearPeel(); go(side > 0 ? 1 : -1); }
+      if (turned) {
+        var cur = Math.round(pos), dest = cur + side;
+        var atEdge = dest < 1 || dest > n - 1;
+        clearPeel();
+        if (atEdge) { go(side); return; }              // past the first / last page: the book swaps as usual
+        // carry on from where you let go: the page keeps falling the way you pulled it, no restart
+        var prog = side > 0 ? (W - P.x) / (2 * W) : P.x / (2 * W);
+        pos = cur + side * clamp(prog, 0.15, 0.9); place(); hideHint();
+        animateTo(dest, 520, false, side * 0.0025);
+      }
       else peelBack();
       return;
     }
@@ -499,11 +509,13 @@
       return;
     }
     hideHint();
-    var throwPages = -vel * 240 / (W * 1.1);
+    if (performance.now() - lastT > 80) vel = 0;           // held still before letting go: no throw
+    var throwPages = -vel * 240 / (W * 1.1), dragged = pos - p0;
+    // a small wobble back as the mouse lets go never undoes a page you've pulled past halfway
+    if (throwPages * dragged < 0 && Math.round(pos) !== Math.round(p0)) { throwPages = 0; vel = 0; }
     var target = Math.abs(throwPages) < 0.35 ? Math.round(pos) : (throwPages > 0 ? Math.ceil(pos + throwPages) : Math.floor(pos + throwPages));
     if (!embedded && target > n - 1 && throwPages > 0 && p0 >= n - 1.5) { closeThenNext(); return; }
     if (!embedded && target < 1 && throwPages < 0 && p0 <= 1.5) { closeThenPrev(); return; }
-    if (performance.now() - lastT > 80) vel = 0;           // held still before letting go: no throw
     animateTo(target, Math.min(1300, 480 + Math.abs(target - pos) * 110), false, -vel / (W * 1.1));
   }
   stage.addEventListener("click", function (e) {   // "Next: ..." on the last page swipes to it in place
