@@ -25,14 +25,51 @@
     measureBand(); addEventListener("resize", measureBand);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureBand);
     new IntersectionObserver(function (en) { seen = en[0].isIntersecting; }).observe(band);
+    // grab the band and drag / swipe / throw it either way (trackpad sideways scroll too); it carries on by itself after
+    var drag = null, fling = 0, dragged = 0;
+    band.addEventListener("pointerdown", function (e) {
+      if (e.button) return;
+      drag = { id: e.pointerId, x0: e.clientX, sx: x, lx: e.clientX, lt: performance.now(), v: 0 }; dragged = 0; fling = 0;
+      band.classList.add("grabbing");
+    });
+    addEventListener("pointermove", function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var now = performance.now();
+      drag.v = 0.7 * drag.v + 0.3 * ((e.clientX - drag.lx) / Math.max(1, now - drag.lt) * 16.7);   // px per frame
+      drag.lx = e.clientX; drag.lt = now;
+      dragged = Math.max(dragged, Math.abs(e.clientX - drag.x0));
+      if (dragged > 6 && !band.hasPointerCapture(e.pointerId)) { try { band.setPointerCapture(e.pointerId); } catch (er) {} }
+      x = drag.sx + (e.clientX - drag.x0);
+    });
+    function letGo(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      fling = performance.now() - drag.lt > 80 ? 0 : drag.v;
+      drag = null; band.classList.remove("grabbing");
+    }
+    addEventListener("pointerup", letGo); addEventListener("pointercancel", letGo);
+    band.addEventListener("click", function (e) {
+      if (dragged > 6) { e.preventDefault(); e.stopPropagation(); return; }   // a drag isn't a click
+      var a = e.target.closest && e.target.closest("a[href^='#']"), id = a && a.getAttribute("href").slice(1);
+      if (!id || id === "films" || id === "roll") return;                    // camcorder / film roll handle themselves
+      var t = document.getElementById(id);
+      if (!t) return;
+      e.preventDefault();                                                     // glide to that part of the bookcase
+      t.scrollIntoView({ behavior: "smooth", block: "start" });
+      try { history.replaceState(history.state, "", "#" + id); } catch (er) {}
+    }, true);
+    band.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    band.addEventListener("wheel", function (e) {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   // only sideways scrolling moves it; up/down still scrolls the page
+      e.preventDefault(); x -= e.deltaX; fling = 0;
+    }, { passive: false });
     (function run(now) {
       requestAnimationFrame(run);
       if (!seen || document.hidden || document.body.classList.contains("album-open")) { lastY = scrollY; prevT = now; return; }
       var k = prevT ? Math.min(3, (now - prevT) / 16.7) : 1; prevT = now;   // same speed on 60 and 120 Hz screens
       var dy = scrollY - lastY; lastY = scrollY;
       boost = boost * 0.92 + Math.abs(dy) * 0.06;
-      x -= (0.6 + boost) * k;
-      if (half && -x > half) x += half;
+      if (!drag) { x += fling * k - (0.6 + boost) * k; fling *= Math.pow(0.95, k); if (Math.abs(fling) < 0.05) fling = 0; }
+      if (half) { while (-x > half) x += half; while (x > 0) x -= half; }   // loops seamlessly both ways
       track.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0) skewX(" + Math.max(-12, -boost * 1.5).toFixed(2) + "deg)";
     })(0);
   }

@@ -618,9 +618,47 @@ body.archive-open { overflow: hidden; }
   #work .section-head [data-edit] { translate: none !important; }
   /* hero line: one line across the phone (js/site.js sizes it to fit) */
   .hero-meta em[data-edit="hero_middle"] { zoom: 1 !important; white-space: nowrap; display: block; text-align: center !important; width: 100%; }
-  /* Archives: the word runs across the whole flat book */
-  .ib.lying[href="#archives"] .ib-sub, .ib.lying[href="#archives"] .ib-foot, .ib.lying[href="#archives"] .ib-ring { display: none !important; }
-  .ib.lying[href="#archives"] .ib-spine { justify-content: center; padding: 0 8px; }
-  .ib.lying[href="#archives"] .ib-label { zoom: 1 !important; flex: 1; width: auto; max-width: none; text-align: center; overflow: visible;
-    font-size: calc(var(--h) * .72) !important; line-height: 1; letter-spacing: .08em; }
+  /* (Archives looks like the other flat books) */
+}
+/* phones: "My albums" sits up near the line above, with room before the camcorder / film roll */
+@media (max-width: 760px) {
+  #work.section { padding-top: 30px; }
+  #work .bookcase { margin-top: 175px; }
+}
+/* phones: the flat books all keep the same design, minus the end "PSWRLD", so each title has room to show */
+@media (max-width: 760px) {
+  .ib.lying .ib-foot { display: none !important; }
+  .ib.lying .ib-spine { gap: 5px; padding: 0 6px; justify-content: flex-start; }
+  .ib.lying .ib-label { zoom: 1 !important; flex: 1; min-width: 0; max-width: none; overflow: visible; white-space: nowrap; text-align: center;
+    font-size: calc(var(--h) * .62); line-height: 1; }
+  .ib.lying .ib-sub { display: block !important; font-size: 6px; flex: none; }
+  .ib.lying .ib-ring { display: block !important; flex: none; }
+}
+@media (max-width: 760px) {
+  .ib.lying .ib-sub { display: none !important; }   /* phones: logo + title on every flat book */
+  .ib.lying .ib-spine { justify-content: center; gap: 8px; }
+  .ib.lying .ib-label { flex: 0 1 auto; }
+}
+
+/* flat books keep the logo and PSWRLD everywhere (phones drop only the small top word); titles shrink to fit */
+@media (max-width: 760px) {
+  .ib.lying .ib-foot { display: block !important; flex: none; font-size: 6px; }
+  .ib.lying .ib-ring { display: block !important; flex: none; }
+  .ib.lying .ib-spine { justify-content: space-between; gap: 5px; }
+  .ib.lying .ib-label { flex: 1 1 auto; text-align: center; overflow: hidden; }
+}
+/* TikTok: a bigger title (still shrinks to fit its book) */
+.ib.lying .ib-label[data-edit="ib_label_tiktok"] { font-size: clamp(16px, calc(var(--h) * .78), 30px); }
+@media (max-width: 760px) { .ib.lying .ib-label[data-edit="ib_label_tiktok"] { font-size: calc(var(--h) * .82); } }
+.ib.lying .ib-label[data-edit="ib_label_tiktok"] { line-height: 1.25; }
+@media (max-width: 760px) {
+  /* Contact: Instagram, TikTok and the location side by side on one line */
+  .contact-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; font-size: 10px; letter-spacing: .06em; }
+  .contact-links .cl { min-width: 0; }
+  .contact-links .cl a, .contact-links .cl span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .contact-links .cl small { font-size: 12px; }
+  /* About Me, My Photo Works, Contact: a touch smaller (no editor zoom on phones) and always the whole word */
+  .ib:not(.lying) .ib-label { zoom: 1 !important; }
+  .ib-serif:not(.lying) .ib-label { font-size: clamp(14px, calc(var(--w) * .42), 26px); }
+  .ib-big:not(.lying) .ib-label { font-size: clamp(16px, calc(var(--w) * .5), 30px); }
 }

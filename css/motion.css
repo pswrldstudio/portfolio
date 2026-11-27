@@ -19,3 +19,8 @@ h2.split .ch { display: inline-block; transform: translateY(105%) rotate(6deg); 
 h2.split { overflow: hidden; padding-bottom: .08em; }
 h2.split.go .ch { transform: none; opacity: 1; }
 .top nav a, .controls button, .contact-links a, .backlink { transition: translate .35s cubic-bezier(.2,.8,.2,1), opacity .3s, background .3s, color .3s; }
+
+/* the moving words can be grabbed and dragged / swiped */
+.marquee { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.marquee.grabbing { cursor: grabbing; }
+.marquee a { -webkit-user-drag: none; }

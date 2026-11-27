@@ -15,7 +15,7 @@ window.PSWRLD_TEXT = {
  "footer": "All photographs by Petter maciala",
  "instagram_url": "https://www.instagram.com/pswrld.png/",
  "tiktok_url": "https://www.tiktok.com/@pswrld.png",
- "disciplines": "Directing, Production, Commercials, Fashion Shows, Editorials, Music, Film Photography",
+ "disciplines": "Directing, Production, Commercials, Runway, Editorials, Film Photography",
  "email": "PSWRLD.PNG@GMAIL.COM",
  "location": "pARIS/DUBLIN",
  "about_lead": "My name is Petter Maciala, a director and photographer based in Paris whose dream is to create.",
@@ -73,7 +73,6 @@ window.PSWRLD_TEXT = {
  "cat_commissions": "Commissions",
  "style_cat_editorials": "{\"z\":1.1,\"a\":\"center\"}",
  "shelf_cats": "{\"montfrd\":\"commercial\",\"twh\":\"commercial\",\"yallah\":\"commercial\",\"rendezvous\":\"commissions\",\"headshots\":\"commissions\",\"rubi-rose\":\"commissions\",\"toochi\":\"commissions\",\"sona-blue-x-jt\":\"commissions\",\"commercial\":\"commercial\"}",
- "style_ib_label_archives": "{\"z\":2.4}",
  "ib_sub_archives": "5 books",
  "ib_label_archives": "Archives"
 };
